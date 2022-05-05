@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Account Settings UI Design</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css"> -->
+</head>
+<body>
+    <header class="header_area sticky-header">
+		<!---navbar start -->
+		<app-navbar></app-navbar>
+		<div class="search_input" id="search_input_box">
+			<div class="container">
+				<form class="d-flex justify-content-between">
+					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
+					<button type="submit" class="btn"></button>
+					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+				</form>
+			</div>
+		</div>
+	</header>
+	<section class="py-5 my-5">
+		<div class="container">
+			<h1 class="mb-5">Account Settings</h1>
+			<div class="bg-white shadow rounded-lg d-block d-sm-flex">
+				<div class="profile-tab-nav border-right">
+					<div class="p-4">
+						<div class="img-circle text-center mb-3">
+							<img src="assets/img/user2.jpg" alt="Image" class="shadow">
+						</div>
+						<h4 class="text-center" >Kiran Acharya</h4>
+					</div>
+					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+							<i class="fa fa-home text-center mr-1"></i> 
+							Account
+						</a>
+						<a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+							<i class="fa fa-key text-center mr-1"></i> 
+							Password
+						</a>
+						<a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
+							<i class="fas fa-wallet"></i> 
+							Wallet
+						</a>
+					</div>
+				</div>
+				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+					<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+						<h3 class="mb-4">Account Settings</h3>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>First Name</label>
+								  	<input type="text" class="form-control" disabled value="Kiran">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Last Name</label>
+								  	<input type="text" class="form-control" disabled value="Acharya">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Email</label>
+								  	<input type="text" class="form-control" disabled value="kiranacharya287@gmail.com">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Phone number</label>
+								  	<input type="text" class="form-control" disabled value="+91 9876543215">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Company</label>
+								  	<input type="text" class="form-control" disabled value="Kiran Workspace">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Designation</label>
+								  	<input type="text" class="form-control" disabled value="UI Developer">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+								  	<!-- <label>Bio</label>
+									<textarea class="form-control" rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea> -->
+								</div>
+							</div>
+						</div>
+						<div>
+							<button class="btn btn-primary">Update</button>
+							<button class="btn btn-light">Cancel</button>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+						<h3 class="mb-4">Password Settings</h3>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Old password</label>
+								  	<input type="password" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>New password</label>
+								  	<input type="password" class="form-control">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Confirm new password</label>
+								  	<input type="password" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div>
+							<button class="btn btn-primary">Update</button>
+							<button class="btn btn-light">Cancel</button>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+						
+						<h1 style="text-align: center;">Create Credit Card</h1>
+
+						<div class="wrapper" id="app">
+							<div class="card-form">
+							  <div class="card-list">
+								<div class="card-item">
+								  <div class="card-item__side -front">
+									<div class="card-item__focus" ></div>
+									<div class="card-item__cover">
+									  <img
+									  src="/assets/17.jpeg" class="card-item__bg">
+									</div>
+									
+									<div class="card-item__wrapper">
+									  <div class="card-item__top">
+										<img src="/assets/chip.png" class="card-item__chip">
+										<div class="card-item__type">
+										  <div name="slide-fade-up">
+											<img src="/assets/visa.png" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
+										  </div>
+										</div>
+									  </div>
+									  <!-- card Number -->
+									  <div class="card-item__content">
+										<p class="cardNumber"> {{cardNumber}} </p>
+										
+										<!-- card Holder -->
+										<div class="card-item__holder">
+											<p class=""> {{cardHolder}} </p>
+										</div>
+
+										<!-- card data -->
+										<div class="card-item__date" ref="cardDate">
+											<p class="card">23/42</p>
+										</div>
+
+										
+									  </div>
+									</div>
+								  </div>
+								  <div class="card-item__side -back">
+									<div class="card-item__cover">
+									  <img
+									  src="/assets/17.jpeg" class="card-item__bg">
+									</div>
+									<div class="card-item__band"></div>
+									<div class="card-item__cvv">
+										<div class="card-item__cvvTitle">CVV</div>
+										<div class="card-item__cvvBand">
+						
+									  </div>
+										
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  <!-- start form -->
+							  <form [formGroup]="credit_card">
+							  <div class="card-form__inner">
+								<div class="card-input">
+									<!-- start card number -->
+								  <label for="cardNumber" class="card-input__label">Card Number</label>
+								  <input type="text" id="cardNumber" class="card-input__input" [ngModel]="cardNumber" (ngModelChange)="changeCardNumber($event)" formControlName="cardNumberValid">
+								  <div *ngIf="!credit_card.controls.cardNumberValid!.valid && (credit_card.controls.cardNumberValid!.dirty || credit_card.controls.cardNumberValid?.touched)" 
+										style="color: red"> Card number contains only numbers ( max length is 16 numbers)
+									</div>
+								</div>
+								<!-- end cardnumber -->
+								<div class="card-input">
+								  <label for="cardName" class="card-input__label">Card Holders</label>
+								  <input type="text" id="cardName" class="card-input__input" [ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)" formControlName="cardHolderValid">
+								  <div *ngIf="!credit_card.controls.cardHolderValid!.valid && (credit_card.controls.cardHolderValid!.dirty || credit_card.controls.cardHolderValid?.touched)" 
+										style="color: red"> Card Holder contains only alphabet ( the min and max length is 4 to 25 letters)
+									</div>
+								</div>
+								<div class="card-form__row">
+								  <div class="card-form__col">
+									<div class="card-form__group">
+									  <label for="cardMonth" class="card-input__label">Expiration Date</label>
+									  <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
+										<option value="" disabled selected>Month</option>
+										<option >
+											
+										</option>
+									  </select>
+									  <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
+										<option value="" disabled selected>Year</option>
+										<option >
+											
+										</option>
+									  </select>
+									</div>
+								  </div>
+								  <div class="card-form__col -cvv">
+									<div class="card-input">
+									  <label for="cardCvv" class="card-input__label">CVV</label>
+									  <input type="text" class="card-input__input" id="cardCvv" v-mask="'####'" maxlength="4" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
+									</div>
+								  </div>
+								</div>
+						
+								<button class="card-form__button">
+								  Submit
+								</button>
+							  </div>
+							  </form>
+							  	<!-- end form -->
+							</div>
+						  </div>
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+    <app-footer></app-footer>
+    <!-- scroll to the top -->
+<div id="progress">
+    <a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+</div>
+
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+</body>
+</html>

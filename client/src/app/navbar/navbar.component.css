@@ -1,0 +1,30 @@
+.navul{
+    position: relative;
+    top: 23px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.mar-20{
+    margin-left: 20px;
+}
+.dropP{
+    text-align: center;
+    padding: 10px;
+    font-family: sans-serif;
+    font-weight:500;
+}
+.right-1{
+    margin-left: 5%;
+}
+.right-2{
+    margin-left: 5%;
+}
+.right-3{
+margin-left: 2%;
+}
+.right-4{
+    margin-left: 5%;
+}
+.dropdown-menu{
+    width: 210px;
+}

@@ -1,0 +1,113 @@
+.single-footer-widget p{
+    color: #777777;
+}
+.single-footer-widget h6{
+    color: #ffff;
+    font-size: 18px;
+    font-weight: bold;
+}
+.footer-text {
+    color: #777777;
+}
+.banner-area .banner-content h1 {
+    font-family: Poppins, sans-serif;
+    font-weight: bolder;
+}
+.banner-area .banner-content p {
+    color: #777777;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+}
+.single-features h6 {
+    color: #222222;
+    font-size: 16px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+.single-features p {
+    color: #777777;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+    line-height: 2px
+}
+.section-title h1 {
+    color: #222222;
+    font-size: 36px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500
+}
+.section-title p {
+    color: #777777;
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+}
+.single-product .product-details h6 {
+    color: #222222;
+    font-size: 16px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+.single-product .product-details .price h6 {
+    color: #222222;
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+
+.single-product .product-details .price .l-through{
+    color: #CCCCCC;
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
+}
+.exclusive-deal-area .exclusive-left .clock_sec h1 {
+    color: #FFFFFF;
+    font-size: 30px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+.exclusive-deal-area .exclusive-left .clock_sec p {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+}
+.exclusive-deal-area .exclusive-left .clock_sec .clock-wrap .clockinner {
+    color: #222222;
+    
+}
+.exclusive-deal-area .exclusive-left .clock_sec .clock-wrap h1{
+    color: #222222;
+}
+.exclusive-deal-area .exclusive-right .product-details h4{
+    color: #222222;
+    font-family: Poppins,sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#progress{
+    position: fixed;
+    bottom: 40px;
+    right: 48px;
+    height: 50px;
+    width: 50px;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 100;
+}
+#progress-value{
+    display: block;
+    height: calc(100% - 12px);
+    width: calc(100% - 10px);
+    background-color: #ffff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    font-size: 20px;
+    color: black;
+    
+    
+}

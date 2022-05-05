@@ -1,0 +1,10 @@
+.notFound{
+    background: url("https://wallpaperboat.com/wp-content/uploads/2020/12/03/62926/error-404-10.jpg") no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+	position: relative;
+    min-height: 100vh;
+}

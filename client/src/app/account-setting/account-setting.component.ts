@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { stringify } from 'querystring';
+import { NotifyService } from '../services/notify.service';
+
 
 @Component({
   selector: 'app-account-setting',
@@ -12,8 +14,11 @@ export class AccountSettingComponent implements OnInit {
   credit_card: FormGroup;
   cardNumber:string = "";
   cardHolder:string = "";
+  cardDateMM:string = "";
+  cardDateYYYY:string = "";
+  cardCVV:string = "";
   
-  constructor(private cr: FormBuilder) { }
+  constructor(private cr: FormBuilder,private notify: NotifyService) { }
 
   ngOnInit(): void {
     this.validCreditCard();
@@ -49,12 +54,53 @@ export class AccountSettingComponent implements OnInit {
     }
   }
 
+  changeCardDateMM(updateDateMM){
+    var cardDateMM2 = updateDateMM;
+
+    var formattedCardDateMM = cardDateMM2.replace(/[^\d]/g, "");
+    formattedCardDateMM =formattedCardDateMM.substring(0, 2);
+
+    this.cardDateMM = formattedCardDateMM;
+
+    if(cardDateMM2 !== formattedCardDateMM){
+      this.cardDateMM = formattedCardDateMM;
+    }
+  }
+
+  changeCardDateYYYY(updateDateYYYY){
+    var cardDateYYYY2 = updateDateYYYY;
+
+    var formattedCardDateYYYY = cardDateYYYY2.replace(/[^\d]/g, "");
+    formattedCardDateYYYY = formattedCardDateYYYY.substring(0, 2);
+
+    this.cardDateYYYY = formattedCardDateYYYY;
+
+    if(cardDateYYYY2 !== formattedCardDateYYYY){
+      this.cardDateYYYY = formattedCardDateYYYY;
+    }
+  }
+
+  changeCardCvv(updateCvv){
+    this.notify.success("hover the card to see the CVV");
+    var cardCVV2 = updateCvv;
+    // var formattedCardCvv = cardCVV2.replace(/[^\d]/g, "");
+    var formattedCardCvv = cardCVV2.substring(0, 3);
+
+    this.cardCVV = formattedCardCvv;
+
+    if(cardCVV2 !== formattedCardCvv){
+      this.cardCVV = formattedCardCvv;
+    }
+  }
+
   validCreditCard(){
     this.credit_card = this.cr.group({
       cardNumberValid: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'),Validators.maxLength(19),Validators.minLength(19)]],
       cardHolderValid: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'),Validators.maxLength(25),Validators.minLength(4)]],
+      cardDateMM: ['',[Validators.required,Validators.pattern('^[0-9| ]+$'),Validators.minLength(2),Validators.maxLength(2)]],
+      cardDateYYYY: ['',[Validators.required]],
+      cardCVVValid: ['',[Validators.required,Validators.pattern('^[0-9|]+$'),Validators.minLength(3),Validators.maxLength(3)]],
     });
-
   }
   
 

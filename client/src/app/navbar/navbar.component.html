@@ -4,12 +4,28 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <a class="navbar-brand logo_h " href="index.html"><img src="assets/img/logo-name.png" width="137px" height="70px"></a> &nbsp;
-            <ul class="nav navbar-nav menu_nav ml-auto navul">
-                 <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" routerLink="/login">Login</a> |</li> 
-            </ul>
-            <ul class="nav navbar-nav menu_nav ml-auto navul">
-               &nbsp; <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" routerLink="/signup">Sign-Up</a></li>
-           </ul>
+
+
+            <ng-container *ngIf="!user">
+                <ul class="nav navbar-nav menu_nav ml-auto navul">
+                    <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" routerLink="/login">Login</a> |</li> 
+               </ul>
+               <ul class="nav navbar-nav menu_nav ml-auto navul">
+                  &nbsp; <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" routerLink="/signup">Sign-Up</a></li>
+              </ul>
+            </ng-container>
+        
+            <ng-container *ngIf="user">
+                <ul class="nav navbar-nav menu_nav ml-auto navul">
+                    <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link">Hello {{user.userName}}</a> |</li> 
+               </ul>
+               <ul class="nav navbar-nav menu_nav ml-auto navul">
+                  <!-- &nbsp; <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" routerLink="/logout" routerLinkActive="active">Logout</a></li> -->
+                  &nbsp; <li class="nav-item fixL"><a style="font-weight: 600; font-size: 16px;" class="nav-link" (click)="logout()">Logout</a></li>
+              </ul>
+            </ng-container>
+
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="icon-bar"></span>

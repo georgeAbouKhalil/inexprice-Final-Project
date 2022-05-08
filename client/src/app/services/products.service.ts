@@ -18,7 +18,10 @@ export class ProductsService {
     return this.http.get<ProductModel[]>('http://localhost:3001/api/products');
   }
 
-  
+  public getOneProduct(id:string) {
+    return this.http.get<ProductModel>('http://localhost:3001/api/products/'+ id).toPromise();
+  }
+
   public getProductsByCategory(productsCategory?: number): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>('http://localhost:3001/api/categories/' + productsCategory);
   }

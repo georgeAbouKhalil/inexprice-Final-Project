@@ -133,113 +133,115 @@
 						
 						<h1 style="text-align: center;">Create Credit Card</h1>
 
-						<div class="wrapper" id="app">
-							<div class="card-form">
-							  <div class="card-list">
-								<div class="card-item">
-								  <div class="card-item__side -front">
-									<div class="card-item__focus" ></div>
-									<div class="card-item__cover">
-									  <img
-									  src="/assets/17.jpeg" class="card-item__bg">
-									</div>
-									
-									<div class="card-item__wrapper">
-									  <div class="card-item__top">
-										<img src="/assets/chip.png" class="card-item__chip">
-										<div class="card-item__type">
-										  <div name="slide-fade-up">
-											<img src="/assets/visa.png" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
-										  </div>
-										</div>
-									  </div>
-									  <!-- card Number -->
-									  <div class="card-item__content">
-										<p class="cardNumber"> {{cardNumber}} </p>
-										
-										<!-- card Holder -->
-										<div class="card-item__holder">
-											<p class=""> {{cardHolder}} </p>
-										</div>
-
-										<!-- card data -->
-										<div class="card-item__date" ref="cardDate">
-											<p class="card">23/42</p>
-										</div>
-
-										
-									  </div>
-									</div>
-								  </div>
-								  <div class="card-item__side -back">
-									<div class="card-item__cover">
-									  <img
-									  src="/assets/17.jpeg" class="card-item__bg">
-									</div>
-									<div class="card-item__band"></div>
-									<div class="card-item__cvv">
-										<div class="card-item__cvvTitle">CVV</div>
-										<div class="card-item__cvvBand">
-						
-									  </div>
-										
-									</div>
-								  </div>
-								</div>
-							  </div>
-							  <!-- start form -->
-							  <form [formGroup]="credit_card">
-							  <div class="card-form__inner">
-								<div class="card-input">
-									<!-- start card number -->
-								  <label for="cardNumber" class="card-input__label">Card Number</label>
-								  <input type="text" id="cardNumber" class="card-input__input" [ngModel]="cardNumber" (ngModelChange)="changeCardNumber($event)" formControlName="cardNumberValid">
-								  <div *ngIf="!credit_card.controls.cardNumberValid!.valid && (credit_card.controls.cardNumberValid!.dirty || credit_card.controls.cardNumberValid?.touched)" 
-										style="color: red"> Card number contains only numbers ( max length is 16 numbers)
-									</div>
-								</div>
-								<!-- end cardnumber -->
-								<div class="card-input">
-								  <label for="cardName" class="card-input__label">Card Holders</label>
-								  <input type="text" id="cardName" class="card-input__input" [ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)" formControlName="cardHolderValid">
-								  <div *ngIf="!credit_card.controls.cardHolderValid!.valid && (credit_card.controls.cardHolderValid!.dirty || credit_card.controls.cardHolderValid?.touched)" 
-										style="color: red"> Card Holder contains only alphabet ( the min and max length is 4 to 25 letters)
-									</div>
-								</div>
-								<div class="card-form__row">
-								  <div class="card-form__col">
-									<div class="card-form__group">
-									  <label for="cardMonth" class="card-input__label">Expiration Date</label>
-									  <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-										<option value="" disabled selected>Month</option>
-										<option >
-											
-										</option>
-									  </select>
-									  <select class="card-input__input -select" id="cardYear" v-model="cardYear" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
-										<option value="" disabled selected>Year</option>
-										<option >
-											
-										</option>
-									  </select>
-									</div>
-								  </div>
-								  <div class="card-form__col -cvv">
-									<div class="card-input">
-									  <label for="cardCvv" class="card-input__label">CVV</label>
-									  <input type="text" class="card-input__input" id="cardCvv" v-mask="'####'" maxlength="4" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
-									</div>
-								  </div>
-								</div>
-						
-								<button class="card-form__button">
-								  Submit
-								</button>
-							  </div>
-							  </form>
-							  	<!-- end form -->
+		<div class="wrapper" id="app" style=" margin-top: 15%">
+			<div class="card-form">
+				<div class="card-list">
+				<div class="card-item thecard">
+					<div class="card-item__side thefront">
+					<div class="card-item__focus" ></div>
+					<div class="card-item__cover">
+						<img
+						src="/assets/17.jpeg" class="card-item__bg">
+					</div>
+					
+					<div class="card-item__wrapper">
+						<div class="card-item__top">
+						<img src="/assets/chip.png" class="card-item__chip">
+						<div class="card-item__type">
+							<div name="slide-fade-up">
+							<img src="/assets/visa.png" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
 							</div>
-						  </div>
+						</div>
+						</div>
+						<!-- card Number -->
+						<div class="card-item__content">
+						<p class="cardNumber"> {{cardNumber}} </p>
+						
+						<!-- card Holder -->
+						<div class="card-item__holder">
+							<p class=""> {{cardHolder}} </p>
+						</div>
+
+						<!-- card data -->
+						<div class="card-item__date" ref="cardDate">
+							<p class="card"> {{cardDateMM}} / {{cardDateYYYY}}</p>
+						</div>
+						<!--back side flip -->
+						<div class="card-item__side theback">
+						<div class="card-item__cover">
+						</div>
+					</div>
+						</div>
+					</div>
+					</div>
+					<div class="card-item__side -back">
+					<div class="card-item__cover">
+						<img
+						src="/assets/17.jpeg" class="card-item__bg">
+					</div>
+					<div class="card-item__band"></div>
+					<div class="card-item__cvv">
+						<div class="card-item__cvvTitle">CVV</div>
+						<div class="card-item__cvvBand">
+							<P> {{cardCVV}} </P>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>
+				<!-- start form -->
+				<form [formGroup]="credit_card">
+				<div class="card-form__inner">
+				<div class="card-input">
+					<!-- start card number -->
+					<label for="cardNumber" class="card-input__label">Card Number</label>
+					<input type="text" id="cardNumber" class="card-input__input" [ngModel]="cardNumber" maxlength="19" (ngModelChange)="changeCardNumber($event)" formControlName="cardNumberValid">
+					<div *ngIf="!credit_card.controls.cardNumberValid!.valid && (credit_card.controls.cardNumberValid!.dirty || credit_card.controls.cardNumberValid?.touched)" 
+						style="color: red"> Card number contains only numbers ( max length is 16 numbers)
+					</div>
+				</div>
+				<!-- end card number -->
+				<!-- start card holder -->
+				<div class="card-input">
+					<label for="cardName" class="card-input__label">Card Holders</label>
+					<input type="text" id="cardName" class="card-input__input" maxlength="25" [ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)" formControlName="cardHolderValid">
+					<div *ngIf="!credit_card.controls.cardHolderValid!.valid && (credit_card.controls.cardHolderValid!.dirty || credit_card.controls.cardHolderValid?.touched)" 
+						style="color: red"> Card Holder contains only alphabet ( the min and max length is 4 to 25 letters)
+					</div>
+				</div>
+				<!-- end card holder -->
+				<!-- start card date MM -->
+				<div class="card-form__row">
+					<div class="card-form__col">
+					<div class="card-form__group">
+						<label for="cardMonth" class="card-input__label">Expiration Date</label>
+						<input class="card-input__input" id="cardMonth" maxlength="2" [ngModel]="cardDateMM" (ngModelChange)="changeCardDateMM($event)" formControlName="cardDateMM">
+						<div *ngIf="!credit_card.controls.cardDateMM!.valid && (credit_card.controls.cardDateMM!.dirty || credit_card.controls.cardDateMM?.touched)" 
+						style="color: red"> Card Date MM required
+					</div>
+					
+						<!-- start card date YYYY -->
+						<input class="card-input__input" maxlength="2" id="cardYear" [ngModel]="cardDateYYYY" (ngModelChange)="changeCardDateYYYY($event)" formControlName="cardDateYYYY">
+						
+					</div>
+					</div>
+					<div class="card-form__col -cvv">
+					<div class="card-input">
+						<label for="cardCvv" class="card-input__label">CVV</label>
+						<input type="text" class="card-input__input" id="cardCvv" maxlength="3" [ngModel]="cardCVV" (ngModelChange)="changeCardCvv($event)" formControlName="cardCVVValid">
+						<div *ngIf="!credit_card.controls.cardCVVValid!.valid && (credit_card.controls.cardCVVValid!.dirty || credit_card.controls.cardCVVValid?.touched)" 
+						style="color: red;"> There must be 3 numbers
+					</div>
+					</div>
+					</div>
+				</div>
+		
+				<button class="card-form__button"> Submit </button>
+				</div>
+				</form>
+				<!-- end form -->
+			</div>
+			</div>
 
 
 

@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+public user;
+  constructor(public authservice: AuthService) { }
 
   ngOnInit(): void {
+    this.user = this.authservice.getUser();
+  }
+
+  logout() {
+    this.authservice.logout();
+    window.location.href = "home"
   }
 
 }

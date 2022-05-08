@@ -9,6 +9,8 @@ export const environment = {
   loginUrl: "http://localhost:3001/api/auth/login",
   categories: 'http://localhost:3001/api/categories/',
   prodByCat : 'http://localhost:3001/api/products/by-types/',
+  cartUrl : 'http://localhost:3001/api/carts/',
+  cartItemUrl : 'http://localhost:3001/api/cartItem/',
 
 };
 

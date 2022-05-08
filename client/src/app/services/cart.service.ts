@@ -64,7 +64,12 @@ export class CartsService {
     );
   }
 
-  public updateOnCart(productToUpdate: ProductModel): Observable<ProductModel> {
+
+
+
+
+  public updateOnCart(productToUpdate: ProductModel): Observable<ProductModel> { 
+    
     return this.http.put<ProductModel>(
       environment.cartItemUrl,
       // 'http://localhost:3001/api/carts/items',

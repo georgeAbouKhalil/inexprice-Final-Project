@@ -7,6 +7,7 @@ import { CartsService } from '../services/cart.service';
 import { CategoriesService } from '../services/categories.service';
 import { NotifyService } from '../services/notify.service';
 import { ProductsService } from '../services/products.service';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-category',
@@ -63,24 +64,37 @@ export class CategoryComponent implements OnInit {
     let ifInCart = false;
         // Get PRODUCTS FROM CART
         this.cartsService.getCartItemsByCartId(this.cart.id).subscribe(res => {
-          this.cartsService.cartItems = res; });
+          // console.log({res});
+          
+          this.cartsService.cartItems = res;
 
           
+          // console.log('1   ',this.cartsService.cartItems);
+          console.log(      this.cartsService.cartItems.some((item) => { item.product_id.toString() === product._id.toString()}));
+          
     if (
-      this.cartsService.cartItems.some((item) => {console.log({item});item._id === product.product_id})
+      
+      // this.cartsService.cartItems.some((item) => {console.log({item});item._id === product.product_id})
+      // this.cartsService.cartItems.some((item) => {item.product_id.toString() === product._id.toString()})
+      // this.cartsService.cartItems.includes(product._id)
+
+      this.cartsService.cartItems.some((item) =>      item.product_id.toString().valueOf() === product._id.toString().valueOf()  )
     ) {
       ifInCart = true;
-      let oldProduct = this.cartsService.cartItems.find(
-        (product) => product._id === this.product._id
-      );
+//       let oldProduct = this.cartsService.cartItems.find(
+//         (item) => {console.log(item); console.log({product});
+//            ;item.product_id === product._id}
+//       );
+// console.log({oldProduct});
 
-      this.cartsService.total -= oldProduct.totalPrice;
+      // this.cartsService.total -= oldProduct.totalPrice;
+      // this.cartsService.total -= oldProduct.totalPrice;
     }
 
     if (!ifInCart) {
       let productToAdd = {
         quantity: this.amount,
-        total_price: this.amount * product.price,
+        totalPrice: this.amount * product.price,
         product_id: product._id,
         cart_id: this.cart._id,
 
@@ -107,18 +121,29 @@ export class CategoryComponent implements OnInit {
         }
       );
     } else if (ifInCart) {
-      let productToAdd = {
+              //search the product in the cart
+              let oldProduct = this.cartsService.cartItems.find(
+                (productCart) =>
+                  productCart.product_id === product._id
+              );
+
+      let productToUpdate = {
+        _id: oldProduct._id,
         quantity: this.amount,
-        total_price: this.amount * product.price,
+        totalPrice: this.amount * product.price,
         product_id: product._id,
         cart_id: this.cart._id,
 
         img: product.img,
         name: product.name,
       };
-console.log({productToAdd});
+console.log({productToUpdate});
 
-      this.cartsService.updateOnCart(productToAdd).subscribe(
+
+
+        if (productToUpdate.quantity != oldProduct.amount) {       
+          productToUpdate._id = oldProduct._id;
+      this.cartsService.updateOnCart(productToUpdate).subscribe(
         (newProductInCart) => {
           this.notify.success("This product has been updated in your shopping cart");
 
@@ -139,7 +164,33 @@ console.log({productToAdd});
       );
     }
   }
+  });
+  }
 
 
+  // public async addToCart(product) {
+  //   try{
+  //     let productToAdd = {
+  //       quantity: this.amount,
+  //       totalPrice: this.amount * product.price,
+  //       product_id: product._id,
+  //       cart_id: this.cart._id,
+
+  //       img: product.img,
+  //       name: product.name,
+  //     };
+
+  //     console.log({});
+      
+  //     await this.cartsService.addToCart(productToAdd);
+  //     this.notify.success("This product ha been added to your shopping cart");
+
+  //   }
+
+
+  //   catch(err: any) {
+  //     this.notify.error(err);
+  //   }
+  // }
 
 }

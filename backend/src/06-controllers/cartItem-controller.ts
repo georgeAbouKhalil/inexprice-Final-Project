@@ -36,12 +36,19 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
     }
 });
 
-router.put("/:_id", async (request: Request, response: Response, next: NextFunction) => {
+router.put("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const _id = request.params._id;
-        request.body._id = _id;
-        const cartItem = new CartItemModel(request.body);
-        const updatedCartItem = await logic.updateCartItem(cartItem);
+        // const _id = request.params._id;
+        // console.log('*******  ' ,_id);
+        // request.body._id = _id;
+        // console.log('*******  ' ,request.body);
+        // request.body._id = request.params._id;
+        // const productId = request.params.id;
+        // const cartItem = new CartItemModel(request.body);
+        let product = request.body;
+                console.log({product});
+        
+        const updatedCartItem = await logic.updateCartItem(product);
         response.json(updatedCartItem);
     }
     catch(err: any) {

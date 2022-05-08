@@ -97,9 +97,9 @@ export class AccountSettingComponent implements OnInit {
     this.credit_card = this.cr.group({
       cardNumberValid: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'),Validators.maxLength(19),Validators.minLength(19)]],
       cardHolderValid: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'),Validators.maxLength(25),Validators.minLength(4)]],
-      cardDateMM: ['',[Validators.required,Validators.pattern('^[0-9| ]+$'),Validators.minLength(2),Validators.maxLength(2)]],
-      cardDateYYYY: ['',[Validators.required]],
-      cardCVVValid: ['',[Validators.required,Validators.pattern('^[0-9|]+$'),Validators.minLength(3),Validators.maxLength(3)]],
+      cardDateMM: ['',[Validators.required,Validators.pattern('^(0[1-9]|1[0-2])$'),Validators.minLength(2),Validators.maxLength(2)]],
+      cardDateYYYY: ['',[Validators.required,Validators.pattern('^(2[2-9])$'),Validators.minLength(2),Validators.maxLength(2)]],
+      cardCVVValid: ['',[Validators.required,Validators.pattern('^[0-9]+$'),Validators.minLength(3),Validators.maxLength(3)]],
     });
   }
   

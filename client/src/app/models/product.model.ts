@@ -15,4 +15,6 @@ export class ProductModel {
     category?: CategoryModel;
     amount?: number;
     totalPrice?:number;
+    product_id?: string;
+
 }

@@ -6,10 +6,10 @@ import { IProductModel, ProductModel } from "../03-models/product-model";
 async function getAllProduct(): Promise<IProductModel[]> {
 
     // Get all products without virtual fields:
-    return ProductModel.find().exec();
+    // return ProductModel.find().exec();
 
     // Get all product with specific virtual fields:
-    // return ProductModel.find().populate("category").exec();
+    return ProductModel.find().populate("category").exec();
 }
 
 // Get one:
@@ -17,7 +17,7 @@ async function getOneProduct(_id: string): Promise<IProductModel> {
 
     if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`); // להיות יותר צדיק מאפיפיור...
 
-    const product = await ProductModel.findById(_id).exec();
+    const product = await ProductModel.findById(_id).populate("category").exec();
     if (!product) throw new ClientError(404, `_id ${_id} not found`);
 
     return product;

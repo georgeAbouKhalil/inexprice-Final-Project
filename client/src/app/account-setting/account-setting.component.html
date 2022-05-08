@@ -222,7 +222,9 @@
 					
 						<!-- start card date YYYY -->
 						<input class="card-input__input" maxlength="2" id="cardYear" [ngModel]="cardDateYYYY" (ngModelChange)="changeCardDateYYYY($event)" formControlName="cardDateYYYY">
-						
+						<div *ngIf="!credit_card.controls.cardDateYYYY!.valid && (credit_card.controls.cardDateYYYY!.dirty || credit_card.controls.cardDateYYYY?.touched)" 
+						style="color: red;"> Card Date YYYY required
+					</div>
 					</div>
 					</div>
 					<div class="card-form__col -cvv">

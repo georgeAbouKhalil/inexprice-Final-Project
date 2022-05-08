@@ -15,7 +15,7 @@ async function getAllCartItem(): Promise<ICartItemModel[]> {
 // Get one:
 async function getOneCartItem(_id: string): Promise<ICartItemModel> {
 
-    if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`); // להיות יותר צדיק מאפיפיור...
+    if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`);
 
     const product = await CartItemModel.findById(_id).exec();
     if (!product) throw new ClientError(404, `_id ${_id} not found`);
@@ -37,11 +37,12 @@ async function addCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 // Update:
 async function updateCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 
-    if (!mongoose.Types.ObjectId.isValid(product._id)) throw new ClientError(404, `_id ${product._id} not valid`);
+    // if (!mongoose.Types.ObjectId.isValid(product._id)) throw new ClientError(404, `_id ${product._id} not valid`);
+console.log('product ', product);
 
     // Validation:
-    const errors = product.validateSync();
-    if (errors) throw new ClientError(400, errors.message);
+    // const errors = product.validateSync();
+    // if (errors) throw new ClientError(400, errors.message);
 
     // Update:
     const updatedProduct = await CartItemModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();

@@ -7,9 +7,14 @@ import { ProductModel } from "./product-model";
 export interface ICartItemModel extends Document {
     // we don't define the _id because it exists by default.
     quantity: number;
-    total_price: number;
+    totalPrice: number;
     cart_id: Schema.Types.ObjectId;
     product_id: Schema.Types.ObjectId;
+
+    name: string;
+    img: string;
+    itemPrice: number
+
 }
 
 // Define model schema:
@@ -20,7 +25,7 @@ const CartItemSchema = new Schema<ICartItemModel>({
         min: [0, "Price can't be negative"],
         max: [1000, "Price can't exceed 1000"]
     },
-    total_price: {
+    totalPrice: {
         type: Number,
         required: [true, "Missing price"],
         min: [0, "Price can't be negative"]    

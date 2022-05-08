@@ -3,7 +3,7 @@ import { CartModel } from './cart.model';
 export class CartItemModel {
     _id?: string;
     quantity: number;
-    total_price: number;
+    totalPrice: number;
     cart_id: CartModel;
     product_id: ProductModel;
 

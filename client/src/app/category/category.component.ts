@@ -70,13 +70,8 @@ export class CategoryComponent implements OnInit {
 
           
           // console.log('1   ',this.cartsService.cartItems);
-          console.log(      this.cartsService.cartItems.some((item) => { item.product_id.toString() === product._id.toString()}));
           
     if (
-      
-      // this.cartsService.cartItems.some((item) => {console.log({item});item._id === product.product_id})
-      // this.cartsService.cartItems.some((item) => {item.product_id.toString() === product._id.toString()})
-      // this.cartsService.cartItems.includes(product._id)
 
       this.cartsService.cartItems.some((item) =>      item.product_id.toString().valueOf() === product._id.toString().valueOf()  )
     ) {

@@ -25,15 +25,20 @@ export class CartsService {
   }
 
   // CART
-  public getCart(): Observable<CartModel> {
-    return this.http.get<CartModel>(environment.cartUrl);
+  // public async getCart(userId: string){
+  //   return await this.http.get<CartModel>(environment.cartUrl+ 'by-user/' + userId).toPromise();
+  // }
+  public getCart(userId: string): Observable<CartModel> {
+    return this.http.get<CartModel>(environment.cartUrl+ 'by-user/' + userId);
   }
 
 
-  public createCart(cart: CartModel): Observable<CartModel> {
-    return this.http.post<CartModel>( environment.cartUrl, cart );
+  // public async createCart(cart: CartModel) {  
+  //   return await this.http.post<CartModel>(environment.cartUrl, cart).toPromise();
+  // }
+  public createCart(cart: CartModel): Observable<CartModel> {  
+    return this.http.post<CartModel>(environment.cartUrl, cart);
   }
-
 
 
     // GET SUM

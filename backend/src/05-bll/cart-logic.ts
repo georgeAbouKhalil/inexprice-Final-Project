@@ -7,6 +7,7 @@ async function getAllCarts(): Promise<ICartModel[]> {
 
     // Get all products without virtual fields:
     return CartModel.find().exec();
+    // return CartModel.find().populate("user");
 
     // Get all product with specific virtual fields:
     // return CartModel.find().populate("category").exec();
@@ -17,45 +18,58 @@ async function getOneCart(_id: string): Promise<ICartModel> {
 
     if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`); // להיות יותר צדיק מאפיפיור...
 
-    const product = await CartModel.findById(_id).exec();
-    if (!product) throw new ClientError(404, `_id ${_id} not found`);
+    // const cart = await CartModel.findById(_id).populate("user").exec();
+    const cart = await CartModel.findById(_id).exec();
+    if (!cart) throw new ClientError(404, `_id ${_id} not found`);
 
-    return product;
+    return cart;
+}
+
+async function getOneCartByUserId(user_id: string): Promise<ICartModel | any> {
+    // Validate _id:
+    if (!mongoose.isValidObjectId(user_id)) throw new ClientError(404, `user_id ${user_id} is invalid`);
+
+    const cart = await CartModel.findOne({"user_id": user_id, "status": "open"}).exec();
+    // const cart = await CartModel.findOne({"user_id": user_id}).populate("user").exec();
+
+    // // Validate cart existence:
+    // if(cart.length === 0) throw new ClientError(404, "Current user has no cart");
+    return cart;
 }
 
 // Insert:
-async function addCart(product: ICartModel): Promise<ICartModel> {
+async function addCart(cart: ICartModel): Promise<ICartModel> {
 
     // Validation:
-    const errors = product.validateSync();
+    const errors = cart.validateSync();
     if (errors) throw new ClientError(400, errors.message);
 
     // Add:
-    return product.save();
+    return cart.save();
 }
 
 // Update:
-async function updateCart(product: ICartModel): Promise<ICartModel> {
+async function updateCart(cart: ICartModel): Promise<ICartModel> {
 
-    if (!mongoose.Types.ObjectId.isValid(product._id)) throw new ClientError(404, `_id ${product._id} not valid`);
+    if (!mongoose.Types.ObjectId.isValid(cart._id)) throw new ClientError(404, `_id ${cart._id} not valid`);
 
     // Validation:
-    const errors = product.validateSync();
+    const errors = cart.validateSync();
     if (errors) throw new ClientError(400, errors.message);
 
     // Update:
-    const updatedProduct = await CartModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
-    if (!updatedProduct) throw new ClientError(404, `_id ${product._id} not found`);
+    const updatedCart = await CartModel.findByIdAndUpdate(cart._id, cart, { returnOriginal: false }).exec();
+    if (!updatedCart) throw new ClientError(404, `_id ${cart._id} not found`);
 
-    // Return updated product:
-    return updatedProduct;
+    // Return updated cart:
+    return updatedCart;
 }
 
 // Delete:
 async function deleteCart(_id: string): Promise<void> {
     if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`);
-    const deletedProduct = await CartModel.findByIdAndDelete(_id).exec();
-    if (!deletedProduct) throw new ClientError(404, `_id ${_id} not found`);
+    const deletedCart = await CartModel.findByIdAndDelete(_id).exec();
+    if (!deletedCart) throw new ClientError(404, `_id ${_id} not found`);
 }
 
 // ------------------------------------------------------------------------------
@@ -129,5 +143,6 @@ export default {
     getPartialProducts,
     getSomeProducts,
     getPagedProducts,
-    getProductsUsingRegex
+    getProductsUsingRegex,
+    getOneCartByUserId
 };

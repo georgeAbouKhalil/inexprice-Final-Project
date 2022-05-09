@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // productsUrl: "http://localhost:3001/api/products/",
-  registerUrl: "http://localhost:3001/api/auth/register",
+  registerUrl: "http://localhost:3001/api/auth/register/",
   loginUrl: "http://localhost:3001/api/auth/login",
   categories: 'http://localhost:3001/api/categories/',
   prodByCat : 'http://localhost:3001/api/products/by-types/',

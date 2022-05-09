@@ -25,9 +25,23 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
     }
 });
 
+// Route for getting one by userId :
+router.get("/by-user/:userId",async (request: Request, response: Response, next: NextFunction) => {
+    try{
+        const userId = request.params.userId;
+        const cart = await logic.getOneCartByUserId(userId);
+        response.json(cart);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        
         request.body.status = "open"; 
+        console.log(request.body);
         const cart = new CartModel(request.body);
         const addedCart= await logic.addCart(cart);
         response.status(201).json(addedCart);

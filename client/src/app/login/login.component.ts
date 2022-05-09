@@ -16,12 +16,12 @@ export class LoginComponent implements OnInit {
   public credentials = new CredentialsModel();
   public error: string = '';
   public cart: any;
+  public user: any;
 
   constructor(public myAuthService: AuthService,private myRouter: Router,public cartsService: CartsService,private notify: NotifyService,) { }
 
   ngOnInit(): void {
-    this.cart = JSON.parse(localStorage.getItem("cart"));
-
+    // this.cart = JSON.parse(localStorage.getItem("cart"));
   }
 
   public async login() {
@@ -29,47 +29,25 @@ export class LoginComponent implements OnInit {
       await this.myAuthService.login(this.credentials);
       this.notify.success("You are logged-in ");
       // this.myRouter.navigateByUrl("/home");
-      
-      this.myAuthService.isLoggedIn = true;
-      this.getCart();
-      this.getCartItems();
-      window.location.href = "home";
 
+      
+      // if (this.cartsService.cart?.status == 'open') {
+      //   this.getCartItems();
+  
+      // } 
+      // else {
+        //   this.createNewCart();
+      // }
+      
+      window.location.href = "home";
+      this.myAuthService.isLoggedIn = true;
+      
     }
     catch (err) {
       this.notify.error("wrong username or password");
     }
   }
 
-  private getCart(): void {
-    this.cartsService.getCart().subscribe(
-      (cart) => {
-        cart
-          ? (this.cartsService.cart = cart)
-          : (this.cartsService.cart = new CartModel());
 
-          localStorage.setItem("cart", JSON.stringify(this.cartsService.cart[0]));
-      },
-      (serverErrorResponse) => {
-        this.error = serverErrorResponse.error.error;
-      }
-    );
-  }
-
-
-  public getCartItems(): void {
-    this.cartsService.getCartItems().subscribe(
-      (cartItems) => {       
-        this.cartsService.total = 0;
-        this.cartsService.cartItems = cartItems;
-        cartItems.map(
-          (product) => (this.cartsService.total += product.totalPrice)
-        );
-      },
-      (serverErrorResponse) => {
-        this.error = serverErrorResponse.error.error;
-      }
-    );
-  }
 
 }

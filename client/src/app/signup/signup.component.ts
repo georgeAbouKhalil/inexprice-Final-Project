@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { CartsService } from '../services/cart.service';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +29,7 @@ export class SignupComponent implements OnInit {
   fourFormGroup: FormGroup;
 
   completed = false;
-  constructor(private _formBuilder: FormBuilder, private myAuthService: AuthService,private myRouter: Router,) { }
+  constructor( private cartsService: CartsService , private _formBuilder: FormBuilder, private myAuthService: AuthService,private myRouter: Router,) { }
 
   ngOnInit(): void {
     this.createLoginForm();
@@ -65,7 +66,8 @@ export class SignupComponent implements OnInit {
         console.log(this.fourFormGroup.value);
 
         await this.myAuthService.register({ ...this.firstFormGroup.value, ...this.secondFormGroup.value , ...this.thirdFormGroup.value, ...this.fourFormGroup.value  });
-        // this.myRouter.navigate(['/home']);
+        this.myRouter.navigate(['/login']);
+        this.cartsService.cartItems = [];
       }
 
     } catch (err) {

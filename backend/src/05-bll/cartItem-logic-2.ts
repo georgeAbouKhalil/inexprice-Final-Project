@@ -9,7 +9,6 @@ async function getAllCartProducts(cartId: string): Promise<ICartItemModel[]> {
 }
 
 async function addCartProduct(cartProduct: ICartItemModel): Promise<ICartItemModel> {
-    console.log({cartProduct});
     
     // Getting the price of the prod:
     const productPrice = (await productLogic.getOneProduct(cartProduct.product_id.toString())).price;
@@ -29,7 +28,7 @@ async function addCartProduct(cartProduct: ICartItemModel): Promise<ICartItemMod
         logicHelpers.increaseCartProductQuantity(existingProduct, cartProduct);
         // update Cart Product:
         const updatedProduct = await updateCartProduct(existingProduct);
-        console.log({updatedProduct});
+        // console.log({updatedProduct});
         
         return updatedProduct
     }

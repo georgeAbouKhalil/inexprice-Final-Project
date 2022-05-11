@@ -1,3 +1,4 @@
+import { CartItemModel } from './../models/cartItem.model';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -53,21 +54,49 @@ export class CartsService {
 
 
   // CART ITEMS
-  public getCartItems(): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(
-      environment.cartItemUrl
+  public async getCartItems(cartId: string) {
+    return await this.http.get<CartItemModel[]>(
+      environment.cartItemUrl + '/by-cart/' +cartId
       // 'http://localhost:3001/api/carts/items'
-    );
-  }
-
-  public addToCart(purchasedProduct: ProductModel): Observable<ProductModel> {
+    ).toPromise();
    
-    return this.http.post<ProductModel>(
+  }
+  // // CART ITEMS
+  // public async getCartItems(cartId) {
+  //   const abc = await this.http.get<ProductModel[]>(
+  //     environment.cartItemUrl + '/by-cart/' +cartId
+  //     // 'http://localhost:3001/api/carts/items'
+  //   ).toPromise();
+  //   console.log({abc});
+  //   return abc
+    
+  // }
+  // public getCartItems(): Observable<ProductModel[]> {
+  //   return this.http.get<ProductModel[]>(
+  //     environment.cartItemUrl
+  //     // 'http://localhost:3001/api/carts/items'
+  //   );
+  // }
+
+  public async addToCart(purchasedProduct: ProductModel) {
+   console.log({purchasedProduct});
+   
+    return await this.http.post<ProductModel>(
       // 'http://localhost:3001/api/carts/items',
       environment.cartItemUrl,
       purchasedProduct
-    );
+    ).toPromise();
   }
+
+  // public addToCart(purchasedProduct: ProductModel): Observable<ProductModel> {
+  //  console.log({purchasedProduct});
+   
+  //   return this.http.post<ProductModel>(
+  //     // 'http://localhost:3001/api/carts/items',
+  //     environment.cartItemUrl,
+  //     purchasedProduct
+  //   );
+  // }
 
 
 
@@ -82,12 +111,17 @@ export class CartsService {
     );
   }
 
-  public removeFromCart(product: ProductModel): Observable<void> {
-    return this.http.delete<void>(
-      // 'http://localhost:3001/api/carts/items/' + product._id
-      environment.cartItemUrl + product._id
-    );
+  public async removeFromCart(productId: string) {
+   
+    return await this.http.delete<void>( environment.cartItemUrl + productId).toPromise();
   }
+  // public removeFromCart(productId: string): Observable<void> {
+   
+  //   return this.http.delete<void>(
+  //     // 'http://localhost:3001/api/carts/items/' + product._id
+  //     environment.cartItemUrl + productId
+  //   );
+  // }
 
   public emptyCart(): Observable<void> {
     return this.http.delete<void>(
@@ -102,8 +136,9 @@ export class CartsService {
   }
 
 
-  getCartItemsByCartId(_id): Observable<any> {
-    return this.http.get(environment.cartItemUrl + '?cart_id=' + _id);
+  getCartItemsByCartId(_id: string): Observable<any> {
+    // return this.http.get(environment.cartItemUrl + '?cart_id=' + _id);
+    return this.http.get(environment.cartItemUrl  + _id);
   }
 
 }

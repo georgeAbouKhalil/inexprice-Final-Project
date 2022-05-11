@@ -7,7 +7,7 @@ const router = express.Router();
 // Route for getting all :
 router.get("/by-cart/:cartId",async (request: Request, response: Response, next: NextFunction) => {
     try{
-        const cartId = request.params.cartId;
+        const cartId = request.params.cartId;      
         const cartProd = await logic.getAllCartProducts(cartId);
         response.json(cartProd);
     }

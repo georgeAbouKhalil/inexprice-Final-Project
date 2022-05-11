@@ -56,7 +56,7 @@ private allocateTimeUnits (timeDifference) {
 
 if (this.user){
         this.getCart();
-        this.getCartItems();
+        // this.getCartItems();
 }
 }
 
@@ -85,20 +85,20 @@ private getCart() {
 
 
 
-public getCartItems(): void {
-  this.cartsService.getCartItems().subscribe(
-    (cartItems) => {       
-      this.cartsService.total = 0;
-      this.cartsService.cartItems = cartItems;
-      cartItems.map(
-        (product) => (this.cartsService.total += product.totalPrice)
-      );
-    },
-    (serverErrorResponse) => {
-      this.error = serverErrorResponse.error.error;
-    }
-  );
-}
+// public getCartItems(): void {
+//   this.cartsService.getCartItems().subscribe(
+//     (cartItems) => {       
+//       this.cartsService.total = 0;
+//       this.cartsService.cartItems = cartItems;
+//       cartItems.map(
+//         (product) => (this.cartsService.total += product.totalPrice)
+//       );
+//     },
+//     (serverErrorResponse) => {
+//       this.error = serverErrorResponse.error.error;
+//     }
+//   );
+// }
 
 
 public createNewCart(userCart): void {

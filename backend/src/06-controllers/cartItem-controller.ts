@@ -4,9 +4,14 @@ import logic from "../05-bll/cartItem-logic";
 
 const router = express.Router();
 
-router.get("/", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/by-cart/:cartId", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const cartItem = await logic.getAllCartItem();
+       
+        const cartId = request.params.cartId;
+        console.log('1 ', cartId);
+        const cartItem = await logic.getAllCartItem(cartId);
+        console.log({cartItem});
+        
         response.json(cartItem);
     }
     catch(err: any) {
@@ -28,6 +33,8 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const cartItem = new CartItemModel(request.body);
+        console.log({cartItem});
+        
         const addedCartItem= await logic.addCartItem(cartItem);
         response.status(201).json(addedCartItem);
     }

@@ -2,11 +2,14 @@ import mongoose from "mongoose";
 import ClientError from "../03-Models/client-error";
 import { ICartItemModel, CartItemModel } from "../03-models/cartItem-model";
 
-// Get all:
-async function getAllCartItem(): Promise<ICartItemModel[]> {
+// Get all:s
+async function getAllCartItem(cart_id: string): Promise<ICartItemModel[]> {
 
     // Get all products without virtual fields:
-    return CartItemModel.find().exec();
+    // return await CartItemModel.find({ cart_id: cart_id }).exec();
+    return await CartItemModel.find({"cart_id": cart_id}).populate("product").populate("cart").exec();
+    // return await CartItemModel.find({cart_id: cart_id}).populate("product").populate("cart").exec();
+    // const carto = CartItemModel.find({"cart_id": cartId}).exec();
 
     // Get all product with specific virtual fields:
     // return CartItemModel.find().populate("category").exec();
@@ -25,9 +28,11 @@ async function getOneCartItem(_id: string): Promise<ICartItemModel> {
 
 // Insert:
 async function addCartItem(product: ICartItemModel): Promise<ICartItemModel> {
+console.log({product});
 
     // Validation:
-    const errors = product.validateSync();
+    const errors = product.validateSync(); console.log('5555555555555555555555555555555555555555555');
+    
     if (errors) throw new ClientError(400, errors.message);
 
     // Add:
@@ -53,7 +58,7 @@ console.log('product ', product);
 }
 
 // Delete:
-async function deleteCartItem(_id: string): Promise<void> {
+async function deleteCartItem(_id: string): Promise<void> {   
     if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`);
     const deletedProduct = await CartItemModel.findByIdAndDelete(_id).exec();
     if (!deletedProduct) throw new ClientError(404, `_id ${_id} not found`);

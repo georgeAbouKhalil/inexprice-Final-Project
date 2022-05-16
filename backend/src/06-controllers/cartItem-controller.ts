@@ -33,7 +33,14 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const cartItem = new CartItemModel(request.body);
-        console.log({cartItem});
+        // const checkProduct = await logic.checkIfProductExistInCart(cartItem);
+        // if (checkProduct) {console.log({checkProduct});
+        // console.log('************* ' ,cartItem);
+        
+        //     const updatedCartItem = await logic.updateCartItem(cartItem);
+        //     response.json(updatedCartItem);
+       
+        // }else {
         
         const addedCartItem= await logic.addCartItem(cartItem);
         response.status(201).json(addedCartItem);
@@ -73,6 +80,19 @@ router.delete("/:_id", async (request: Request, response: Response, next: NextFu
         next(err);
     }
 }); 
+
+router.delete("/by-cart/:cartId", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const cartId = request.params.cartId;
+        console.log({cartId});
+        
+        await logic.emptyCart(cartId);
+        response.json();
+    }
+    catch (err) {
+        next(err);
+    }
+});
 
 router.get("/test", async (request: Request, response: Response, next: NextFunction) => {
     try {

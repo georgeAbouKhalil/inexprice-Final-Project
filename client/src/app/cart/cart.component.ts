@@ -15,20 +15,21 @@ export class CartComponent implements OnInit {
   @Input() product: ProductModel = new ProductModel();
   public error: string = '';
   cart: any;
-  cartItems: any;
-  total:any;
+  cartItems: any[] = [];
+  total: any;
 
-  constructor(private notify: NotifyService, private cartsService: CartsService, public usersService: AuthService, public productsService: ProductsService, ) { }
+  constructor(private notify: NotifyService, private cartsService: CartsService, public usersService: AuthService, public productsService: ProductsService,) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
 
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
 
-   
-if (this.cartItems.length > 0){
-    this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b);
-}
+
+    // if (this.cartItems.length > 0){
+    this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
+    // this.total = this.cartsService.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b);
+    // }
   }
 
   // public getCartItems(): void {
@@ -55,30 +56,34 @@ if (this.cartItems.length > 0){
   // }
 
   public async deleteProductFromCart(cartProductId: string) {
-    try{ 
-    
-     await this.cartsService.removeFromCart(cartProductId);
-    const indexToDelete = this.cartItems.findIndex(t => t._id === cartProductId);
-    this.cartsService.cartItems = this.cartItems.splice(indexToDelete, 1);
-    
+    try {
+
+      await this.cartsService.removeFromCart(cartProductId);
+      const indexToDelete = this.cartItems.findIndex(t => t._id === cartProductId);
+      this.cartsService.cartItems = this.cartItems.splice(indexToDelete, 1);
+      this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
     }
-    catch(err: any) {
+    catch (err: any) {
       this.notify.error(err);
     }
   }
 
-
-  // public removeFromCart(product: ProductModel) {
-  //   this.cartsService.removeFromCart(product).subscribe(
-  //     () => {
-  //           this.cartItem = this.cartsService.getCartItems(this.cart._id);
-
-  //         (serverErrorResponse) => { this.error = serverErrorResponse.error.error; }
-        
-  //     },
-  //     (serverErrorResponse) => { this.error = serverErrorResponse.error.error; }
-  //   );
-  // }
+  public emptyCart(): void {
+   
+    this.cartsService.emptyCart(this.cart._id).subscribe(
+      () => {
+        // this.productsService.products.map(
+        //   (product) => product.amount != 0 && (product.amount = 0)
+        // );
+        this.cartsService.cartItems = [];
+        this.cartItems = [];
+        this.total = 0;
+      },
+      (serverErrorResponse) => {
+        this.error = serverErrorResponse.error.error;
+      }
+    );
+  }
 
 
 }

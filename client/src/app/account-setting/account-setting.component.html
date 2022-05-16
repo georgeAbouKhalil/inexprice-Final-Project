@@ -46,6 +46,10 @@
 							<i class="fas fa-wallet"></i> 
 							Wallet
 						</a>
+						<a class="nav-link" id="savingCreditCart-tab" data-toggle="pill" href="#savingCreditCart" role="tab" aria-controls="savingCreditCart" aria-selected="false">
+							<i class="fas fa-credit-card"></i>
+							Saving credit cards
+						</a>
 					</div>
 				</div>
 				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
@@ -73,19 +77,19 @@
 							<div class="col-md-6">
 								<div class="form-group">
 								  	<label>Phone number</label>
-								  	<input type="text" class="form-control" disabled value="+91 9876543215">
+								  	<input type="text" class="form-control" disabled value="9876543215">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Company</label>
-								  	<input type="text" class="form-control" disabled value="Kiran Workspace">
+								  	<label>Birthday</label>
+								  	<input type="text" class="form-control" disabled value="2021-12-15">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Designation</label>
-								  	<input type="text" class="form-control" disabled value="UI Developer">
+								  	<label>Gender</label>
+								  	<input type="text" class="form-control" disabled value="Male">
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -94,10 +98,6 @@
 									<textarea class="form-control" rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea> -->
 								</div>
 							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Update</button>
-							<button class="btn btn-light">Cancel</button>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
@@ -242,13 +242,42 @@
 				</div>
 				</form>
 				<!-- end form -->
+
+				
 			</div>
 			</div>
 
+			
 
 
 
 					</div>
+					<!-- saving credit carts -->
+					<div class="tab-pane fade" id="savingCreditCart" role="tabpanel" aria-labelledby="savingCreditCart-tab">
+							<!-- start card saved for user -->
+						<div class="container" style="width: 800vh;">
+							<div  class="row col-md-6 col-md-offset-2 custyle">
+							<table class="table table-striped custab">
+							<thead>
+								<tr>
+									<th>Card Number</th>
+									<th>Card Holder</th>
+									<th>Date</th>
+									<th class="text-center">Action</th>
+								</tr>
+							</thead>
+									<tr style="width: 350vh;">
+										<td style="width: 30vh;">1244 4444 4444 4444</td>
+										<td style="width: 20vh;">George ak</td>
+										<td>04/24</td>
+										<td class="text-center"> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a></td>
+									</tr>
+							</table>
+							</div>
+						</div>
+							<!-- end card saved for user -->
+					</div>
+					<!-- ending saving credit cart -->
 				</div>
 			</div>
 		</div>
@@ -264,3 +293,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 </body>
 </html>
+
+
+
+
+

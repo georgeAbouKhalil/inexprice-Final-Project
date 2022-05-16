@@ -79,7 +79,7 @@ export class CartsService {
   // }
 
   public async addToCart(purchasedProduct: ProductModel) {
-   console.log({purchasedProduct});
+  //  console.log({purchasedProduct});
    
     return await this.http.post<ProductModel>(
       // 'http://localhost:3001/api/carts/items',
@@ -123,10 +123,10 @@ export class CartsService {
   //   );
   // }
 
-  public emptyCart(): Observable<void> {
+  public emptyCart(cartId: string): Observable<void> {
     return this.http.delete<void>(
       // 'http://localhost:3001/api/carts/items'
-      environment.cartItemUrl
+      environment.cartItemUrl +'/by-cart/' + cartId
     );
   }
 

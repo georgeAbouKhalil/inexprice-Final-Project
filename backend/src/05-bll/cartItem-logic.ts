@@ -4,7 +4,6 @@ import { ICartItemModel, CartItemModel } from "../03-models/cartItem-model";
 
 // Get all:s
 async function getAllCartItem(cart_id: string): Promise<ICartItemModel[]> {
-
     // Get all products without virtual fields:
     // return await CartItemModel.find({ cart_id: cart_id }).exec();
     return await CartItemModel.find({"cart_id": cart_id}).populate("product").populate("cart").exec();
@@ -28,7 +27,6 @@ async function getOneCartItem(_id: string): Promise<ICartItemModel> {
 
 // Insert:
 async function addCartItem(product: ICartItemModel): Promise<ICartItemModel> {
-console.log({product});
 
     // Validation:
     const errors = product.validateSync(); console.log('5555555555555555555555555555555555555555555');
@@ -37,6 +35,12 @@ console.log({product});
 
     // Add:
     return product.save();
+}
+
+async function checkIfProductExistInCart(product) {
+    console.log({product});
+    
+    return CartItemModel.findOne({ "cart_id": product.cart_id, "product_id": product.product_id, "quantity" : product.quantity})
 }
 
 // Update:
@@ -50,6 +54,7 @@ console.log('product ', product);
     // if (errors) throw new ClientError(400, errors.message);
 
     // Update:
+    // const updatedProduct = await CartItemModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
     const updatedProduct = await CartItemModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
     if (!updatedProduct) throw new ClientError(404, `_id ${product._id} not found`);
 
@@ -63,6 +68,13 @@ async function deleteCartItem(_id: string): Promise<void> {
     const deletedProduct = await CartItemModel.findByIdAndDelete(_id).exec();
     if (!deletedProduct) throw new ClientError(404, `_id ${_id} not found`);
 }
+
+async function emptyCart(cartId) {
+  
+    if (!mongoose.Types.ObjectId.isValid(cartId)) throw new ClientError(404, `_id ${cartId} not valid`);
+    // await CartItemModel.findByIdAndDelete({"cart_id" : cartId}).exec();
+    await CartItemModel.deleteMany({"cart_id" : cartId}).exec();
+  };
 
 // ------------------------------------------------------------------------------
 
@@ -128,6 +140,7 @@ async function getProductsUsingRegex(): Promise<ICartItemModel[]> {
 
 export default {
     getAllCartItem,
+    checkIfProductExistInCart,
     getOneCartItem,
     addCartItem,
     updateCartItem,
@@ -135,5 +148,6 @@ export default {
     getPartialProducts,
     getSomeProducts,
     getPagedProducts,
-    getProductsUsingRegex
+    getProductsUsingRegex,
+    emptyCart
 };

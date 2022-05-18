@@ -50,12 +50,12 @@
 	<!-- End Banner Area -->
 
 	<!--================Single Product Area =================-->
-	<div class="product_image_area"  *ngIf="product">
+	<div class="product_image_area" *ngIf="product">
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
 					<div class="s_Product_carousel">
-						<div class="single-prd-item" >
+						<div class="single-prd-item">
 							<img class="img-fluid" style="width: auto; max-height: 600px;" src={{product.img}} alt="">
 						</div>
 					</div>
@@ -65,18 +65,59 @@
 						<h3>{{product.name}}</h3>
 						<h2>{{product.price|currency}}</h2>
 						<ul class="list">
-							<li><a class="active" ><span>Category</span> : {{product.category.name}}</a></li>
-							<li><a ><span>Availibility</span> 
-								<span *ngIf="this.product.inStock> 0; else elseBlock">: In Stock</span>
-								<ng-template #elseBlock><span style="color: red; width: auto;">&nbsp;: Not Available</span></ng-template>
+							<li><a class="active"><span>Category</span> : {{product.category.name}}</a></li>
+							<li><a><span>Availibility</span>
+									<span *ngIf="this.product.inStock> 0; else elseBlock">: In Stock</span>
+									<ng-template #elseBlock><span style="color: red; width: auto;">&nbsp;: Not
+											Available</span></ng-template>
 								</a></li>
 						</ul>
 						<p *ngIf="this.product.inStock> 0"></p>
 						<p>{{product.description}}</p>
-						
-						<div class="card_area d-flex align-items-center">
-							<a *ngIf="product.inStock>0" class="primary-btn" href="#">Add to Cart</a>
+
+						<div class="card_area d-flex align-items-center" data-bs-toggle="modal"
+							[attr.data-bs-target]="'#product'+product._id">
+							<a *ngIf="product.inStock>0" class="primary-btn">Add to Cart</a>
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+						</div>
+					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="{{'product'+product._id}}" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content ">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalLabel">{{product.name|titlecase}}
+									</h3>
+
+									<svg type="button" data-bs-dismiss="modal" aria-label="Close"
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-x-lg" viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+										<path fill-rule="evenodd"
+											d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+									</svg>
+
+								</div>
+								<div class="modal-body row">
+									<p class="col">Price: {{product.price}}$</p>
+									<div class="amount col">
+										<label for="amount" class="col">Amount: </label>
+										<input type="number" class="col" min="1" [(ngModel)]="amount"
+											value="{{ product.amount }}" name="amount" />
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+
+									<button type="button" class="btn btn-primary" [disabled]="amount===0||amount===null"
+										(click)="addToCart(product)" data-bs-dismiss="modal">Add to cart</button>
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,16 +132,16 @@
 		<div class="container">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-					 aria-selected="false">Specification</a>
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+						aria-controls="profile" aria-selected="false">Specification</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
-					 aria-selected="false">Reviews</a>
+					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+						aria-controls="review" aria-selected="false">Reviews</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
-				
+
 				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 					<div class="table-responsive">
 						<table class="table">
@@ -173,7 +214,7 @@
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
 					<div class="row">
 						<div class="col-lg-6">
@@ -189,16 +230,21 @@
 									<div class="rating_list">
 										<h3>Based on 3 Reviews</h3>
 										<ul class="list">
-											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">5 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">4 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">3 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">2 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">1 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
 										</ul>
 									</div>
 								</div>
@@ -218,8 +264,10 @@
 											<i class="fa fa-star"></i>
 										</div>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+										incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+										laboris nisi ut aliquip ex ea
 										commodo</p>
 								</div>
 								<div class="review_item">
@@ -236,8 +284,10 @@
 											<i class="fa fa-star"></i>
 										</div>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+										incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+										laboris nisi ut aliquip ex ea
 										commodo</p>
 								</div>
 								<div class="review_item">
@@ -254,8 +304,10 @@
 											<i class="fa fa-star"></i>
 										</div>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+										incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+										laboris nisi ut aliquip ex ea
 										commodo</p>
 								</div>
 							</div>
@@ -272,25 +324,34 @@
 									<li><a href="#"><i class="fa fa-star"></i></a></li>
 								</ul>
 								<p>Outstanding</p>
-								<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+								<form class="row contact_form" action="contact_process.php" method="post"
+									id="contactForm" novalidate="novalidate">
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
+											<input type="text" class="form-control" id="name" name="name"
+												placeholder="Your Full name" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Your Full name'">
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+											<input type="email" class="form-control" id="email" name="email"
+												placeholder="Email Address" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Email Address'">
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
+											<input type="text" class="form-control" id="number" name="number"
+												placeholder="Phone Number" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Phone Number'">
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea>
+											<textarea class="form-control" name="message" id="message" rows="1"
+												placeholder="Review" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Review'"></textarea>
 										</div>
 									</div>
 									<div class="col-md-12 text-right">
@@ -310,10 +371,10 @@
 	<app-footer></app-footer>
 	<!-- End footer Area -->
 
-<!-- scroll to the top -->
-<div hidden id="progress">
-	<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
-</div>
+	<!-- scroll to the top -->
+	<div hidden id="progress">
+		<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+	</div>
 </body>
 
 </html>

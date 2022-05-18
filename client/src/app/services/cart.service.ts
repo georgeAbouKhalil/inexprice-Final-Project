@@ -86,7 +86,19 @@ export class CartsService {
       environment.cartItemUrl,
       purchasedProduct
     ).toPromise();
+    
   }
+  
+  // public async addToCart(purchasedProduct: ProductModel) {
+  // //  console.log({purchasedProduct});
+   
+  //   return await this.http.post<ProductModel>(
+  //     // 'http://localhost:3001/api/carts/items',
+  //     environment.cartItemUrl,
+  //     purchasedProduct
+  //   ).toPromise();
+    
+  // }
 
   // public addToCart(purchasedProduct: ProductModel): Observable<ProductModel> {
   //  console.log({purchasedProduct});

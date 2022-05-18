@@ -29,10 +29,9 @@ async function getOneCartItem(_id: string): Promise<ICartItemModel> {
 async function addCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 
     // Validation:
-    const errors = product.validateSync(); console.log('5555555555555555555555555555555555555555555');
-    
+    const errors = product.validateSync(); 
     if (errors) throw new ClientError(400, errors.message);
-
+    
     // Add:
     return product.save();
 }

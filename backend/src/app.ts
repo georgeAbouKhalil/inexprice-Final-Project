@@ -11,6 +11,8 @@ import errorsHandler from "./02-middleware/errors-handler";
 import usersController from "./06-controllers/users-controller";
 import cartController from "./06-controllers/cart-controller";
 import typesController from "./06-controllers/types-controller";
+import creditCardsController from "./06-controllers/creditCards-controller";
+import { workerData } from "worker_threads";
 
 const server = express();
 
@@ -23,7 +25,11 @@ server.use("/api/carts", cartController);
 server.use("/api/cartItem", cartItemController);
 server.use("/api/orders", ordersController);
 server.use("/api/categories", typesController);
+server.use("/api/creditCard", creditCardsController);
 
 server.use(errorsHandler);
 
 server.listen(config.port, () => console.log("Listening..."));    
+
+
+

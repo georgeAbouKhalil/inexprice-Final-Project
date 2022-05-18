@@ -25,6 +25,7 @@ export class CategoryComponent implements OnInit {
   public productToAdd: ProductModel;
   cartProducts: any;
   cartP: any[];
+  products: any;
   constructor(private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
 
   }
@@ -43,6 +44,8 @@ export class CategoryComponent implements OnInit {
       }
     );
 
+
+
   }
 
   async filterCategories(categoryId: any) {
@@ -51,11 +54,19 @@ export class CategoryComponent implements OnInit {
   }
 
   public async addToCart(product) {
+
     if (this.amount < 0) {
       this.notify.error("Positive Quantity only allowed");
       this.amount = 1;
       return;
     };
+
+    let stock1 = this.productsService.products.find((item) => item._id === product._id);
+    if (this.amount > stock1.inStock) {
+      this.notify.error("max quantity to order is " + stock1.inStock);
+      this.amount = 1;
+      return;
+    }
 
     //If product already in cart
     let ifInCart = false;
@@ -66,7 +77,7 @@ export class CategoryComponent implements OnInit {
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-console.log(this.cartP);
+    console.log(this.cartP);
 
     if (this.cartP.length > 0) {
       ifInCart = true;
@@ -85,6 +96,11 @@ console.log(this.cartP);
       console.log({ productToAdd });
 
       this.cartsService.addToCart(productToAdd);
+//       let stock = this.productsService.products.find((product) => product._id === productToAdd.product_id)
+//       console.log({stock});
+//       stock.inStock = stock.inStock - productToAdd.quantity;
+// console.log({stock});
+
 
       this.notify.success("This product has been added to your shopping cart");
     } else if (ifInCart) {
@@ -103,8 +119,11 @@ console.log(this.cartP);
 
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
+        // this.cartP[0].inStock += productToUpdate.quantity;
         this.cartsService.updateOnCart(productToUpdate).subscribe(
           (newProductInCart) => {
+            // let stock = this.productsService.products.find((product) => product._id === newProductInCart.product_id)
+            // stock.inStock = stock.inStock - newProductInCart.amount;
             this.notify.success("This product has been updated in your shopping cart");
           },
           (serverErrorResponse) => {

@@ -62,6 +62,7 @@
                             <tr>
                                 <th scope="col">Product</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Discount</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
                                 <th></th>
@@ -83,12 +84,15 @@
                                     <h5>{{item?.product?.price}}</h5>
                                 </td>
                                 <td>
+                                    <h5>{{item?.product?.discount}}%</h5>
+                                </td>
+                                <td>
                                     <h5>{{item?.quantity}}</h5>
                                 </td>
                                 <td>
                                     <h5>{{item.totalPrice}}</h5>
                                 </td>
-                                <td (click)="deleteProductFromCart(item._id)" style="cursor:pointer ;">❌</td>
+                                <td (click)="deleteProductFromCart(item)" style="cursor:pointer ;">❌</td>
                             </tr>
                             <!-- <tr>
                                 <td>
@@ -208,7 +212,7 @@
     <!-- End footer Area -->
 <!-- scroll to the top -->
 <div id="progress">
-    <a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+    <a id="progress-value" class="gotopbtn" href="/cart"><i class="fas fa-arrow-up"></i></a>
 </div>
     
 </body>

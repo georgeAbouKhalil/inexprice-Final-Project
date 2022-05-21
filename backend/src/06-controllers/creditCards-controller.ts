@@ -60,7 +60,7 @@ router.delete("/:_id", async (request: Request, response: Response, next: NextFu
     }
 }); 
 
-router.get("/test", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/by-user/:userId", async (request: Request, response: Response, next: NextFunction) => {
     try {
 
         // const products = await logic.getPartialProducts();
@@ -68,10 +68,9 @@ router.get("/test", async (request: Request, response: Response, next: NextFunct
         // const products = await logic.getSomeProducts();
 
         // const products = await logic.getPagedProducts();
-
-        const products = await logic.getCreditCardsUsingRegex();
-        
-        response.json(products);
+        const userId = request.params.userId;
+        const creditItem = await logic.getAllCreditCardsByUserId(userId);
+        response.json(creditItem);
     }
     catch(err: any) {
         next(err);

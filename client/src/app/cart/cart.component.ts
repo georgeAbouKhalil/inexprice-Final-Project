@@ -55,11 +55,11 @@ export class CartComponent implements OnInit {
   //   this.cartItem = this.cartsService.getCartItems(this.cart._id);
   // }
 
-  public async deleteProductFromCart(cartProductId: string) {
+  public async deleteProductFromCart(cartProduct: CartItemModel) {
     try {
 
-      await this.cartsService.removeFromCart(cartProductId);
-      const indexToDelete = this.cartItems.findIndex(t => t._id === cartProductId);
+      await this.cartsService.removeFromCart(cartProduct._id);
+      const indexToDelete = this.cartItems.findIndex(t => t._id === cartProduct.product_id);
       this.cartsService.cartItems = this.cartItems.splice(indexToDelete, 1);
       this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
     }

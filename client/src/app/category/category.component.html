@@ -160,12 +160,16 @@
 								<div class="product-details">
 									<h6>{{product.name|titlecase}}</h6>
 									<div class="price">
-										<h6>{{product.price|currency}}</h6>
-										<!-- <h6 class="l-through">$210.00</h6> -->
+										<!-- <h6>{{product.price|currency}}</h6> -->
+										<h6 *ngIf="product.discount == 0 ; else elseBlock"> {{product.price |currency}}</h6>
+										<ng-template #elseBlock><h6>{{product.price *(1-product.discount/100) | currency}}</h6></ng-template>
+										<h6 class="l-through">{{product.discount/100}}%</h6>
+										<ng-template #elseBlock><h3>{{product.discount/100}}%</h3></ng-template>
 									</div>
 									<div class="prd-bottom">
 
-										<a *ngIf="product.inStock>0" class="social-info" data-bs-toggle="modal"
+										<!-- <a *ngIf="product.inStock != 0" class="social-info" data-bs-toggle="modal" -->
+										<a *ngIf="productStock != 0 || product.inStock != 0" class="social-info" data-bs-toggle="modal"
 											[attr.data-bs-target]="'#product'+product._id">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
@@ -336,7 +340,7 @@
 	</div>
 	<!-- scroll to the top -->
 	<div id="progress">
-		<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+		<a id="progress-value" class="gotopbtn" href="/category"><i class="fas fa-arrow-up"></i></a>
 	</div>
 
 

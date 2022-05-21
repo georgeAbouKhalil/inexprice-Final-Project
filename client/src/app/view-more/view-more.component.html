@@ -18,9 +18,9 @@
 <body>
 
 	<!-- Start Header Area -->
-	<!-- <header class="header_area sticky-header">
+	<header class="header_area sticky-header">
 		<app-navbar></app-navbar>
-		<div class="search_input" id="search_input_box">
+		<!-- <div class="search_input" id="search_input_box">
 			<div class="container">
 				<form class="d-flex justify-content-between">
 					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
@@ -28,8 +28,8 @@
 					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
 				</form>
 			</div>
-		</div>
-	</header> -->
+		</div> -->
+	</header>
 	<!-- End Header Area -->
 
 	<!-- Start Banner Area -->
@@ -63,7 +63,11 @@
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
 						<h3>{{product.name}}</h3>
-						<h2>{{product.price|currency}}</h2>
+						<h2 *ngIf="product.discount == 0 ; else elseBlock">{{product.price|currency}}</h2>
+						<ng-template #elseBlock><h2>{{product.price *(1-product.discount/100) | currency}}</h2></ng-template>
+
+						<h3 style="color: #CCCCCC;font-size:18px;font-family: Poppins, sans-serif;"> {{product.discount/100}}% </h3>
+						<ng-template #elseBlock><h3>{{disProduct.discount/100}}%</h3></ng-template>
 						<ul class="list">
 							<li><a class="active"><span>Category</span> : {{product.category.name}}</a></li>
 							<li><a><span>Availibility</span>

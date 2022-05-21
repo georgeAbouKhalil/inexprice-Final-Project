@@ -33,8 +33,9 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        request.body.price = request.body.price * (1 - request.body.discount / 100);
+        request.body.totalPrice = request.body.totalPrice * (1 - request.body.discount / 100);
         const cartItem = new CartItemModel(request.body);
-
         //update inStock in database
         const oldProduct = await productsLogic.getOneProduct(cartItem.product_id.toString());
         oldProduct.inStock = oldProduct.inStock - cartItem.quantity;
@@ -50,6 +51,8 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
 
 router.put("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        request.body.price = request.body.price * (1 - request.body.discount / 100);
+        request.body.totalPrice = request.body.totalPrice * (1 - request.body.discount / 100);
         let product = request.body;
 
         //update inStock in database

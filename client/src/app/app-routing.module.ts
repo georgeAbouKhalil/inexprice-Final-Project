@@ -14,6 +14,7 @@ import { ViewMoreComponent } from './view-more/view-more.component';
 const routes: Routes = [
   {path:'',pathMatch:'full',redirectTo:'home'},
   {path:'home',component: HomeComponent},
+  {path:'home/:id',component: ViewMoreComponent},
   {path:'category',component: CategoryComponent},
   {path:'cart',component: CartComponent},
   {path:'signup',component: SignupComponent},

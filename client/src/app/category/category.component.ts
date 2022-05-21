@@ -21,11 +21,17 @@ export class CategoryComponent implements OnInit {
   public error: string = '';
   public count: number = 0;
   public amount: number = 1;
-  @Input() product: ProductModel = new ProductModel();
+  // @Input() product: ProductModel = new ProductModel();
   public productToAdd: ProductModel;
   cartProducts: any;
   cartP: any[];
   products: any;
+  updateStockProduct: ProductModel;
+  stock: any;
+  getProduct: any;
+  productStock: number;
+  sum: number;
+  quantityCart: number;
   constructor(private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
 
   }
@@ -43,9 +49,6 @@ export class CategoryComponent implements OnInit {
         this.error = serverErrorResponse.error.error;
       }
     );
-
-
-
   }
 
   async filterCategories(categoryId: any) {
@@ -54,30 +57,54 @@ export class CategoryComponent implements OnInit {
   }
 
   public async addToCart(product) {
+    console.log({ product });
 
-    if (this.amount < 0) {
-      this.notify.error("Positive Quantity only allowed");
-      this.amount = 1;
-      return;
-    };
-
-    let stock1 = this.productsService.products.find((item) => item._id === product._id);
-    if (this.amount > stock1.inStock) {
-      this.notify.error("max quantity to order is " + stock1.inStock);
-      this.amount = 1;
-      return;
-    }
-
-    //If product already in cart
-    let ifInCart = false;
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    console.log('cartprodct ', this.cartProducts);
+    console.log('cartproduct ', this.cartProducts);
 
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
     console.log(this.cartP);
+
+    this.getProduct = await this.productsService.getOneProduct(product._id);
+    console.log(this.getProduct);
+
+    if (this.amount < 0) {
+      this.amount = 1;
+      this.notify.error("Positive Quantity only allowed");
+      return;
+    };
+
+    // this.stock = this.productsService.products.find((item) => item._id === product._id);
+    // console.log(this.stock);
+
+    // console.log('11111 ', this.getProduct.inStock);
+    // console.log('22222222 ', this.cartP[0]?.quantity);
+
+    if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
+      this.quantityCart = 0
+    } else {
+      this.quantityCart = this.cartP[0]?.quantity
+    };
+    this.sum = this.getProduct.inStock + this.quantityCart;
+    if (this.amount > this.sum) {
+      this.amount = 1;
+      this.notify.error("max quantity to order is " + this.sum);
+      return;
+    }
+
+    //If product already in cart
+    let ifInCart = false;
+    // // Get PRODUCTS FROM CART
+    // this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
+    // console.log('cartprodct ', this.cartProducts);
+
+    // this.cartP = this.cartProducts.filter((a: any) => {
+    //   return a.product_id === product._id;
+    // });
+    // console.log(this.cartP);
 
     if (this.cartP.length > 0) {
       ifInCart = true;
@@ -89,20 +116,27 @@ export class CategoryComponent implements OnInit {
         totalPrice: this.amount * product.price,
         product_id: product._id,
         cart_id: this.cart._id,
-
+        price: product.price,
+        discount: product.discount,
         img: product.img,
         name: product.name,
       };
       console.log({ productToAdd });
 
       this.cartsService.addToCart(productToAdd);
-//       let stock = this.productsService.products.find((product) => product._id === productToAdd.product_id)
-//       console.log({stock});
-//       stock.inStock = stock.inStock - productToAdd.quantity;
-// console.log({stock});
-
-
+      this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
       this.notify.success("This product has been added to your shopping cart");
+      // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToAdd.quantity;
+      this.updateStockProduct.inStock = this.getProduct.inStock - productToAdd.quantity;
+
+      const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
+      this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
+      console.log(this.productsService.products[indexToDelete].inStock);
+      
+      this.productStock = this.productsService.products[indexToDelete].inStock;
+      console.log(this.productStock);
+      
+
     } else if (ifInCart) {
 
       let productToUpdate = {
@@ -111,20 +145,50 @@ export class CategoryComponent implements OnInit {
         totalPrice: this.amount * product.price,
         product_id: product._id,
         cart_id: this.cart._id,
-
+        price: product.price,
+        discount: product.discount,
         img: product.img,
         name: product.name,
       };
       console.log({ productToUpdate });
 
+      console.log( this.cartP[0]);
+      console.log(this.getProduct);
+      console.log(this.updateStockProduct);
+      
+      this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
+
+      this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
+      console.log('--111--    ', this.updateStockProduct.inStock);
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
-        // this.cartP[0].inStock += productToUpdate.quantity;
         this.cartsService.updateOnCart(productToUpdate).subscribe(
           (newProductInCart) => {
-            // let stock = this.productsService.products.find((product) => product._id === newProductInCart.product_id)
-            // stock.inStock = stock.inStock - newProductInCart.amount;
             this.notify.success("This product has been updated in your shopping cart");
+            // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
+            // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
+            console.log(this.updateStockProduct);
+            console.log(this.getProduct.inStock);
+            console.log(productToUpdate.quantity);
+console.log('--------', this.getProduct.inStock);
+
+
+            // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
+            // this.updateStockProduct.inStock = this.getProduct.inStock + productToUpdate.quantity;
+            // this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
+            
+            // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
+            this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
+            console.log('--222--    ', this.updateStockProduct.inStock);
+
+            // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
+            // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
+
+            console.log('********  ', this.updateStockProduct.inStock);
+
+            const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);           
+            this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
+            this.productStock = this.productsService.products[indexToDelete].inStock;
           },
           (serverErrorResponse) => {
             this.error = serverErrorResponse.error.error;

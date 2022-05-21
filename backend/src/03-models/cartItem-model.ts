@@ -10,7 +10,8 @@ export interface ICartItemModel extends Document {
     totalPrice: number;
     cart_id: Schema.Types.ObjectId;
     product_id: Schema.Types.ObjectId;
-
+    discount: number;
+    price:number;
     name: string;
     img: string;
     itemPrice: number
@@ -27,8 +28,6 @@ const CartItemSchema = new Schema<ICartItemModel>({
     },
     totalPrice: {
         type: Number,
-        required: [true, "Missing price"],
-        min: [0, "Price can't be negative"]    
     },
     cart_id: {
         type: Schema.Types.ObjectId,

@@ -27,8 +27,7 @@ const CreditCardSchema = new Schema<ICreditCardModel>({
     card_number: {
         type: String,
         required: [true, "Missing card_number"],
-        min: [0, "card_number can't be negative"],
-        max: [1000, "card_number can't exceed 1000"]
+        
     },
     card_holder: {
         type: String,

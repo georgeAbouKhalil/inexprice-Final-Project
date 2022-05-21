@@ -1,7 +1,11 @@
+import { CreditCardModel } from './../models/creditCard.model';
+import { CreditCardService } from './../services/creditCard.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { stringify } from 'querystring';
 import { NotifyService } from '../services/notify.service';
+import { AuthService } from '../services/auth.service';
+import { style } from '@angular/animations';
 
 
 @Component({
@@ -10,20 +14,30 @@ import { NotifyService } from '../services/notify.service';
   styleUrls: ['./account-setting.component.css']
 })
 export class AccountSettingComponent implements OnInit {
-  
+  public user: any;
+
   credit_card: FormGroup;
   cardNumber:string = "";
   cardHolder:string = "";
   cardDateMM:string = "";
   cardDateYYYY:string = "";
   cardCVV:string = "";
-  
-  constructor(private cr: FormBuilder,private notify: NotifyService) { }
+  rotato: any;
+  creditCards:any = [] = [];
+  constructor(public myAuthService: AuthService,private cr: FormBuilder,private notify: NotifyService, private creditService: CreditCardService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.user = this.myAuthService.getUser();
     this.validCreditCard();
+    this.creditCards = await this.creditService.getCreditCardById(this.user._id);
+    
+    console.log(this.creditCards);
+    
   }
   
+//   onClickedItem(){
+//     this.rotato = "thecard";
+// }
 
   changeCardNumber(updateNumberValue){
     var cardNumber2 = updateNumberValue;
@@ -81,7 +95,10 @@ export class AccountSettingComponent implements OnInit {
   }
 
   changeCardCvv(updateCvv){
-    this.notify.success("hover the card to see the CVV");
+    // this.rotato = "thecard";
+    for(let i=0; i<1; i++){
+      this.notify.success("hover the card to see the CVV");
+    }
     var cardCVV2 = updateCvv;
     // var formattedCardCvv = cardCVV2.replace(/[^\d]/g, "");
     var formattedCardCvv = cardCVV2.substring(0, 3);
@@ -95,13 +112,42 @@ export class AccountSettingComponent implements OnInit {
 
   validCreditCard(){
     this.credit_card = this.cr.group({
-      cardNumberValid: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'),Validators.maxLength(19),Validators.minLength(19)]],
-      cardHolderValid: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'),Validators.maxLength(25),Validators.minLength(4)]],
-      cardDateMM: ['',[Validators.required,Validators.pattern('^(0[1-9]|1[0-2])$'),Validators.minLength(2),Validators.maxLength(2)]],
-      cardDateYYYY: ['',[Validators.required,Validators.pattern('^(2[2-9])$'),Validators.minLength(2),Validators.maxLength(2)]],
-      cardCVVValid: ['',[Validators.required,Validators.pattern('^[0-9]+$'),Validators.minLength(3),Validators.maxLength(3)]],
+      user_id:[this.user._id],
+      card_number: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'),Validators.maxLength(19),Validators.minLength(19)]],
+      card_holder: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'),Validators.maxLength(25),Validators.minLength(4)]],
+      cvv: ['',[Validators.required,Validators.pattern('^[0-9]+$'),Validators.minLength(3),Validators.maxLength(3)]],
+      date_mm: ['',[Validators.required,Validators.pattern('^(0[1-9]|1[0-2])$'),Validators.minLength(2),Validators.maxLength(2)]],
+      date_yyyy: ['',[Validators.required,Validators.pattern('^(2[2-9])$'),Validators.minLength(2),Validators.maxLength(2)]],
     });
   }
+  async onSubmit(){
+    try{      
+      console.log("value  ",this.credit_card.value);
+      if(this.credit_card.valid){
+        await this.creditService.addCreditCard({ ...this.credit_card.value });
+        this.notify.success("credit card successfuly added");
+      }
+      
+    }catch (err){
+      alert(err)
+    }
+  }
+
+
   
+  public async deleteCreditCart(creditCard: CreditCardModel) {
+    try {
+console.log(creditCard._id);
+
+      await this.creditService.deleteCreditCard(creditCard._id);
+      const indexToDelete = this.creditCards.findIndex(t => t._id === creditCard._id);
+      this.creditCards= this.creditCards.splice(indexToDelete, 1);
+      console.log(this.creditCards);
+      
+    }
+    catch (err: any) {
+      this.notify.error(err);
+    }
+  }
 
 }

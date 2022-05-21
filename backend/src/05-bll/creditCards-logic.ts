@@ -12,6 +12,11 @@ async function getAllCreditCards(): Promise<ICreditCardModel[]> {
     // return HolidayModel.find().populate("category").exec();
 }
 
+ // Get all CreditCard by user ID
+async function getAllCreditCardsByUserId(user_id: string): Promise<ICreditCardModel[]> {
+    return await CreditCardModel.find({"user_id": user_id}).exec();
+}
+
 // Get one:
 async function getOneCreditCard(_id: string): Promise<ICreditCardModel> {
 
@@ -128,5 +133,6 @@ export default {
     getPartialCreditCard,
     getSomeCreditCards,
     getPagedCreditCards,
-    getCreditCardsUsingRegex
+    getCreditCardsUsingRegex,
+    getAllCreditCardsByUserId
 };

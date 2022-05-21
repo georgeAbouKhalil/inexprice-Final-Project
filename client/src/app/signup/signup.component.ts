@@ -21,8 +21,8 @@ import { CartsService } from '../services/cart.service';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
-
   formBuilder: FormBuilder;
+  
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -60,10 +60,6 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     try {
       if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourFormGroup.valid) {
-        console.log(this.firstFormGroup.value);
-        console.log(this.secondFormGroup.value);
-        console.log(this.thirdFormGroup.value);
-        console.log(this.fourFormGroup.value);
 
         await this.myAuthService.register({ ...this.firstFormGroup.value, ...this.secondFormGroup.value , ...this.thirdFormGroup.value, ...this.fourFormGroup.value  });
         this.myRouter.navigate(['/login']);

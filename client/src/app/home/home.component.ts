@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription , interval } from 'rxjs';
 import { CartModel } from '../models/cart.model';
+import { CategoryModel } from '../models/category.model';
 import { AuthService } from '../services/auth.service';
 import { CartsService } from '../services/cart.service';
+import { ProductsService } from '../services/products.service';
 
 
 @Component({
@@ -14,8 +16,11 @@ export class HomeComponent implements OnInit {
   public user: any;
   public error: string = '';
 
+  disProducts:any[] = [];
+  chepProducts:any[] = [];
+
   private subscription: Subscription;
-  constructor(public myAuthService: AuthService, public cartsService: CartsService) { }
+  constructor(public myAuthService: AuthService, public cartsService: CartsService,public productsService: ProductsService) { }
 
   public dateNow = new Date('Mar 19 2022 23:07:00');
   public dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -58,6 +63,26 @@ if (this.user){
         this.getCart();
         // this.getCartItems();
 }
+
+//get the products
+this.productsService.getProducts().subscribe(
+  (productsList) => {
+    this.productsService.products = productsList;
+    //get product they have discount
+    this.disProducts = this.productsService.products.filter((product) => product.discount > 0 );
+    this.chepProducts = this.productsService.products.filter((product) => product.price < 20);
+    
+  },
+  (serverErrorResponse) => {
+    this.error = serverErrorResponse.error.error;
+  }
+  
+);
+
+
+
+
+
 }
 
 

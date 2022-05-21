@@ -11,8 +11,8 @@ export const environment = {
   prodByCat : 'http://localhost:3001/api/products/by-types/',
   cartUrl : 'http://localhost:3001/api/carts/',
   cartItemUrl : 'http://localhost:3001/api/cartItem/',
-  creditCardUrl : 'http://localhost:3001/api/creditCard/'
-
+  creditCardUrl : 'http://localhost:3001/api/creditCard/',
+  orderUrl: 'http://localhost:3001/api/orders/'
 };
 
 /*

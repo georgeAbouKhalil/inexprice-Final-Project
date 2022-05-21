@@ -28,6 +28,8 @@ export class AccountSettingComponent implements OnInit {
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
+    console.log(this.user);
+    
     this.validCreditCard();
     this.creditCards = await this.creditService.getCreditCardById(this.user._id);
     
@@ -121,11 +123,14 @@ export class AccountSettingComponent implements OnInit {
     });
   }
   async onSubmit(){
-    try{      
+    try{
       console.log("value  ",this.credit_card.value);
       if(this.credit_card.valid){
-        await this.creditService.addCreditCard({ ...this.credit_card.value });
+        const newCard = await this.creditService.addCreditCard({ ...this.credit_card.value });
         this.notify.success("credit card successfuly added");
+        this.creditCards.push(newCard);
+        this.credit_card.reset();
+
       }
       
     }catch (err){
@@ -141,7 +146,7 @@ console.log(creditCard._id);
 
       await this.creditService.deleteCreditCard(creditCard._id);
       const indexToDelete = this.creditCards.findIndex(t => t._id === creditCard._id);
-      this.creditCards= this.creditCards.splice(indexToDelete, 1);
+      this.creditCards.splice(indexToDelete, 1);
       console.log(this.creditCards);
       
     }

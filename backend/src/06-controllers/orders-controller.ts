@@ -1,6 +1,7 @@
 import { OrderModel } from '../03-models/order-model';
 import express, { NextFunction, Request, Response } from "express";
 import logic from "../05-bll/orders-logic";
+import cartLogic from '../05-bll/cart-logic';
 
 const router = express.Router();
 
@@ -29,6 +30,10 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
     try {
         const order = new OrderModel(request.body);
         const addedOrder= await logic.addOrder(order);
+
+       const cart =  await cartLogic.getOneCartByUserId(order.user_id.toString());
+        cart.status = "close";
+        await cartLogic.updateCart(cart);
         response.status(201).json(addedOrder);
     }
     catch(err: any) {

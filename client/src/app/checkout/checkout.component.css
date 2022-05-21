@@ -22,3 +22,17 @@
     font-size: 20px;
     color: black;
 }
+
+#img2 {
+    position: relative;
+    width: 20%;
+    z-index:10;
+    float: right;
+}
+/* #img2 {
+    position: absolute;
+    right: 34%;
+    top : 40%;
+    height: 10%;
+    z-index:10;
+} */

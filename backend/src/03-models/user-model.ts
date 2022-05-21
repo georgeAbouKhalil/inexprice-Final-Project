@@ -15,6 +15,7 @@ export interface IUserModel extends Document {
     gender: string;
     business: string;
     role: string;
+    phone: string;
 
 }
 
@@ -33,6 +34,10 @@ const UserSchema = new Schema<IUserModel>({
         minlength: [2, "lastName must be min 2 chars"],
         maxlength: [15, "lastName must be max 15 chars"],
         trim: true
+    },
+    phone: {
+        type: String,
+        required: [true, "phone is required"],
     },
     email: {
         type: String,

@@ -11,5 +11,6 @@ export class UserModel {
     gender: string;
     business: string;
     role: string;
+    phone: string;
 
 }

@@ -10,10 +10,9 @@ export interface IOrderModel extends Document {
      user_id: Schema.Types.ObjectId;
      final_price : number;
      delivery_city: string;
-     delivery_street: string;
-     shipping_date: string;
      order_date: string;
-     credit_card: number;
+     credit_card: string;
+
 }
 
 // Define model schema:
@@ -38,23 +37,12 @@ const OrderSchema = new Schema<IOrderModel>({
         maxlength: [20, "City must be min 20 chars"],
         trim: true
     },
-    delivery_street: {
-        type: String,
-        required: [true, "street is required"],
-        minlength: [2, "street must be min 2 chars"],
-        maxlength: [20, "street must be min 20 chars"],
-        trim: true
-    },
-    shipping_date: {
-        type: String,
-        required: [true, "delivery Date is required"]
-    },
     order_date: {
         type: String,
         required: [true, "order Date is required"]
     },
     credit_card: {
-        type: Number,
+        type: String,
         required: [true, "Missing stock"],
         min: [0, "Stock can't be negative"],
         max: [1000, "Stock can't exceed 1000"]

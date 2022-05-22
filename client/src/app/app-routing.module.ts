@@ -1,3 +1,4 @@
+import { WishlistComponent } from './wishlist/wishlist.component';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
@@ -24,6 +25,8 @@ const routes: Routes = [
   {path:'checkout',component:CheckoutComponent},
   {path:'pageNotFound',component: PageNotFoundComponent},
   {path:'account-setting',component:AccountSettingComponent},
+  {path:'wishlist',component:WishlistComponent},
+  
   {path: '**',component: PageNotFoundComponent}
 ];
 

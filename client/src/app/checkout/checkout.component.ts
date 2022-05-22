@@ -60,7 +60,7 @@ console.log(this.cartItems);
    
   public createReceiptFile(): void {
     let receipt = `Thank you for buying from InexPrice!\n` +
-      `Here is your order from ${this.orderDetails.order_date.toLocaleString()}: \n\n`;
+      `Here is your order from: ${this.orderDetails.order_date.toLocaleString()}: \n\n Products: \n`;
 
     for (let item of this.cartItems) {    
       receipt += `${item.product.name.toUpperCase()} - Amount: ${item.quantity} -  Price: ${item.totalPrice}$ \n`;
@@ -85,7 +85,6 @@ console.log(this.cartItems);
     this.cartsService.cart = {};
     window.location.href = "home";
 
-    // this.router.navigate(['/home']);
   }
 
 

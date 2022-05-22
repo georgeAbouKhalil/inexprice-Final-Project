@@ -12,7 +12,9 @@ export const environment = {
   cartUrl : 'http://localhost:3001/api/carts/',
   cartItemUrl : 'http://localhost:3001/api/cartItem/',
   creditCardUrl : 'http://localhost:3001/api/creditCard/',
-  orderUrl: 'http://localhost:3001/api/orders/'
+  orderUrl: 'http://localhost:3001/api/orders/',
+  wishListUrl: 'http://localhost:3001/api/wishList/'
+  
 };
 
 /*

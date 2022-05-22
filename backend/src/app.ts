@@ -12,7 +12,7 @@ import usersController from "./06-controllers/users-controller";
 import cartController from "./06-controllers/cart-controller";
 import typesController from "./06-controllers/types-controller";
 import creditCardsController from "./06-controllers/creditCards-controller";
-import { workerData } from "worker_threads";
+import wishListController from "./06-controllers/wishlist-controller";
 
 const server = express();
 
@@ -26,6 +26,7 @@ server.use("/api/cartItem", cartItemController);
 server.use("/api/orders", ordersController);
 server.use("/api/categories", typesController);
 server.use("/api/creditCard", creditCardsController);
+server.use("/api/wishList", wishListController);
 
 server.use(errorsHandler);
 

@@ -7,7 +7,10 @@ import { CartsService } from '../services/cart.service';
 import { CategoriesService } from '../services/categories.service';
 import { NotifyService } from '../services/notify.service';
 import { ProductsService } from '../services/products.service';
-import { isNgTemplate } from '@angular/compiler';
+import { AuthService } from '../services/auth.service';
+import { UserModel } from '../models/user.model';
+import { WishListModel } from '../models/wishlist.model';
+import { WishListService } from '../services/wishlist.service';
 
 @Component({
   selector: 'app-category',
@@ -32,13 +35,20 @@ export class CategoryComponent implements OnInit {
   productStock: number;
   sum: number;
   quantityCart: number;
-  constructor(private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
+  isWishProduct: WishListModel[];
+  isWish: boolean = false;
+  user: UserModel;
+  wishProduct: WishListModel[] = [];
+  clicked: boolean = false;
+
+  constructor(private wishListService: WishListService, private authService: AuthService, private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
 
   }
 
   async ngOnInit() {
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.categories = await this.categoriesService.getAllCategories();
+    this.user = this.authService.getUser();
 
     // get products
     this.productsService.getProducts().subscribe(
@@ -132,10 +142,10 @@ export class CategoryComponent implements OnInit {
       const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
       console.log(this.productsService.products[indexToDelete].inStock);
-      
+
       this.productStock = this.productsService.products[indexToDelete].inStock;
       console.log(this.productStock);
-      
+
 
     } else if (ifInCart) {
 
@@ -152,10 +162,10 @@ export class CategoryComponent implements OnInit {
       };
       console.log({ productToUpdate });
 
-      console.log( this.cartP[0]);
+      console.log(this.cartP[0]);
       console.log(this.getProduct);
       console.log(this.updateStockProduct);
-      
+
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
@@ -170,13 +180,13 @@ export class CategoryComponent implements OnInit {
             console.log(this.updateStockProduct);
             console.log(this.getProduct.inStock);
             console.log(productToUpdate.quantity);
-console.log('--------', this.getProduct.inStock);
+            console.log('--------', this.getProduct.inStock);
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
             // this.updateStockProduct.inStock = this.getProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-            
+
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
             console.log('--222--    ', this.updateStockProduct.inStock);
@@ -186,7 +196,7 @@ console.log('--------', this.getProduct.inStock);
 
             console.log('********  ', this.updateStockProduct.inStock);
 
-            const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);           
+            const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);
             this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
             this.productStock = this.productsService.products[indexToDelete].inStock;
           },
@@ -196,6 +206,39 @@ console.log('--------', this.getProduct.inStock);
         );
       }
     }
+  }
+
+  public async wish(product) {
+
+    if (this.clicked) {
+      this.clicked = false
+    }
+    else { this.clicked = true };
+
+    this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
+
+
+    const follow = new WishListModel();
+    follow.productId = product._id;
+    follow.userId = this.user._id;
+
+    this.isWishProduct = this.wishProduct.filter((a: any) => {
+      return a.productId === product._id;
+    });
+
+    // if product is already in wishlist
+    if (this.isWishProduct.length > 0) {
+      await this.wishListService.removeWishList(this.isWishProduct[0]);
+      this.notify.error("product has removed from wishlist");
+      this.isWish = false;
+      return;
+    }
+
+    // if product is NOT in wishlist
+    this.isWish = true;
+    await this.wishListService.addToWishList(follow);
+    this.notify.success("product has added from wishlist");
+
   }
 
 }

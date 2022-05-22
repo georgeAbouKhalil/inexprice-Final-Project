@@ -21,6 +21,7 @@ import { ViewMoreComponent } from './view-more/view-more.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
 import { HttpClientModule } from '@angular/common/http';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     ViewMoreComponent,
     CheckoutComponent,
     AccountSettingComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,

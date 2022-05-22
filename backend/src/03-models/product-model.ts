@@ -15,6 +15,7 @@ export interface IProductModel extends Document {
     description: string;
     inStock: number;
     discount: number;
+    wishlist: boolean;
     // p_id: number; //delete this
     // categoryId: Schema.Types.ObjectId;
 }
@@ -82,6 +83,9 @@ const ProductSchema = new Schema<IProductModel>({
         required: [true, "Missing price"],
         min: [0, "Price can't be negative"],
         max: [1000, "Price can't exceed 1000"]
+    },
+    wishlist: {
+        type: Boolean,
     },
     // p_id: {
     //     type: Number,

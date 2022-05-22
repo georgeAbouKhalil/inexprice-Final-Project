@@ -53,7 +53,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-3 col-lg-4 col-md-5">
-				<div class="sidebar-categories">
+				<!-- <div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
 						<li class="main-nav-list" *ngFor="let category of categories"
@@ -63,7 +63,7 @@
 								| titlecase}}<span class="number"></span></a>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
@@ -154,42 +154,42 @@
 					<div class="row">
 						<!-- <app-product-card [product]="product" (click)="updateProduct(product)"></app-product-card> -->
 						<!-- <app-product-card [product]="product" ></app-product-card> -->
-						<div class="col-lg-4 col-md-6" *ngFor="let product of productsService.products">
+						<div class="col-lg-4 col-md-6" *ngFor="let wishP of wishProducts">
 							<div class="single-product">
-									<img class="img-fluid" src={{product.img}} alt="">
+									<img class="img-fluid" src={{wishP.product.img}} alt="">
 								<div class="product-details">
-									<h6>{{product.name|titlecase}}</h6>
+									<h6>{{wishP.product.name|titlecase}}</h6>
 									<div class="price">
 										<!-- <h6>{{product.price|currency}}</h6> -->
-										<h6 *ngIf="product.discount == 0 ; else elseBlock"> {{product.price |currency}}</h6>
-										<ng-template #elseBlock><h6>{{product.price *(1-product.discount/100) | currency}}</h6></ng-template>
-										<h6 class="l-through">{{product.discount/100}}%</h6>
-										<ng-template #elseBlock><h3>{{product.discount/100}}%</h3></ng-template>
+										<h6 *ngIf="wishP.discount == 0 ; else elseBlock"> {{wishP.product.price |currency}}</h6>
+										<ng-template #elseBlock><h6>{{wishP.product.price *(1-wishP.product.discount/100) | currency}}</h6></ng-template>
+										<h6 class="l-through">{{wishP.product.discount/100}}%</h6>
+										<ng-template #elseBlock><h3>{{wishP.product.discount/100}}%</h3></ng-template>
 									</div>
 									<div class="prd-bottom">
 
 										<!-- <a *ngIf="product.inStock != 0" class="social-info" data-bs-toggle="modal" -->
-										<a *ngIf="productStock != 0 || product.inStock != 0" class="social-info" data-bs-toggle="modal"
+										<!-- <a *ngIf="productStock != 0 || product.inStock != 0" class="social-info" data-bs-toggle="modal"
 											[attr.data-bs-target]="'#product'+product._id">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
-										</a>
+										</a> -->
 
-										<a class="social-info" (click)="wish(product)" >
+										<a class="social-info" (click)="wish(wishP.product)">
 											<span class="lnr lnr-heart" ></span>
 											<p class="hover-text">Wishlist</p>
 										</a>
 
 										<!-- <a href="" class="social-info"> -->
-										<a [routerLink]="'/category/'+ product._id" class="social-info">
+										<!-- <a [routerLink]="'/category/'+ product._id" class="social-info">
 											<span class="lnr lnr-move"></span>
 											<p class="hover-text">view more</p>
-										</a>
+										</a> -->
 									</div>
 								</div>
 							</div>
 							<!-- Modal -->
-							<div class="modal fade" id="{{'product'+product._id}}" tabindex="-1"
+							<!-- <div class="modal fade" id="{{'product'+product._id}}" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content ">
@@ -227,7 +227,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 

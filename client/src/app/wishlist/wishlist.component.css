@@ -1,0 +1,78 @@
+.breadcrumb-banner h1 {
+    color: #FFFFFF;
+    font-size: 36px;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+}
+.breadcrumb-banner a {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+}
+.single-product .product-details h6 {
+    color: #222222;
+    font-size: 16px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+.single-product .product-details .price h6 {
+    color: #222222;
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
+}
+.single-product .product-details .price .l-through {
+    color: #CCCCCC;
+    font: 14px;
+    font-family: Poppins,sans-serif;
+}
+
+.section-title h1 {
+    color: #222222;
+    font-size: 36px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+}
+.section-title p {
+    color: #777777;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+}
+.footer-area h6 {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-family: Poppins, sans-serif;
+    font-weight: bold;
+}
+.footer-area p{
+    color: #777777;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+}
+#progress{
+    position: fixed;
+    bottom: 40px;
+    right: 48px;
+    height: 50px;
+    width: 50px;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 100;
+}
+#progress-value{
+    display: block;
+    height: calc(100% - 12px);
+    width: calc(100% - 10px);
+    background-color: #ffff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    font-size: 20px;
+    color: black;
+}
+img{
+    width: auto;
+    height:  200px;
+}

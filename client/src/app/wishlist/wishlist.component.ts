@@ -13,6 +13,7 @@ export class WishlistComponent implements OnInit {
   wishProducts: WishListModel[] = [];
   user: UserModel;
   isWishProduct: WishListModel[];
+  public arrayLength:any;
 
   constructor(private wishListService: WishListService, private authService: AuthService) { }
 
@@ -20,6 +21,8 @@ export class WishlistComponent implements OnInit {
 
     this.user = await this.authService.getUser();
     this.wishProducts = await this.wishListService.getAllWishListByUserId(this.user._id);
+    this.arrayLength = this.wishProducts.length;
+    
   }
 
 

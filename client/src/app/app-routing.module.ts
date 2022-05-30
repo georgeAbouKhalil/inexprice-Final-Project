@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignupComponent } from './signup/signup.component';
 import { ViewMoreComponent } from './view-more/view-more.component';
+import { MessagesComponent } from './messages/messages.component';
 
 const routes: Routes = [
   {path:'',pathMatch:'full',redirectTo:'home'},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'pageNotFound',component: PageNotFoundComponent},
   {path:'account-setting',component:AccountSettingComponent},
   {path:'wishlist',component:WishlistComponent},
+  {path:'messages',component:MessagesComponent},
   
   {path: '**',component: PageNotFoundComponent}
 ];

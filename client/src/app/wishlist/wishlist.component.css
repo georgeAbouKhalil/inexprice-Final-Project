@@ -76,3 +76,30 @@ img{
     width: auto;
     height:  200px;
 }
+
+table{
+    font-family: "Lato",sans-serif;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    margin-left: 20%;
+   
+}
+table, th, td {
+    border:1px solid #ddd;
+    
+  }
+
+  th{
+      padding: 20px 0px;
+      color: #555555;
+      font: 18px;
+  }
+  td{
+    padding: 30px;
+    color: #333333;
+    font: 16px;
+}
+td > img{
+    width: 80px;
+    height: 100px;
+}

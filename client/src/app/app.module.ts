@@ -22,6 +22,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     CheckoutComponent,
     AccountSettingComponent,
     WishlistComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

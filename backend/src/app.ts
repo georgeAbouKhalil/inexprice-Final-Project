@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import socketLogic from "./05-bll/socket-logic";
 import config from "./01-utils/config";
 import con from "./04-dal/dal";
 con.connectToMongoDB();
@@ -13,6 +14,7 @@ import cartController from "./06-controllers/cart-controller";
 import typesController from "./06-controllers/types-controller";
 import creditCardsController from "./06-controllers/creditCards-controller";
 import wishListController from "./06-controllers/wishlist-controller";
+import MessageController from "./06-controllers/message-controller";
 
 const server = express();
 
@@ -27,10 +29,11 @@ server.use("/api/orders", ordersController);
 server.use("/api/categories", typesController);
 server.use("/api/creditCard", creditCardsController);
 server.use("/api/wishList", wishListController);
+server.use("/api/message", MessageController);
 
 server.use(errorsHandler);
 
-server.listen(config.port, () => console.log("Listening..."));    
-
+const httpServer = server.listen(config.port, () => console.log("Listening..."));    
+socketLogic.socketIo(httpServer);
 
 

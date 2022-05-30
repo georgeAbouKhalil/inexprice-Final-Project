@@ -13,7 +13,8 @@ export const environment = {
   cartItemUrl : 'http://localhost:3001/api/cartItem/',
   creditCardUrl : 'http://localhost:3001/api/creditCard/',
   orderUrl: 'http://localhost:3001/api/orders/',
-  wishListUrl: 'http://localhost:3001/api/wishList/'
+  wishListUrl: 'http://localhost:3001/api/wishList/',
+  messageUrl: 'http://localhost:3001/api/message/'
   
 };
 

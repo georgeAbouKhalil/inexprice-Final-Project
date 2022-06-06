@@ -3,6 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,19 +12,18 @@ export class ChatService {
 
     // // Client Socket:
     // private socket: Socket;
-
+    connectedUser: any;
     // Connect to server: 
-    constructor(private httpClient: HttpClient) { }
-
+    constructor(private http: HttpClient, public authService: AuthService) { }
     private socket = io('http://localhost:3001');
-
+    
     // // Connecting to server: 
     // public connect(): void {
-
-    //     // Connect to server: 
-    //     this.socket = io("http://localhost:3001");
-
-    //     // Listen to new message: 
+        
+        //     // Connect to server: 
+        //     this.socket = io("http://localhost:3001");
+        
+        //     // Listen to new message: 
     //     this.socket.on("msg-added", (msg ) =>{
 
 
@@ -51,15 +51,20 @@ export class ChatService {
     // }
 
 
+    async getUsersList() {
+        const usersList = await this.http.get<any>(environment.messageUrl + "by-user/" ).toPromise();
+        return usersList;
+    }
+    
     // save messagep
     saveMessage(user) {
-        return this.httpClient.post<any>(environment.messageUrl, user);
+        return this.http.post<any>(environment.messageUrl, user);
     }
     // get Email Marketing Messages
     allMessages(userId) {
         // console.log({ userId });
 
-        const msg = this.httpClient.get<any>(environment.messageUrl + "by-user/" + userId);
+        const msg = this.http.get<any>(environment.messageUrl + "by-user/" + userId);
         // console.log({ msg });
 
         return msg;
@@ -82,6 +87,7 @@ export class ChatService {
     typing(data) {
         this.socket.emit('typing', data);
     }
+
     userTyping() {
         const observable = new Observable<{ userName: string, message: string }>(observer => {
             this.socket.on('user typing', (data) => {

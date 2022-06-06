@@ -63,4 +63,11 @@ public getUser() {
 
 }
 
+// public async changePassword(password: any) {
+public async changePassword(user: any) {
+  console.log({user});
+  // return this.http.put<UserModel>('http://localhost:3001/api/auth', password).toPromise();
+  return await this.http.put<UserModel>('http://localhost:3001/api/auth/' + user._id , user).toPromise();
+}                                       
+
 }

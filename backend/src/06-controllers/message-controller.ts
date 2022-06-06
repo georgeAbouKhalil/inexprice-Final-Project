@@ -30,8 +30,22 @@ const router = express.Router();
 router.get("/by-user/:userId",async (request: Request, response: Response, next: NextFunction) => {
     try{
         const userId = request.params.userId;
-        const cart = await logic.getMsgByUserId(userId);
-        response.json(cart);
+        const msgByUserId = await logic.getMsgByUserId(userId);
+        response.json(msgByUserId);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+
+// Route for getting one that send msg to database :
+router.get("/by-user",async (request: Request, response: Response, next: NextFunction) => {
+    try{
+        // const userId = request.params.userId;
+        const users = await logic.getAllMsgUsers();
+        console.log({users});
+        
+        response.json(users);
     }
     catch(err: any) {
         next(err);

@@ -9,6 +9,7 @@ export interface IMessageModel extends Document {
     // we don't define the _id because it exists by default.
     userId: Schema.Types.ObjectId;
     role: Schema.Types.ObjectId;
+    admin: string;
     name: string;
     userName: string;
     email: string;
@@ -23,6 +24,9 @@ const MessageModelSchema = new Schema<IMessageModel>({
     // userId: {
     //     type: Schema.Types.ObjectId,
     // },
+    admin: {
+        type: String,
+    },
     name: {
         type: String,
     },

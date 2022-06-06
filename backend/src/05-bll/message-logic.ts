@@ -43,6 +43,12 @@ async function getMsgByUserId(userId: string): Promise<IMessageModel | any> {
     return msgs;
 }
 
+// get all users that have msg in database
+async function getAllMsgUsers(): Promise<IMessageModel[]> {
+    return MessageModel.find().exec();
+}
+
+
 // Insert:
 async function addMessage(message: IMessageModel): Promise<IMessageModel> {
 
@@ -151,5 +157,6 @@ export default {
     getSomeProducts,
     getPagedProducts,
     getProductsUsingRegex,
+    getAllMsgUsers,
     getMsgByUserId
 };

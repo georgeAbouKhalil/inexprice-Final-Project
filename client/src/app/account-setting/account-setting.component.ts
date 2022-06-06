@@ -17,6 +17,11 @@ export class AccountSettingComponent implements OnInit {
   public user: any;
 
   credit_card: FormGroup;
+  Password_valid: FormGroup;
+  oldPassword:String = "";
+  confrimPassword:String = "";
+  oldPasswordFromDB:string = "";
+
   cardNumber:string = "";
   cardHolder:string = "";
   cardDateMM:string = "";
@@ -24,13 +29,16 @@ export class AccountSettingComponent implements OnInit {
   cardCVV:string = "";
   rotato: any;
   creditCards:any = [] = [];
-  constructor(public myAuthService: AuthService,private cr: FormBuilder,private notify: NotifyService, private creditService: CreditCardService) { }
+
+
+  constructor(public myAuthService: AuthService,private cr: FormBuilder,private ps: FormBuilder,private notify: NotifyService, private creditService: CreditCardService) { }
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
     console.log(this.user);
     
     this.validCreditCard();
+    this.validPasswordUser();
     this.creditCards = await this.creditService.getCreditCardById(this.user._id);
     
     console.log(this.creditCards);
@@ -137,8 +145,6 @@ export class AccountSettingComponent implements OnInit {
       alert(err)
     }
   }
-
-
   
   public async deleteCreditCart(creditCard: CreditCardModel) {
     try {
@@ -152,6 +158,45 @@ console.log(creditCard._id);
     }
     catch (err: any) {
       this.notify.error(err);
+    }
+  }
+
+  validPasswordUser(){
+    this.Password_valid = this.ps.group({
+      password: ['',[Validators.required,Validators.minLength(4),Validators.maxLength(10)]],
+      oldPassword: [this.oldPassword],
+      confrimPassword: [this.confrimPassword]
+    });
+  }
+
+  sendOldPassword(updateOldPassword){
+    this.oldPassword = updateOldPassword;
+
+  }
+  sendConfrimPassword(updateConfirmPassword){
+    this.confrimPassword = updateConfirmPassword;
+  }
+
+
+
+  async onSubmitPassword(){
+    
+    try{
+      console.log(this.Password_valid.valid);
+      
+      if(this.oldPassword === this.user.password && this.oldPassword !== this.confrimPassword ){
+        if(this.Password_valid.valid){
+          this.user.password = this.confrimPassword;         
+          await this.myAuthService.changePassword(this.user);          
+          this.Password_valid.reset();
+          this.notify.success("password has been changed please login again")
+          this.myAuthService.logout();
+        }
+      } else {
+        this.notify.error("wrong password");
+      }
+    }catch (err){
+      alert(err)
     }
   }
 

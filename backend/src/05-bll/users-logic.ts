@@ -82,6 +82,8 @@ async function updateUser(user: IUserModel): Promise<IUserModel> {
     const errors = user.validateSync();
     if(errors) throw new ClientError(404, errors.message);
     
+    console.log({user});
+    
     // Update:
     const updatedUser = await UserModel.findByIdAndUpdate(user._id, user, {returnOriginal: false}).exec();
 

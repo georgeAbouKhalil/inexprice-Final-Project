@@ -33,6 +33,7 @@ export class MessagesComponent implements OnInit {
   showTypingPara = false;
   @ViewChild('chatWindow') chatWindow: ElementRef;
   connectedUser : any;
+  usersList: any;
 
   constructor(private chatService: ChatService, private router: Router, public authService: AuthService) {
  
@@ -51,11 +52,20 @@ export class MessagesComponent implements OnInit {
 
    }
 
-  ngOnInit() {
-    this.connectedUser = this.authService.getUser();  
+  async ngOnInit() {
+    this.connectedUser = this.authService.getUser();     
     this.username = this.connectedUser.firstName;
     this.name = this.connectedUser.userName;
     this.getMessages(this.connectedUser._id);
+
+console.log(this.connectedUser.role);
+
+
+    if (this.connectedUser.role === "admin") {
+      this.usersList = await this.chatService.getUsersList();
+      console.log(this.usersList);
+      
+    }
   }
   
    

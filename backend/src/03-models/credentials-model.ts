@@ -23,4 +23,4 @@ const CredentialsSchema = new Schema({
     id: false
 });
 
-export const CredentialsModel = model("CredentialsModel", CredentialsSchema, "users");
+export const CredentialsModel = model("CredentialsModel", CredentialsSchema, "Users");

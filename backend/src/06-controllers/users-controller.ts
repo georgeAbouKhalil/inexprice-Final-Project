@@ -68,10 +68,12 @@ router.post("/",async (request: Request, response: Response, next: NextFunction)
 });
 
 // Route for updating a user:
-router.put("/:_id",async (request: Request, response: Response, next: NextFunction) => {
+router.put("/:id",async (request: Request, response: Response, next: NextFunction) => {
     try{
-        request.body._id = request.params._id;
         const userToUpdate = new UserModel(request.body);
+
+        console.log({userToUpdate});
+        
         const updatedUser = await logic.updateUser(userToUpdate);
         response.status(201).json(updatedUser);
     }

@@ -13,9 +13,15 @@ export class OrdersService {
 
   public async order( orderDetails: OrderModel){
     const orderrr = await this.http.post<UserModel>(environment.orderUrl,orderDetails).toPromise();
-console.log({orderrr});
+// console.log({orderrr});
 
     return orderrr
+  }
+
+
+  public async getOrderList( userId: string){
+    return await this.http.get<OrderModel[]>(environment.orderUrl + 'by-user/'+ userId).toPromise();
+
   }
 
 

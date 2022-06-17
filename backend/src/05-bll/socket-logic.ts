@@ -1,6 +1,8 @@
 import { MessageModel } from './../03-models/message-model';
 import { Server as HttpServer } from "http";
 import { Server as SocketIoServer, Socket } from "socket.io";
+import jwt from "../01-Utils/jwt";
+import usersLogic from './users-logic';
 
 let socketIoServer : SocketIoServer;
 
@@ -27,12 +29,17 @@ function socketIo(httpServer: HttpServer): void {
         // });
 
 
-
-        socket.on('message', function(data) {
+        socket.on('message', async function(data) {
+            
+            // const user = await usersLogic.getUserIdByUserName(data.userName)
+            // console.log({data});
+            // console.log({user});
+            // if (user.role === "admin" && data.userName === user.userName) {
+            // }
             // var d = new Date();
             // socketIoServer.in(data.userName).emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
             socketIoServer.emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
-
+           
           });
           
           socket.on('typing', function(data) {                                         

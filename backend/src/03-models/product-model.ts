@@ -64,7 +64,6 @@ const ProductSchema = new Schema<IProductModel>({
         type: Number,
         required: [true, "Missing price"],
         min: [0, "Price can't be negative"],
-        max: [1000, "Price can't exceed 1000"]
     },
     description: {
         type: String,

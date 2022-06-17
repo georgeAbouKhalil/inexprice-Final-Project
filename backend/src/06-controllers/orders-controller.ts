@@ -15,6 +15,19 @@ router.get("/", async (request: Request, response: Response, next: NextFunction)
     }
 });
 
+router.get("/by-user/:userId", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+
+     
+        const userId = request.params.userId;
+        const orders = await logic.getAllOrdersByUserId(userId);
+        response.json(orders);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+
 router.get("/:_id", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;
@@ -28,6 +41,7 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        request.body.order_number = Math.floor(Math.random() * 1000000) ; 
         const order = new OrderModel(request.body);
         const addedOrder= await logic.addOrder(order);
 

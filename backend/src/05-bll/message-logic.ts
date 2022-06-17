@@ -28,13 +28,11 @@ async function getOneCart(_id: string): Promise<ICartModel> {
 }
 
 async function getMsgByUserId(userId: string): Promise<IMessageModel | any> {
-    console.log({userId});
-    
+   
     // Validate _id:
     if (!mongoose.isValidObjectId(userId)) throw new ClientError(404, `user_id ${userId} is invalid`);
 
     const msgs = await MessageModel.find({"userId": userId}).populate("user").exec();
-    console.log(msgs);
     
     // const cart = await CartModel.findOne({"user_id": user_id}).populate("user").exec();
 

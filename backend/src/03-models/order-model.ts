@@ -12,7 +12,7 @@ export interface IOrderModel extends Document {
      delivery_city: string;
      order_date: string;
      credit_card: string;
-
+     order_number: Number;
 }
 
 // Define model schema:
@@ -29,6 +29,10 @@ const OrderSchema = new Schema<IOrderModel>({
         type: Number,
         required: [true, "Missing stock"],
         min: [0, "Stock can't be negative"]
+    },
+    order_number: {
+        type: Number,
+        unique: true
     },
     delivery_city: {
         type: String,

@@ -23,6 +23,7 @@ import { AccountSettingComponent } from './account-setting/account-setting.compo
 import { HttpClientModule } from '@angular/common/http';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { MessagesComponent } from './messages/messages.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MessagesComponent } from './messages/messages.component';
     AccountSettingComponent,
     WishlistComponent,
     MessagesComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

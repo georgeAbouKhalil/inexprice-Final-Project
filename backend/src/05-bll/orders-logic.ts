@@ -5,12 +5,13 @@ import { IOrderModel, OrderModel } from "../03-models/order-model";
 
 // Get all:
 async function getAllOrders(): Promise<IOrderModel[]> {
-
     // Get all products without virtual fields:
     return OrderModel.find().exec();
+}
 
-    // Get all product with specific virtual fields:
-    // return OrderModel.find().populate("category").exec();
+ // Get all Orders by user ID
+ async function getAllOrdersByUserId(user_id: string): Promise<IOrderModel[]> {
+    return await OrderModel.find({"user_id": user_id}).exec();
 }
 
 // Get one:
@@ -130,6 +131,7 @@ export default {
     addOrder,
     updateOrder,
     deleteOrder,
+    getAllOrdersByUserId,
     getPartialProducts,
     getSomeProducts,
     getPagedProducts,

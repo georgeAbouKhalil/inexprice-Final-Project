@@ -9,5 +9,6 @@ export class OrderModel {
      final_price : number;
      delivery_city: string;
      order_date: Date;
-     credit_card: string
+     credit_card: string;
+     order_number?: number;
 }

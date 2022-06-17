@@ -59,15 +59,20 @@ console.log(this.cartItems);
 
    
   public createReceiptFile(): void {
-    let receipt = `Thank you for buying from InexPrice!\n` +
-      `Here is your order from: ${this.orderDetails.order_date.toLocaleString()}: \n\n Products: \n`;
+    let receipt = `Reception\n\nThank you for buying from InexPrice!\n` +
+      `Here is your order from: ${this.orderDetails.order_date.toLocaleString()}: \n\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n`;
+
+      receipt += `Products: \n`;
+
+
+
 
     for (let item of this.cartItems) {    
       receipt += `${item.product.name.toUpperCase()} - Amount: ${item.quantity} -  Price: ${item.totalPrice}$ \n`;
     }
 
     receipt +=
-      `\n Total Price: ${this.orderDetails.final_price}$  \n\n\n` +
+      `  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n Total Price: ${this.orderDetails.final_price}$ \n\n\n` +
       `Shipping destination: ${this.orderDetails.delivery_city} \n ` +
       `Thanks for buying from us ${this.user.firstName} ${this.user.lastName} 😃`;
 

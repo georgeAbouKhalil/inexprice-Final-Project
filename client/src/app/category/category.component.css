@@ -76,3 +76,23 @@ img{
     width: auto;
     height:  200px;
 }
+.pagination ::ng-deep{
+    position: relative;
+    left: 20vh;
+   
+}
+.pagination ::ng-deep .ngx-pagination .current{
+    background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
+}
+.pagination ::ng-deep .ngx-pagination a:hover{
+    background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
+}
+.pagination ::ng-deep a{
+    width: auto;
+    height: auto;
+    position: relative;
+    border-radius: 4px;
+    padding-left: 9px;
+    padding-right: 9px;
+    margin:2px;
+}

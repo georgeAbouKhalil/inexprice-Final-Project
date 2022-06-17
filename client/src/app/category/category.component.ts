@@ -18,7 +18,7 @@ import { WishListService } from '../services/wishlist.service';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-
+  currentPg:number =1; 
   public categories: CategoryModel[];
   public cart: any;
   public error: string = '';

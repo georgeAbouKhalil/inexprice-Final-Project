@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { MessagesComponent } from './messages/messages.component';
 import { OrderComponent } from './order/order.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { OrderComponent } from './order/order.component';
     ReactiveFormsModule,
     TextMaskModule,
     HttpClientModule,
-
+    NgxPaginationModule
 
   ],
   providers: [],

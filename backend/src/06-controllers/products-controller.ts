@@ -28,6 +28,8 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const product = new ProductModel(request.body);
+        console.log({product});
+        
         const addedProduct = await logic.addProduct(product);
         response.status(201).json(addedProduct);
     }
@@ -53,11 +55,7 @@ router.put("/:_id", async (request: Request, response: Response, next: NextFunct
 router.get("/by-types/:catId", async (request : Request, response : Response, next : NextFunction) => {
     try {
         const _id = request.params.catId;
-        console.log({_id});
-        
         const products = await logic.getProductsByTypes(_id);
-        console.log({products});
-        
         response.json(products);
     } catch (err : any) {
         next(err);

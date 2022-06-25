@@ -20,7 +20,8 @@
 		</div>
 	</header>
 	<table style="text-align:center;">
-		<tr>
+		<h1 *ngIf="wishProducts.length === 0">Go and save some Products</h1>
+		<tr *ngIf="wishProducts.length>0">
 			<th>Remove</th>
 			<th>Image</th>
 			<th>Product</th>
@@ -39,9 +40,50 @@
 			<ng-template #elseBlock> <td style=" text-align: center;">In Stock</td></ng-template>
 			<!-- <td><button  class="btn btn-primary">Add</button></td> -->
 			<td>
-				<div style="margin-bottom: 60%;" class="add-bag d-flex align-items-center">
-					<a class="add-btn" ><span class="lnr lnr-cross"></span></a>
-				</div></td>
+				<div style="margin-bottom: 60%; cursor: pointer;" class="add-bag d-flex align-items-center">
+					<a *ngIf="productStock != 0 || wishP.product.inStock != 0" class="social-info" data-bs-toggle="modal"
+					[attr.data-bs-target]="'#product'+wishP.product._id" class="add-btn" ><span class="lnr lnr-cross"></span></a>
+					<!-- Modal -->
+							<div class="modal fade" id="{{'product'+wishP.product._id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content ">
+										<div class="modal-header">
+											<h3 class="modal-title" id="exampleModalLabel">{{wishP.product.name|titlecase}}
+											</h3>
+
+											<svg type="button" data-bs-dismiss="modal" aria-label="Close"
+												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+												<path fill-rule="evenodd"
+													d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+												<path fill-rule="evenodd"
+													d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+											</svg>
+
+										</div>
+										<div class="modal-body row">
+											<p class="col">Price: {{wishP.product.price}}$</p>
+											<div class="amount col">
+												<label for="amount" class="col">Amount: </label>
+												<input type="number" class="col" min="1" [(ngModel)]="amount"
+													value="{{ amount }}" name="amount" />
+											</div>
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+
+											<button type="button" class="btn btn-primary"
+												[disabled]="amount===0||amount===null" (click)="addToCart(wishP.product)"
+												data-bs-dismiss="modal">Add to cart</button>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</td>
 	  </tr>
 	  
 	</table>
@@ -49,6 +91,10 @@
 	
 	<app-footer></app-footer>
 
+	<!-- scroll to the top -->
+	<div id="progress">
+		<a id="progress-value" class="gotopbtn" href="/wishlist"><i class="fas fa-arrow-up"></i></a>
+	</div>
 
 </body>
 </html>

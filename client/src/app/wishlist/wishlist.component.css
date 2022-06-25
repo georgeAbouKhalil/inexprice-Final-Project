@@ -74,7 +74,7 @@
 }
 img{
     width: auto;
-    height:  200px;
+    max-height:  200px;
 }
 
 table{
@@ -82,7 +82,6 @@ table{
     margin-top: 15%;
     margin-bottom: 15%;
     margin-left: 20%;
-   
 }
 table, th, td {
     border:1px solid #ddd;
@@ -102,4 +101,43 @@ table, th, td {
 td > img{
     width: 80px;
     height: 100px;
+}
+
+@media screen and (max-width: 767px) {
+    thead {
+        
+        display: none;
+    }
+    td{
+        display: block;
+    }
+    th{
+        display: none;
+    }
+    td:first-child{
+        background: #333;
+        text-align: center;
+        
+    }
+    td:nth-child(3)::before{
+        content: "Product ";
+        color: #222222;
+    }
+    td:nth-child(4)::before{
+        content: "dis ";
+    }
+    td:nth-child(5)::before{
+        content: "Price ";
+    }
+    td{
+        text-align: right;
+    }
+    td::before{
+        float: left;
+    }
+    td::before{
+        float: left;
+        margin-right: 5Px;
+        font-weight: bold;
+    }
 }

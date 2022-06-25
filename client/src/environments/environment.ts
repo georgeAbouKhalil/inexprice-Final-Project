@@ -9,13 +9,14 @@ export const environment = {
   loginUrl: "http://localhost:3001/api/auth/login",
   categories: 'http://localhost:3001/api/categories/',
   prodByCat : 'http://localhost:3001/api/products/by-types/',
+  productUrl: 'http://localhost:3001/api/products/',
   cartUrl : 'http://localhost:3001/api/carts/',
   cartItemUrl : 'http://localhost:3001/api/cartItem/',
   creditCardUrl : 'http://localhost:3001/api/creditCard/',
   orderUrl: 'http://localhost:3001/api/orders/',
   wishListUrl: 'http://localhost:3001/api/wishList/',
-  messageUrl: 'http://localhost:3001/api/message/'
-  
+  messageUrl: 'http://localhost:3001/api/message/',
+
 };
 
 /*

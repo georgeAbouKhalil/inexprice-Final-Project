@@ -1,0 +1,50 @@
+<div class="box">
+
+    <form #myForm="ngForm" (submit)="send()">
+
+        <label>Category: </label>
+        <select #typeBox="ngModel" name="type" [(ngModel)]="product.type" required>
+                <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
+        </select>
+
+        <label>Brand: </label>
+        <input #brandBox="ngModel" type="text" [(ngModel)]="product.brand" name="brand" required >
+        <span *ngIf="brandBox.errors?.required && brandBox.touched">Missing brand.</span>
+
+        <label>Name: </label>
+        <input #nameBox="ngModel" type="text" [(ngModel)]="product.name" name="name" required>
+        <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing name.</span>
+
+        <label>size: </label>
+        <input #sizeBox="ngModel" type="text" [(ngModel)]="product.size" name="size" required>
+        <span *ngIf="sizeBox.errors?.required && nameBox.touched">Missing size.</span>
+
+        <label>color: </label>
+        <input #colorBox="ngModel" type="text" [(ngModel)]="product.color" name="color" required>
+        <span *ngIf="colorBox.errors?.required && colorBox.touched">Missing color.</span>
+
+        <label>img: </label>
+        <input #nameBox="ngModel" type="url" [(ngModel)]="product.img" name="img" required>
+        <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing img.</span>
+
+        <label>Price: </label>
+        <input #priceBox="ngModel" type="number" step="0.01" [(ngModel)]="product.price" name="price" required>
+        <span *ngIf="priceBox.invalid && priceBox.touched">Missing price.</span>
+
+        <label>description: </label>
+        <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description" required>
+        <span *ngIf="descriptionBox.errors?.required && descriptionBox.touched">Missing description.</span>
+
+        <label>inStock: </label>
+        <input #inStockBox="ngModel" type="number" [(ngModel)]="product.inStock" name="inStock" required>
+        <span *ngIf="inStockBox.errors?.required && inStockBox.touched">Missing inStock.</span>
+        
+        <label>discount: </label>
+        <input #discountBox="ngModel" type="number" [(ngModel)]="product.discount" name="discount" required>
+        <span *ngIf="discountBox.invalid && discountBox.touched">Missing discount.</span>
+
+        <button [disabled]="myForm.form.invalid">Add</button>
+
+    </form>
+
+</div>

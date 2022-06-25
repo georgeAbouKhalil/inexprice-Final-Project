@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { UserModel } from '../models/user.model';
 import { WishListModel } from '../models/wishlist.model';
 import { WishListService } from '../services/wishlist.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-category',
@@ -52,13 +53,20 @@ export class CategoryComponent implements OnInit {
 
     // get products
     this.productsService.getProducts().subscribe(
-      (productsList) => {
+      async (productsList) => {
         this.productsService.products = productsList;
+        // check if categoryid in sessionStorage from home sent and get filtered category products
+        let categoryId = sessionStorage.getItem('categoryId');
+        if ( categoryId ) {
+          this.productsService.products = await this.categoriesService.getProductsByCategory(categoryId);
+          sessionStorage.clear();
+        }
       },
       (serverErrorResponse) => {
         this.error = serverErrorResponse.error.error;
       }
     );
+
   }
 
   async filterCategories(categoryId: any) {
@@ -240,5 +248,19 @@ export class CategoryComponent implements OnInit {
     this.notify.success("product has added from wishlist");
 
   }
+
+  public async delete(product) {
+    try {
+        const answer = confirm("Are you sure?");
+        if (!answer) return;
+        await this.productsService.deleteProduct(product._id);
+        this.notify.success("Product has been deleted.")
+        const index = this.productsService.products.findIndex(p => p._id === product._id);
+        this.productsService.products.splice(index, 1);
+    }
+    catch (err) {
+        this.notify.error(err);
+    }
+}
 
 }

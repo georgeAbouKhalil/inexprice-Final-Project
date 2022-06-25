@@ -82,7 +82,10 @@
 						<div class="card_area d-flex align-items-center" data-bs-toggle="modal"
 							[attr.data-bs-target]="'#product'+product._id">
 							<a *ngIf="product.inStock>0" class="primary-btn" style="color: white;">Add to Cart</a>
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+							
+						</div>
+						<div class="card_area d-flex align-items-center" style="position: relative; left: 26vh; top: -5.2vh; color: white;">
+							<a class="icon_btn" (click)="wish(product)"><i class="lnr lnr lnr-heart"></i></a>
 						</div>
 					</div>
 					<!-- Modal -->

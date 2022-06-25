@@ -1,3 +1,4 @@
 export class CategoryModel {
-    public name: string
+    _id?: string;
+    name: string
 }

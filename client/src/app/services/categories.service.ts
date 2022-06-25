@@ -13,6 +13,7 @@ import { ProductModel } from '../models/product.model';
 })
 export class CategoriesService {
     public categories: CategoryModel[];
+  categoryDetails : CategoryModel;
 
     constructor(private http: HttpClient) {}
 

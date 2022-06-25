@@ -6,7 +6,7 @@ export class ProductModel {
     brand?: string;
     name?: string;
     size?: string;
-    colo?: string;
+    color?: string;
     img?: string;
     price?: number;
     description?: string;

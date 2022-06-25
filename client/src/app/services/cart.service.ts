@@ -79,7 +79,7 @@ export class CartsService {
   // }
 
   public async addToCart(purchasedProduct: ProductModel) {
-  //  console.log({purchasedProduct});
+   console.log({purchasedProduct});
    
     return await this.http.post<ProductModel>(
       // 'http://localhost:3001/api/carts/items',

@@ -25,6 +25,8 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { MessagesComponent } from './messages/messages.component';
 import { OrderComponent } from './order/order.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AddProductComponent } from './admin/add-product/add-product.component';
+import { UpdateProductComponent } from './admin/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     WishlistComponent,
     MessagesComponent,
     OrderComponent,
+    AddProductComponent,
+    UpdateProductComponent,
+
   ],
   imports: [
     BrowserModule,

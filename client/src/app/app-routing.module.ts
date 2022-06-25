@@ -13,6 +13,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SignupComponent } from './signup/signup.component';
 import { ViewMoreComponent } from './view-more/view-more.component';
 import { MessagesComponent } from './messages/messages.component';
+import { UpdateProductComponent } from './admin/update-product/update-product.component';
+import { AddProductComponent } from './admin/add-product/add-product.component';
 
 const routes: Routes = [
   {path:'',pathMatch:'full',redirectTo:'home'},
@@ -30,7 +32,9 @@ const routes: Routes = [
   {path:'wishlist',component:WishlistComponent},
   {path:'messages',component:MessagesComponent},
   {path:'order',component:OrderComponent},
-  {path: '**',component: PageNotFoundComponent}
+  { path: "category/Product/new", component: AddProductComponent },
+  { path: "category/edit/:id", component: UpdateProductComponent },
+  {path: '**',component: PageNotFoundComponent},
 ];
 
 @NgModule({

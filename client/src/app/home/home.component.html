@@ -192,44 +192,44 @@
 							<div class="single-deal">
 								<div class="overlay"></div>
 								<img class="img-fluid w-100" src="assets/img/category/camera.jpg" style="width: 397px; height: 250px;">
-								<a href="assets/img/category/c1.jpg" class="img-pop-up" target="_blank">
+								<!-- <a href="/category"> -->
 									<div class="deal-details">
-										<h6 class="deal-title">cameras</h6>
+										<h6 class="deal-title" (click)="categoryFilter($event)" style="cursor:pointer ;">camera</h6>
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-4">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="assets/img/category/watch.jpg_.jpg" alt="">
-								<a href="assets/img/category/c2.jpg" class="img-pop-up" target="_blank">
+								<img class="img-fluid w-100" src="assets/img/category/watch.jpg_.jpg" >
+								<!-- <a href="/category"> -->
 									<div class="deal-details">
-										<h6 class="deal-title">Watches</h6>
+										<h6 class="deal-title" (click)="categoryFilter($event)" style="cursor:pointer ;">watch</h6>
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-4">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="assets/img/category/c3.jpg" alt="">
-								<a href="assets/img/category/c3.jpg" class="img-pop-up" target="_blank">
+								<img class="img-fluid w-100" src="assets/img/category/c3.jpg">
+								<!-- <a href="/category"> -->
 									<div class="deal-details">
-										<h6 class="deal-title">Shoes</h6>
+										<h6 class="deal-title" (click)="categoryFilter($event)" style="cursor:pointer ;">shoes</h6>
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 						<div class="col-lg-8 col-md-8">
 							<div class="single-deal">
 								<div class="overlay"></div>
 								<img class="img-fluid w-100"  src="assets/img/category/headphone.jpg" style="height: 200px; width: 396.66px;">
-								<a href="assets/img/category/c4.jpg" class="img-pop-up" target="_blank">
+								<!-- <a href="/category"> -->
 									<div class="deal-details">
-										<h6 class="deal-title">HeadPhones</h6>
+										<h6 class="deal-title" (click)="categoryFilter($event)" style="cursor:pointer ;">headphone</h6>
 									</div>
-								</a>
+								<!-- </a> -->
 							</div>
 						</div>
 					</div>
@@ -237,12 +237,7 @@
 				<div class="col-lg-4 col-md-6">
 					<div class="single-deal">
 						<div class="overlay"></div>
-						<img class="img-fluid w-100" src="assets/img/category/c5.jpg" alt="">
-						<a href="assets/img/category/c5.jpg" class="img-pop-up" target="_blank">
-							<div class="deal-details">
-								<h6 class="deal-title">Sneaker for Sports</h6>
-							</div>
-						</a>
+						<img class="img-fluid w-100" src="assets/img/category/c5.jpg">
 					</div>
 				</div>
 			</div>
@@ -266,32 +261,24 @@
 				<div class="row">
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6" *ngFor="let disProduct of disProducts">
-						<div class="single-product">
-							<img class="img-fluid" style="width: auto;max-height: 200px;" src="{{disProduct.img}}" alt="">
+						<div class="single-product card_d">
+							<img class="img-fluid" style="width: auto;max-height: 120px;" src="{{disProduct.img}}" alt="">
 							<div class="product-details">
-								<h6>{{disProduct.name}}</h6>
+								
+								<h6><img style="height: 15px; width: 37.5px;" src="https://i.imgur.com/tuFSJNg.png" >{{disProduct.name | slice:0:15}}</h6>
 								<div class="price">
 									<h6>{{disProduct.price *(1-disProduct.discount/100) | currency}}</h6>
 									<!-- <h6 class="l-through">{{disProduct.discount | percent}}</h6> -->
 									<h6 class="l-through">{{disProduct.discount/100}}%</h6>
 								</div>
+								
 								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
 									 <a [routerLink]="'/home/'+ disProduct._id" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">view more</p>
 									</a>
 								</div>
-							</div>
+							</div>	
 						</div>
 					</div>
 				</div>
@@ -311,25 +298,19 @@
 				<div class="row">
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6" *ngFor="let product of productsService.products | slice:28:36">
-						<div class="single-product">
-							<img class="img-fluid" style="width: auto;max-height: 200px;" src={{product.img}} alt="">
+						<div class="single-product card_d">
+							<img class="img-fluid" style="width: auto;max-height: 118px;" src={{product.img}}>
+							
 							<div class="product-details">
-								<h6>{{product.name|titlecase}}</h6>
+								<h6>{{product.name|titlecase | slice:0:15}}</h6>
 								<div class="price">
 									<h6>{{product.price|currency}}</h6>
+									<img src="https://i.imgur.com/U3eSu70.jpg" style="width: 80px;" >
+
 									<!-- <h6 class="l-through">$210.00</h6> -->
+
 								</div>
 								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
 									<a [routerLink]="'/home/'+ product._id" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">view more</p>
@@ -337,15 +318,7 @@
 								</div>
 							</div>
 						</div>
-					
 					</div>
-					
-					
-					
-					
-					
-					
-				
 				</div>
 			</div>
 		</div>
@@ -374,226 +347,8 @@
 									<h6 class="l-through">$210.00</h6>
 								</div>
 								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
+								
 									 <a  class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p2.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p3.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p4.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p5.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p6.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p7.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p8.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									
-									<a href="" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">view more</p>
 									</a>
@@ -681,20 +436,20 @@
 	<section class="brand-area section_gap">
 		<div class="container">
 			<div class="row">
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="assets/img/brand/1.png" alt="">
+				<a class="col single-img">
+					<img class="img-fluid d-block mx-auto" src="https://logos-world.net/wp-content/uploads/2020/04/Nike-Logo.png" style="height: 111px ; width: 120px;">
 				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="assets/img/brand/2.png" alt="">
+				<a class="col single-img">
+					<img class="img-fluid d-block mx-auto" src="https://upload.wikimedia.org/wikipedia/commons/2/24/Adidas_logo.png" style="height: 111px ; width: 100px;">
 				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="assets/img/brand/3.png" alt="">
+				<a class="col single-img">
+					<img class="img-fluid d-block mx-auto" src="https://logos-world.net/wp-content/uploads/2020/11/Logitech-Logo.png" style="height: 111px ; width: 100px;">
 				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="assets/img/brand/4.png" alt="">
+				<a class="col single-img">
+					<img class="img-fluid d-block mx-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Dell_logo_2016_black.svg/1024px-Dell_logo_2016_black.svg.png" style="height: 111px ; width: 100px;">
 				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="assets/img/brand/5.png" alt="">
+				<a class="col single-img">
+					<img class="img-fluid d-block mx-auto" src="https://seeklogo.com/images/R/Rolex-logo-C893482458-seeklogo.com.png" style="height: 111px ; width: 120px;">
 				</a>
 			</div>
 		</div>

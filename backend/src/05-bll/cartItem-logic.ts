@@ -37,7 +37,6 @@ async function addCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 }
 
 async function checkIfProductExistInCart(product) {
-    console.log({product});
     
     return CartItemModel.findOne({ "cart_id": product.cart_id, "product_id": product.product_id, "quantity" : product.quantity})
 }
@@ -46,7 +45,6 @@ async function checkIfProductExistInCart(product) {
 async function updateCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 
     // if (!mongoose.Types.ObjectId.isValid(product._id)) throw new ClientError(404, `_id ${product._id} not valid`);
-console.log('product ', product);
 
     // Validation:
     // const errors = product.validateSync();

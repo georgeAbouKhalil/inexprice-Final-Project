@@ -36,6 +36,8 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
         request.body.price = request.body.price * (1 - request.body.discount / 100);
         request.body.totalPrice = request.body.totalPrice * (1 - request.body.discount / 100);
         const cartItem = new CartItemModel(request.body);
+        console.log({cartItem});
+        
         //update inStock in database
         const oldProduct = await productsLogic.getOneProduct(cartItem.product_id.toString());
         oldProduct.inStock = oldProduct.inStock - cartItem.quantity;

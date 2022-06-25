@@ -79,7 +79,6 @@ img{
 .pagination ::ng-deep{
     position: relative;
     left: 20vh;
-   
 }
 .pagination ::ng-deep .ngx-pagination .current{
     background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
@@ -96,3 +95,4 @@ img{
     padding-right: 9px;
     margin:2px;
 }
+

@@ -1,25 +1,54 @@
 <div class="box">
-<!-- 
+
     <form (submit)="update()" [formGroup]="productForm">
 
-        <label>Name: </label>
+        <!-- <label>Category: </label> -->
+        Category: 
+        <select name="type" [formControl]="typeControl" required>
+            <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
+        </select>
+
+        <span *ngIf="typeControl.errors?.required && typeControl.touched">Missing category.</span>
+
+        <br>
+        Brand:
+        <input type="text" [formControl]="brandControl">
+        <span *ngIf="brandControl.errors?.required && brandControl.touched">Missing brand.</span>
+
+        Name:
         <input type="text" [formControl]="nameControl">
         <span *ngIf="nameControl.errors?.required && nameControl.touched">Missing name.</span>
-        <span *ngIf="nameControl.errors?.pattern && nameControl.touched">Name must start with a capital letter.</span>
 
-        <label>Price: </label>
+        Size:
+        <input type="text" [formControl]="sizeControl">
+        <span *ngIf="sizeControl.errors?.required && sizeControl.touched">Missing size.</span>
+
+        Color:
+        <input type="text" [formControl]="colorControl">
+        <span *ngIf="colorControl.errors?.required && colorControl.touched">Missing color.</span>
+
+        Image:
+        <input type="url" [formControl]="imgControl">
+        <span *ngIf="imgControl.errors?.required && imgControl.touched">Missing image.</span>
+
+        Price:
         <input type="number" [formControl]="priceControl">
         <span *ngIf="priceControl.invalid && priceControl.touched">Missing price.</span>
 
-        <label>Stock: </label>
+        description:
+        <input type="text" [formControl]="descriptionControl">
+        <span *ngIf="descriptionControl.errors?.required && descriptionControl.touched">Missing description.</span>
+
+        Stock quantity:
         <input type="number" [formControl]="stockControl">
         <span *ngIf="stockControl.invalid && stockControl.touched">Missing stock.</span>
 
-        <label>Image: </label>
-        <input type="file" [formControl]="imageControl" (change)="saveImage($event)">
+        discount:
+        <input type="number" [formControl]="discountControl">
+        <span *ngIf="discountControl.invalid && discountControl.touched">Missing discount.</span>
 
         <button [disabled]="productForm.invalid">Update</button>
 
-    </form> -->
+    </form>
 
 </div>

@@ -96,3 +96,17 @@ img{
     margin:2px;
 }
 
+.my_icons{
+    float:right
+}
+
+.my_icons:hover{
+    color: red;
+}
+
+@media screen and (max-width: 700px) {
+    .pagination ::ng-deep .ngx-pagination {
+        position: relative;
+        left: -170px;
+    }
+}

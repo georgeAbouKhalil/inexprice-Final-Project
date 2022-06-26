@@ -19,11 +19,11 @@
         <input #sizeBox="ngModel" type="text" [(ngModel)]="product.size" name="size" required>
         <span *ngIf="sizeBox.errors?.required && nameBox.touched">Missing size.</span>
 
-        <label>color: </label>
+        <label>Color: </label>
         <input #colorBox="ngModel" type="text" [(ngModel)]="product.color" name="color" required>
         <span *ngIf="colorBox.errors?.required && colorBox.touched">Missing color.</span>
 
-        <label>img: </label>
+        <label>Image: </label>
         <input #nameBox="ngModel" type="url" [(ngModel)]="product.img" name="img" required>
         <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing img.</span>
 
@@ -35,7 +35,7 @@
         <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description" required>
         <span *ngIf="descriptionBox.errors?.required && descriptionBox.touched">Missing description.</span>
 
-        <label>inStock: </label>
+        <label>Stock quantity: </label>
         <input #inStockBox="ngModel" type="number" [(ngModel)]="product.inStock" name="inStock" required>
         <span *ngIf="inStockBox.errors?.required && inStockBox.touched">Missing inStock.</span>
         

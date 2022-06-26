@@ -33,26 +33,12 @@ export class ProductsService {
 
 
   public async addProduct(product: any) {
-        // // Handle FormData for images:
-        // const myFormData = new FormData();
-        // myFormData.append("type", product.type);
-        // myFormData.append("brand", product.brand);
-        // myFormData.append("name", product.name);
-        // myFormData.append("size", product.size);
-        // myFormData.append("color", product.color);
-        // myFormData.append("img", product.img);
-        // myFormData.append("price", product.price.toString());
-        // myFormData.append("desciption", product.desciption);
-        // myFormData.append("inStock", product.inStock);
-        // myFormData.append("discount", product.discount);
     return await this.http.post<ProductModel>(environment.productUrl, product).toPromise();   
 
   }
 
-  public async updateProduct(product: any) { 
-    // return this.http.put<ProductModel>('http://localhost:3001/api/products', product);
-    return await this.http.put<ProductModel>(environment.productUrl, product).toPromise();   
-
+  public async updateProduct(product: any) { console.log({product});
+    return await this.http.put<ProductModel>(environment.productUrl + product._id, product).toPromise();   
   }
 
   searchProduct(searchInput: string): Observable<ProductModel[]> {

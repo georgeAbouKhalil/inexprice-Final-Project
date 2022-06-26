@@ -1,5 +1,5 @@
 form {
-    width: 300px;
+    width: 500px;
     margin: auto;
     text-align: left;
 }
@@ -7,7 +7,7 @@ form {
 input, button, label {
 	width: 100%;
     box-sizing: border-box;
-    font-size: x-large;
+    font-size: medium;
     margin-bottom: 30px;
 }
 
@@ -17,3 +17,39 @@ span {
     color: red;
     font-size: x-large;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+    font-style: italic;
+    color: darkcyan;
+    background-image: linear-gradient(45deg, lightblue, white);
+}
+
+a {
+    color: blue;
+}
+
+.box {
+    display: inline-block;
+    text-align: left;
+    border: 1px solid black;
+    padding: 0 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.active {
+    color: darkslategrey;
+    font-style: italic;
+    font-weight: bold;
+}
+
+

@@ -15,6 +15,7 @@ import typesController from "./06-controllers/types-controller";
 import creditCardsController from "./06-controllers/creditCards-controller";
 import wishListController from "./06-controllers/wishlist-controller";
 import MessageController from "./06-controllers/message-controller";
+import MailController from "./06-controllers/email-controller";
 
 const server = express();
 
@@ -30,8 +31,10 @@ server.use("/api/categories", typesController);
 server.use("/api/creditCard", creditCardsController);
 server.use("/api/wishList", wishListController);
 server.use("/api/message", MessageController);
+server.use("/api/mail", MailController);
 
 server.use(errorsHandler);
+
 
 const httpServer = server.listen(config.port, () => console.log("Listening..."));    
 socketLogic.socketIo(httpServer);

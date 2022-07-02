@@ -31,7 +31,7 @@ export class CheckoutComponent implements OnInit {
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
     this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
-console.log(this.cartItems);
+
 
   }
 

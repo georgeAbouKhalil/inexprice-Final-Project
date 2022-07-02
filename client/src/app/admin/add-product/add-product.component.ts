@@ -24,12 +24,10 @@ export class AddProductComponent implements OnInit {
 
     async ngOnInit() {
         this.categories = await this.categoriesService.getAllCategories();
-        console.log(this.categories);
         
     }
 
     public async send() {
-        console.log(this.product);
         
         try {
             await this.myProductsService.addProduct(this.product);

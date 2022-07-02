@@ -42,6 +42,8 @@ export class CategoryComponent implements OnInit {
   wishProduct: WishListModel[] = [];
   clicked: boolean = false;
 
+  correctNameCategory:string;
+  ratesUser: any;
   constructor(private wishListService: WishListService, private authService: AuthService, private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
 
   }
@@ -50,6 +52,17 @@ export class CategoryComponent implements OnInit {
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.categories = await this.categoriesService.getAllCategories();
     this.user = this.authService.getUser();
+    console.log(this.user);
+    
+    // console.log(this.user.favorite);
+    
+    this.ratesUser = JSON.parse(localStorage.getItem("rates"));
+
+//     this.ratesUser = await this.authService.getUserRating(this.user.userName);
+// console.log(this.ratesUser);
+    
+    
+    
 
     // get products
     this.productsService.getProducts().subscribe(
@@ -72,22 +85,37 @@ export class CategoryComponent implements OnInit {
   async filterCategories(categoryId: any) {
     this.productsService.productsCategory = categoryId;
     this.productsService.products = await this.categoriesService.getProductsByCategory(categoryId);
+    
+
+    
+    for(let item in this.categories){
+      if(this.categories[item]._id === categoryId)
+      this.correctNameCategory = this.categories[item].name; //insert the name we click to the variable
+      
+    }
+
+    for(let item in this.user.favorite){
+        if(this.user.favorite[item].name == this.correctNameCategory){
+          console.log("item ",this.user.favorite[item].name);
+          console.log("rating ",this.user.favorite[item].rating);
+          // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
+          this.user.favorite[item].rating += 1;
+          console.log("after ",this.user.favorite[item].rating);
+      }
+    }
+    await this.authService.updateUser(this.user); // ask eliana why the array update only when I logout
   }
 
   public async addToCart(product) {
-    console.log({ product });
 
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    console.log('cartproduct ', this.cartProducts);
 
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-    console.log(this.cartP);
 
     this.getProduct = await this.productsService.getOneProduct(product._id);
-    console.log(this.getProduct);
 
     if (this.amount < 0) {
       this.amount = 1;
@@ -95,11 +123,6 @@ export class CategoryComponent implements OnInit {
       return;
     };
 
-    // this.stock = this.productsService.products.find((item) => item._id === product._id);
-    // console.log(this.stock);
-
-    // console.log('11111 ', this.getProduct.inStock);
-    // console.log('22222222 ', this.cartP[0]?.quantity);
 
     if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
       this.quantityCart = 0
@@ -139,7 +162,7 @@ export class CategoryComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      console.log({ productToAdd });
+      
 
       this.cartsService.addToCart(productToAdd);
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
@@ -149,10 +172,10 @@ export class CategoryComponent implements OnInit {
 
       const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
-      console.log(this.productsService.products[indexToDelete].inStock);
+      
 
       this.productStock = this.productsService.products[indexToDelete].inStock;
-      console.log(this.productStock);
+      
 
 
     } else if (ifInCart) {
@@ -168,16 +191,12 @@ export class CategoryComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      console.log({ productToUpdate });
-
-      console.log(this.cartP[0]);
-      console.log(this.getProduct);
-      console.log(this.updateStockProduct);
+      
 
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-      console.log('--111--    ', this.updateStockProduct.inStock);
+      
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
@@ -185,10 +204,7 @@ export class CategoryComponent implements OnInit {
             this.notify.success("This product has been updated in your shopping cart");
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            console.log(this.updateStockProduct);
-            console.log(this.getProduct.inStock);
-            console.log(productToUpdate.quantity);
-            console.log('--------', this.getProduct.inStock);
+           
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
@@ -197,12 +213,12 @@ export class CategoryComponent implements OnInit {
 
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-            console.log('--222--    ', this.updateStockProduct.inStock);
+           
 
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
 
-            console.log('********  ', this.updateStockProduct.inStock);
+            
 
             const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);
             this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;

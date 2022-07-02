@@ -22,9 +22,9 @@ export interface ICartItemModel extends Document {
 const CartItemSchema = new Schema<ICartItemModel>({
     quantity: {
         type: Number,
-        required: [true, "Missing price"],
-        min: [0, "Price can't be negative"],
-        max: [1000, "Price can't exceed 1000"]
+        required: [true, "Missing quantity"],
+        min: [0, "quantity can't be negative"],
+        max: [1000, "quantity can't exceed 1000"]
     },
     totalPrice: {
         type: Number,

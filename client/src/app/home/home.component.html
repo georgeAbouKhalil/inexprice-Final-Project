@@ -291,7 +291,7 @@
 					<div class="col-lg-6 text-center">
 						<div class="section-title">
 							<h1>Laptops</h1>
-							<p>The best leading laptops and tablets on the market</p>
+							<p>The best leading laptops on the market</p>
 						</div>
 					</div>
 				</div>
@@ -306,7 +306,6 @@
 								<div class="price">
 									<h6>{{product.price|currency}}</h6>
 									<img src="https://i.imgur.com/U3eSu70.jpg" style="width: 80px;" >
-
 									<!-- <h6 class="l-through">$210.00</h6> -->
 
 								</div>
@@ -336,19 +335,19 @@
 				</div>
 				<div class="row">
 					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="assets/img/product/p1.jpg" alt="">
+					<div class="col-lg-3 col-md-6" *ngFor="let product of recomendProducts | slice:0:12">
+						<div class="single-product card_d">
+							<img class="img-fluid" style="width: auto;max-height: 118px;" src={{product.img}} alt="">
 							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
+								<h6>{{product.name|titlecase | slice:0:15}}</h6>
 								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
+									<h6>{{product.price|currency}}</h6>
+									<h6 class="l-through">{{product.discount/100}}%</h6>
+									<img src="https://i.imgur.com/uM1yzcX.png" style="width: 90px;">
 								</div>
 								<div class="prd-bottom">
 								
-									 <a  class="social-info">
+									 <a [routerLink]="'/home/'+ product._id" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">view more</p>
 									</a>

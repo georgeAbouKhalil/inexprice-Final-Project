@@ -94,7 +94,7 @@
       
                   
                   <div class="mt-3">
-                    <button [disabled]="total===0"  class="btn btn-primary btn-block btn-lg" 
+                    <button [disabled]="total===0 || creditCards.length===0 || myRadio===''"  class="btn btn-primary btn-block btn-lg" 
                     data-bs-toggle="modal" [attr.data-bs-target]="'#modal'" (click)="makeOrder()" >
                       Proceed to payment <i class="fas fa-long-arrow-alt-right"></i>
                     </button>

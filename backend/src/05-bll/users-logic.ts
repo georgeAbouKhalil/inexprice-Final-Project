@@ -74,6 +74,13 @@ async function getUserIdByUserName(userName: string): Promise<IUserModel> {
 }
 
 
+// Get rating:
+async function getRating(userName: string): Promise<Object> {
+    const user = await UserModel.findOne({ "userName": userName }).exec();
+    return user.favorite;
+}
+
+
 async function addUser(user: IUserModel): Promise<IUserModel> {
     // Validation:
     const errors = user.validateSync();
@@ -118,5 +125,6 @@ export default {
     addUser,
     updateUser,
     deleteUser,
-    getUserIdByUserName
+    getUserIdByUserName,
+    getRating
 }

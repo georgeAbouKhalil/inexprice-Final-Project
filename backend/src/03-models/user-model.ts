@@ -16,7 +16,7 @@ export interface IUserModel extends Document {
     business: string;
     role: string;
     phone: string;
-
+    favorite:object;
 }
 
 // Define model schema:
@@ -90,6 +90,9 @@ const UserSchema = new Schema<IUserModel>({
     role: {
         type: String
     },
+    favorite:{
+        type: Object
+    }
 }, { 
     versionKey: false, // Don't create __v field
     toJSON: { virtuals: true }, // Fill also the virtual fields when we're calling a "populate" function

@@ -1,55 +1,103 @@
-form {
-    width: 500px;
-    margin: auto;
-    text-align: left;
-}
-
-input, button, label {
-	width: 100%;
-    box-sizing: border-box;
-    font-size: x-large;
-    margin-bottom: 30px;
-}
-
-span {
-    position: absolute;
-    margin: 0 20px;
-    color: red;
-    font-size: x-large;
-}
-
-body {
-    margin: 0;
+*,
+*:before,
+*:after{
     padding: 0;
-    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+body{
+    height: 100vh;
+    background: linear-gradient(135deg,#6f6df4,#4c46f5);
+}
+h1{
+    font-size: 30px;
     text-align: center;
-    font-style: italic;
-    color: darkcyan;
-    background-image: linear-gradient(45deg, lightblue, white);
+    color: #1c093c;
 }
-
-a {
-    color: blue;
+p{
+    position: relative;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    color: #606060;
+    font-size: 14px;
+    font-weight: 400;
 }
-
-.box {
-    display: inline-block;
-    text-align: left;
-    border: 1px solid black;
-    padding: 0 10px;
-    margin: 10px;
+span{
+    color: red;
+}
+.box{
+    background: #FFFFFF;
+    width: 95%;
+    min-width: 420px;
+    padding: 35px 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
     border-radius: 10px;
-    box-shadow: 5px 5px 10px;
+    box-shadow: 20px 30px 25px rgba(0, 0, 0, 0.15);    
+}
+label{
+    color: #1c093c;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+}
+input {
+	width: 60%;
+    font-weight: 400;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1.2px solid #c4cae0;
+    margin-top: 5px;
+}
+form {
+    width: 100%;
+    position: relative;
+    margin: 30px auto 0 auto;
+}
+.row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+}
+input:focus{
+    outline: none;
+    border-color: #6f6df4;
+}
+button{
+    border: none;
+    padding: 10px 20px;
+    background: linear-gradient(130deg, #6f6df4,#4c46f5);
+    color: #FFFFFF;
+    border-radius: 3px;
+    position: relative;
+    left: 45%;
 }
 
-h2 {
+#progress{
+    position: fixed;
+    bottom: 40px;
+    right: 48px;
+    height: 50px;
+    width: 50px;
+    display: none;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 100;
+}
+#progress-value{
+    display: block;
+    height: calc(100% - 12px);
+    width: calc(100% - 10px);
+    background-color: #ffff;
+    border-radius: 50%;
     text-align: center;
+    line-height: 35px;
+    font-size: 20px;
+    color: black;
 }
-
-.active {
-    color: darkslategrey;
-    font-style: italic;
-    font-weight: bold;
-}
-
-

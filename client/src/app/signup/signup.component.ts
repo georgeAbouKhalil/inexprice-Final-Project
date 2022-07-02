@@ -4,6 +4,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { CartsService } from '../services/cart.service';
+import { NotifyService } from '../services/notify.service';
 
 @Component({
   selector: 'app-signup',
@@ -29,7 +30,7 @@ export class SignupComponent implements OnInit {
   fourFormGroup: FormGroup;
 
   completed = false;
-  constructor( private cartsService: CartsService , private _formBuilder: FormBuilder, private myAuthService: AuthService,private myRouter: Router,) { }
+  constructor( private cartsService: CartsService ,private notify: NotifyService, private _formBuilder: FormBuilder, private myAuthService: AuthService,private myRouter: Router,) { }
 
   ngOnInit(): void {
     this.createLoginForm();
@@ -62,12 +63,14 @@ export class SignupComponent implements OnInit {
       if (this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid && this.fourFormGroup.valid) {
 
         await this.myAuthService.register({ ...this.firstFormGroup.value, ...this.secondFormGroup.value , ...this.thirdFormGroup.value, ...this.fourFormGroup.value  });
+        this.notify.success("welcome to indexPrice");
         this.myRouter.navigate(['/login']);
         this.cartsService.cartItems = [];
       }
 
     } catch (err) {
-      alert(err)
+      this.notify.error("something is missing");
+      
     }
 
 

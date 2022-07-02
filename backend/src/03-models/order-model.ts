@@ -27,8 +27,8 @@ const OrderSchema = new Schema<IOrderModel>({
     },
     final_price: {
         type: Number,
-        required: [true, "Missing stock"],
-        min: [0, "Stock can't be negative"]
+        required: [true, "Missing final_price"],
+        min: [0, "final_price can't be negative"]
     },
     order_number: {
         type: Number,
@@ -47,9 +47,9 @@ const OrderSchema = new Schema<IOrderModel>({
     },
     credit_card: {
         type: String,
-        required: [true, "Missing stock"],
-        min: [0, "Stock can't be negative"],
-        max: [1000, "Stock can't exceed 1000"]
+        required: [true, "Missing credit_card"],
+        min: [0, "credit_card can't be negative"],
+        max: [1000, "credit_card can't exceed 1000"]
     },
 }, { 
     versionKey: false, // Don't create __v field

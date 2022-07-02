@@ -42,25 +42,25 @@ export class WishlistComponent implements OnInit {
     this.wishProducts = await this.wishListService.getAllWishListByUserId(this.user._id);
     this.arrayLength = this.wishProducts.length;
 
-    console.log(this.wishProducts);
+    
 
   }
 
 
   public async addToCart(product) {
-    console.log({ product });
+    
 
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    console.log('cartproduct ', this.cartProducts);
+    
 
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-    console.log(this.cartP);
+    
 
     this.getProduct = await this.productsService.getOneProduct(product._id);
-    console.log(this.getProduct);
+    
 
     if (this.amount < 0) {
       this.amount = 1;
@@ -68,11 +68,7 @@ export class WishlistComponent implements OnInit {
       return;
     };
 
-    // this.stock = this.productsService.products.find((item) => item._id === product._id);
-    // console.log(this.stock);
-
-    // console.log('11111 ', this.getProduct.inStock);
-    // console.log('22222222 ', this.cartP[0]?.quantity);
+    
 
     if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
       this.quantityCart = 0
@@ -88,14 +84,7 @@ export class WishlistComponent implements OnInit {
 
     //If product already in cart
     let ifInCart = false;
-    // // Get PRODUCTS FROM CART
-    // this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    // console.log('cartprodct ', this.cartProducts);
-
-    // this.cartP = this.cartProducts.filter((a: any) => {
-    //   return a.product_id === product._id;
-    // });
-    // console.log(this.cartP);
+   
 
     if (this.cartP.length > 0) {
       ifInCart = true;
@@ -112,28 +101,26 @@ export class WishlistComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      console.log({ productToAdd });
-console.log(this.wishProducts);
+     
 
       this.cartsService.addToCart(productToAdd);
       // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
       this.updateStockProduct = this.wishProducts.find((product) => product.productId === productToAdd.product_id);
       this.notify.success("This product has been added to your shopping cart");
       // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToAdd.quantity;
-      console.log(this.updateStockProduct);
-      console.log(this.getProduct);
+      
       
       
       this.updateStockProduct.inStock = this.getProduct.inStock - productToAdd.quantity;
 
       const indexToDelete = this.wishProducts.findIndex(t => t.productId === productToAdd.product_id);
-      console.log(indexToDelete);
+     
       
-      console.log(this.wishProducts[indexToDelete]);
+      
       this.wishProducts[indexToDelete].inStock = this.updateStockProduct.inStock;
 
       this.productStock = this.wishProducts[indexToDelete].inStock;
-      console.log(this.productStock);
+     
 
 
     } else if (ifInCart) {
@@ -149,16 +136,12 @@ console.log(this.wishProducts);
         img: product.img,
         name: product.name,
       };
-      console.log({ productToUpdate });
-
-      console.log(this.cartP[0]);
-      console.log(this.getProduct);
-      console.log(this.updateStockProduct);
+      
 
       this.updateStockProduct = this.wishProducts.find((product) => product.productId === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-      console.log('--111--    ', this.updateStockProduct.inStock);
+     
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
@@ -166,10 +149,7 @@ console.log(this.wishProducts);
             this.notify.success("This product has been updated in your shopping cart");
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            console.log(this.updateStockProduct);
-            console.log(this.getProduct.inStock);
-            console.log(productToUpdate.quantity);
-            console.log('--------', this.getProduct.inStock);
+            
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
@@ -178,12 +158,12 @@ console.log(this.wishProducts);
 
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-            console.log('--222--    ', this.updateStockProduct.inStock);
+            
 
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
 
-            console.log('********  ', this.updateStockProduct.inStock);
+            
 
             const indexToDelete = this.wishProducts.findIndex(t => t.productId === productToUpdate.product_id);
             this.wishProducts[indexToDelete].inStock = this.updateStockProduct.inStock;

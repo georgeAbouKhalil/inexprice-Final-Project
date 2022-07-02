@@ -1,50 +1,95 @@
-<div class="box">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
 
-    <form #myForm="ngForm" (submit)="send()">
-
-        <label>Category: </label>
-        <select #typeBox="ngModel" name="type" [(ngModel)]="product.type" required>
-                <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
-        </select>
-
-        <label>Brand: </label>
-        <input #brandBox="ngModel" type="text" [(ngModel)]="product.brand" name="brand" required >
-        <span *ngIf="brandBox.errors?.required && brandBox.touched">Missing brand.</span>
-
-        <label>Name: </label>
-        <input #nameBox="ngModel" type="text" [(ngModel)]="product.name" name="name" required>
-        <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing name.</span>
-
-        <label>size: </label>
-        <input #sizeBox="ngModel" type="text" [(ngModel)]="product.size" name="size" required>
-        <span *ngIf="sizeBox.errors?.required && nameBox.touched">Missing size.</span>
-
-        <label>Color: </label>
-        <input #colorBox="ngModel" type="text" [(ngModel)]="product.color" name="color" required>
-        <span *ngIf="colorBox.errors?.required && colorBox.touched">Missing color.</span>
-
-        <label>Image: </label>
-        <input #nameBox="ngModel" type="url" [(ngModel)]="product.img" name="img" required>
-        <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing img.</span>
-
-        <label>Price: </label>
-        <input #priceBox="ngModel" type="number" step="0.01" [(ngModel)]="product.price" name="price" required>
-        <span *ngIf="priceBox.invalid && priceBox.touched">Missing price.</span>
-
-        <label>description: </label>
-        <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description" required>
-        <span *ngIf="descriptionBox.errors?.required && descriptionBox.touched">Missing description.</span>
-
-        <label>Stock quantity: </label>
-        <input #inStockBox="ngModel" type="number" [(ngModel)]="product.inStock" name="inStock" required>
-        <span *ngIf="inStockBox.errors?.required && inStockBox.touched">Missing inStock.</span>
-        
-        <label>discount: </label>
-        <input #discountBox="ngModel" type="number" [(ngModel)]="product.discount" name="discount" required>
-        <span *ngIf="discountBox.invalid && discountBox.touched">Missing discount.</span>
-
-        <button [disabled]="myForm.form.invalid">Add</button>
-
-    </form>
-
-</div>
+    <div class="box">
+        <h1>ADD A NEW PRODUCT</h1>
+        <p>Please pay attention to filling in the details gently<br>you can not add until you fill everything.</p>
+        <form #myForm="ngForm" (submit)="send()">
+    
+            <div class="row">
+                <div class="column">
+                    <label>Brand: </label>
+                    <input #brandBox="ngModel" type="text" [(ngModel)]="product.brand" name="brand" required >
+                    <span *ngIf="brandBox.errors?.required && brandBox.touched">Missing brand.</span>
+                </div>
+                <div class="column">
+                    <label>Name: </label>
+                    <input #nameBox="ngModel" type="text" [(ngModel)]="product.name" name="name" required>
+                    <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing name.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>size: </label>
+                    <input #sizeBox="ngModel" type="text" [(ngModel)]="product.size" name="size" required>
+                    <span *ngIf="sizeBox.errors?.required && nameBox.touched">Missing size.</span>
+                </div>
+                <div class="column">
+                    <label>Color: </label>
+                    <input #colorBox="ngModel" type="text" [(ngModel)]="product.color" name="color" required>
+                    <span *ngIf="colorBox.errors?.required && colorBox.touched">Missing color.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>Image: </label>
+                    <input #nameBox="ngModel" type="url" [(ngModel)]="product.img" name="img" required>
+                    <span *ngIf="nameBox.errors?.required && nameBox.touched">Missing img.</span>
+                </div>
+                <div class="column">
+                    <label>Price: </label>
+                    <input #priceBox="ngModel" type="number" min="0" [(ngModel)]="product.price" name="price" required>
+                    <span *ngIf="priceBox.invalid && priceBox.touched">Missing price.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>description: </label>
+                    <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description" required>
+                    <span *ngIf="descriptionBox.errors?.required && descriptionBox.touched">Missing description.</span>
+                </div>
+                <div class="column">
+                    <label>Stock quantity: </label>
+                    <input #inStockBox="ngModel" type="number" min="0" [(ngModel)]="product.inStock" name="inStock" required>
+                    <span *ngIf="inStockBox.errors?.required && inStockBox.touched">Missing inStock.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>discount: </label>
+                    <input #discountBox="ngModel" type="number" min="0" [(ngModel)]="product.discount" name="discount" required>
+                    <span *ngIf="discountBox.invalid && discountBox.touched">Missing discount.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>Category: </label>
+                    <select #typeBox="ngModel" name="type" [(ngModel)]="product.type" required>
+                            <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <button [disabled]="myForm.form.invalid">Add</button>
+                </div>
+            </div>
+    
+        </form>
+    
+    </div>
+    <!-- scroll to the top -->
+    <div style="display: none;">
+        <div id="progress">
+            <a id="progress-value" class="gotopbtn" href="/category"><i class="fas fa-arrow-up"></i></a>
+        </div>
+    </div>
+	
+</body>
+</html>

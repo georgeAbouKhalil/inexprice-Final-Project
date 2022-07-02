@@ -41,8 +41,13 @@ export class HomeComponent implements OnInit {
   categories: CategoryModel[];
   categoryDetails: CategoryModel;
 
+  //my add
+  allcategorys: CategoryModel[];
+  categoryID:any="";
+  recomendProducts: ProductModel[] = [];
+  ratesUser: any;
   private subscription: Subscription;
-  constructor(private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService,public myAuthService: AuthService, public cartsService: CartsService,public productsService: ProductsService) { }
+  constructor( private authService: AuthService,private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService,public myAuthService: AuthService, public cartsService: CartsService,public productsService: ProductsService) { }
 
   dateNow = new Date('Mar 19 2022 23:07:00');
   dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -68,9 +73,25 @@ private allocateTimeUnits (timeDifference) {
 }
   
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.user = this.myAuthService.getUser();
+    
+    
+    // console.log(this.recomendProducts);
+    // console.log(this.categoryID);
+    
+   
+    this.allcategorys = await this.categoriesService.getAllCategories();
 
+
+    if(this.user){
+    this.ratesUser = await this.authService.getUserRating(this.user.userName);
+    }
+    
     this.getTimeDifference();
+
+    if(this.user != undefined)
+      this.getMax();
     
     
     this.subscription = interval(1000).subscribe(x => { 
@@ -96,7 +117,7 @@ this.productsService.getProducts().subscribe(
     //get product they have discount
     this.disProducts = this.productsService.products.filter((product) => product.discount > 0 );
     this.chepProducts = this.productsService.products.filter((product) => product.price < 20);
-    console.log(this.chepProducts);
+    
     
   },
   (serverErrorResponse) => {
@@ -104,6 +125,9 @@ this.productsService.getProducts().subscribe(
   }
   
 );
+
+
+
 
 
 
@@ -162,4 +186,36 @@ async categoryFilter(e: Event) {
 ngOnDestroy() {
   this.subscription.unsubscribe();
   }
+
+
+
+  async getMax(){
+    var max:any = 0;
+    var index:any = 0;
+    var mostViewCategoryName:any="";
+    
+    for(let item in this.ratesUser){
+      if(this.ratesUser[item].rating > max){
+        max = this.ratesUser[item].rating; //get the max rating number
+        index = item; //get the index of the product
+        mostViewCategoryName = this.ratesUser[item].name // get the name of the product
+      }
+    }
+    // console.log(max);
+    // console.log(index);
+    // console.log(mostViewCategoryName);
+    
+    for(let item in this.allcategorys){
+      if(this.allcategorys[item].name == mostViewCategoryName)
+        this.categoryID = this.allcategorys[item]._id;
+    }
+    // console.log(this.categoryID);
+    this.recomendProducts = await this.categoriesService.getProductsByCategory(this.categoryID);
+    // console.log(this.recomendProducts);
+    
+  }
+
+
+
+
 }

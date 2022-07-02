@@ -13,5 +13,5 @@ export class UserModel {
     business: string;
     role: string;
     phone: string;
-
+    favorite:object;
 }

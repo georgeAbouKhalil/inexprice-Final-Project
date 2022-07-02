@@ -35,13 +35,13 @@ export class AccountSettingComponent implements OnInit {
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
-    console.log(this.user);
+    
     
     this.validCreditCard();
     this.validPasswordUser();
     this.creditCards = await this.creditService.getCreditCardById(this.user._id);
     
-    console.log(this.creditCards);
+    
     
   }
   
@@ -132,7 +132,6 @@ export class AccountSettingComponent implements OnInit {
   }
   async onSubmit(){
     try{
-      console.log("value  ",this.credit_card.value);
       if(this.credit_card.valid){
         const newCard = await this.creditService.addCreditCard({ ...this.credit_card.value });
         this.notify.success("credit card successfuly added");
@@ -148,12 +147,10 @@ export class AccountSettingComponent implements OnInit {
   
   public async deleteCreditCart(creditCard: CreditCardModel) {
     try {
-console.log(creditCard._id);
 
       await this.creditService.deleteCreditCard(creditCard._id);
       const indexToDelete = this.creditCards.findIndex(t => t._id === creditCard._id);
       this.creditCards.splice(indexToDelete, 1);
-      console.log(this.creditCards);
       
     }
     catch (err: any) {
@@ -182,11 +179,9 @@ console.log(creditCard._id);
   async onSubmitPassword(){
     
     try{
-      console.log(this.Password_valid.valid);
-      
       if(this.oldPassword === this.user.password && this.oldPassword !== this.confrimPassword ){
         if(this.Password_valid.valid){
-          this.user.password = this.confrimPassword;         
+          this.user.password = this.confrimPassword;
           await this.myAuthService.changePassword(this.user);          
           this.Password_valid.reset();
           this.notify.success("password has been changed please login again")

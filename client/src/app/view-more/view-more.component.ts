@@ -50,7 +50,7 @@ export class ViewMoreComponent implements OnInit {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       const productID = this.actRoute.snapshot.params['id'];
       this.product = await this.productsService.getOneProduct(productID);
-      console.log(this.product);
+     
 
     }
     catch (err) {
@@ -62,19 +62,19 @@ export class ViewMoreComponent implements OnInit {
   }
   public async addToCart(product) {
     
-    console.log({ product });
+  
 
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    console.log('cartproduct ', this.cartProducts);
+    
 
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-    console.log(this.cartP);
+    
 
     this.getProduct = await this.productsService.getOneProduct(product._id);
-    console.log(this.getProduct);
+   
 
     if (this.amount < 0) {
       this.amount = 1;
@@ -82,11 +82,7 @@ export class ViewMoreComponent implements OnInit {
       return;
     };
 
-    // this.stock = this.productsService.products.find((item) => item._id === product._id);
-    // console.log(this.stock);
-
-    // console.log('11111 ', this.getProduct.inStock);
-    // console.log('22222222 ', this.cartP[0]?.quantity);
+   
 
     if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
       this.quantityCart = 0
@@ -102,14 +98,7 @@ export class ViewMoreComponent implements OnInit {
 
     //If product already in cart
     let ifInCart = false;
-    // // Get PRODUCTS FROM CART
-    // this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    // console.log('cartprodct ', this.cartProducts);
-
-    // this.cartP = this.cartProducts.filter((a: any) => {
-    //   return a.product_id === product._id;
-    // });
-    // console.log(this.cartP);
+    
 
     if (this.cartP.length > 0) {
       ifInCart = true;
@@ -126,7 +115,7 @@ export class ViewMoreComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      console.log({ productToAdd });
+      
 
       this.cartsService.addToCart(productToAdd);
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
@@ -136,10 +125,10 @@ export class ViewMoreComponent implements OnInit {
 
       const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
-      console.log(this.productsService.products[indexToDelete].inStock);
+      
 
       this.productStock = this.productsService.products[indexToDelete].inStock;
-      console.log(this.productStock);
+      
 
 
     } else if (ifInCart) {
@@ -155,16 +144,12 @@ export class ViewMoreComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      console.log({ productToUpdate });
-
-      console.log(this.cartP[0]);
-      console.log(this.getProduct);
-      console.log(this.updateStockProduct);
+      
 
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-      console.log('--111--    ', this.updateStockProduct.inStock);
+      
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
@@ -172,10 +157,7 @@ export class ViewMoreComponent implements OnInit {
             this.notify.success("This product has been updated in your shopping cart");
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            console.log(this.updateStockProduct);
-            console.log(this.getProduct.inStock);
-            console.log(productToUpdate.quantity);
-            console.log('--------', this.getProduct.inStock);
+            
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
@@ -184,12 +166,12 @@ export class ViewMoreComponent implements OnInit {
 
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-            console.log('--222--    ', this.updateStockProduct.inStock);
+            
 
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
 
-            console.log('********  ', this.updateStockProduct.inStock);
+            
 
             const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);
             this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;

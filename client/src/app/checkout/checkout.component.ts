@@ -5,6 +5,8 @@ import { AuthService } from '../services/auth.service';
 import { CartsService } from '../services/cart.service';
 import { CreditCardService } from '../services/creditCard.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MailService } from '../services/mail.service';
+import { NotifyService } from '../services/notify.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,12 +19,13 @@ export class CheckoutComponent implements OnInit {
   cart: any;
   cartItems: any[] = [];
   total: any;
- orderDetails: OrderModel;
+  orderDetails: OrderModel;
 
   myRadio: string = ''
-  public receiptTrustedUrl: {};
+  receiptTrustedUrl: {};
+  orderReceipt:any;
 
-  constructor(private cartsService: CartsService,public myAuthService: AuthService ,private creditService: CreditCardService, private orderService: OrdersService, private sanitizer: DomSanitizer,) { }
+  constructor(private cartsService: CartsService,public myAuthService: AuthService ,private creditService: CreditCardService, private orderService: OrdersService, private sanitizer: DomSanitizer,private mailService: MailService,private notify: NotifyService) { }
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
@@ -31,7 +34,6 @@ export class CheckoutComponent implements OnInit {
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
     this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
-
 
   }
 
@@ -47,13 +49,15 @@ export class CheckoutComponent implements OnInit {
       final_price: this.total , 
       delivery_city: this.user.city ,
       credit_card: this.myRadio,
-    order_date: dateNow,
+      order_date: dateNow,
     };
 
     this.orderDetails = order;
 
     await this.orderService.order(order)
         this.createReceiptFile();
+
+    this.sendMessage();
    }
 
 
@@ -67,7 +71,8 @@ export class CheckoutComponent implements OnInit {
 
 
 
-    for (let item of this.cartItems) {    
+    for (let item of this.cartItems) {
+      
       receipt += `${item.product.name.toUpperCase()} - Amount: ${item.quantity} -  Price: ${item.totalPrice}$ \n`;
     }
 
@@ -81,14 +86,27 @@ export class CheckoutComponent implements OnInit {
     let receiptFileUrl = URL.createObjectURL(data);
 
     this.receiptTrustedUrl = this.sanitizer.bypassSecurityTrustUrl(receiptFileUrl);
+
   }
 
-
+  
   public close() {
     this.cartsService.total = 0;
     this.cartsService.cartItems = [];
     this.cartsService.cart = {};
     window.location.href = "home";
+
+  }
+
+
+  async sendMessage() {
+   
+     await this.mailService.sendEmailAfterBuying(this.user.email,this.cartItems,this.orderDetails);
+
+     this.notify.success("Email sent successfully");
+     
+
+    // here to continue send email to user
 
   }
 

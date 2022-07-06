@@ -17,12 +17,22 @@ export class LoginComponent implements OnInit {
   public error: string = '';
   public cart: any;
   public user: any;
+  public date: string;
 
-  constructor(public myAuthService: AuthService,private myRouter: Router,public cartsService: CartsService,private notify: NotifyService,) { }
+  constructor(public myAuthService: AuthService,private myRouter: Router,public cartsService: CartsService,private notify: NotifyService, ) { this.date = this.getCurrentDate(); }
 
   ngOnInit(): void {
     // this.cart = JSON.parse(localStorage.getItem("cart"));
+    
   }
+
+  private getCurrentDate(): string {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const year = now.getFullYear();
+    return months[monthIndex] + " " + year;
+}
 
   public async login() {
     try {

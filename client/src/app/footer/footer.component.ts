@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  public date: string;
+  
+  constructor() {
+    this.date = this.getCurrentDate();
+   }
 
   ngOnInit(): void {
   }
+
+
+  private getCurrentDate(): string {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const year = now.getFullYear();
+    return months[monthIndex] + " " + year;
+}
+
+
 
 }

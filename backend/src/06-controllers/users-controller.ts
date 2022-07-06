@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/register", async (request : Request, response: Response, next: NextFunction) => {
     try{
         request.body.role = "user"; // Make sure added user has User role
-        request.body.favorite = [ {name:"shoes", rating:0},
+        request.body.favorite = [ {name:"shoes", rating:1},
                                   {name:"pants", rating:0},
                                   {name:"T-shirt",rating:0},
                                   {name:"shirt",rating:0},

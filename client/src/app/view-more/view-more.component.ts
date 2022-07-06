@@ -41,16 +41,27 @@ export class ViewMoreComponent implements OnInit {
   isWish: boolean = false;
   user: UserModel;
 
+  stockCheck:any="";
+
 
   constructor(private authService: AuthService,public cartsService: CartsService, private notify: NotifyService, private actRoute: ActivatedRoute, private productsService: ProductsService,private wishListService: WishListService) { }
 
   async ngOnInit() {
     this.user = this.authService.getUser();
+    
     try {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       const productID = this.actRoute.snapshot.params['id'];
       this.product = await this.productsService.getOneProduct(productID);
-     
+      console.log(this.product);
+      
+      if(this.product.inStock > 0){
+        this.stockCheck = "In Stock";
+      }
+      else {
+        this.stockCheck = "Not Available";
+      }
+      
 
     }
     catch (err) {

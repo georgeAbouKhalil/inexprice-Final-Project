@@ -9,9 +9,9 @@ router.get("/by-cart/:cartId", async (request: Request, response: Response, next
     try {
 
         const cartId = request.params.cartId;
-        console.log('1 ', cartId);
+        // console.log('1 ', cartId);
         const cartItem = await logic.getAllCartItem(cartId);
-        console.log({ cartItem });
+        // console.log({ cartItem });
 
         response.json(cartItem);
     }
@@ -36,7 +36,7 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
         request.body.price = request.body.price * (1 - request.body.discount / 100);
         request.body.totalPrice = request.body.totalPrice * (1 - request.body.discount / 100);
         const cartItem = new CartItemModel(request.body);
-        console.log({cartItem});
+        // console.log({cartItem});
         
         //update inStock in database
         const oldProduct = await productsLogic.getOneProduct(cartItem.product_id.toString());

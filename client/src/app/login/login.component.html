@@ -22,7 +22,7 @@
 		
 		<div class="bottom-grid">
 			<div class="logo">
-				<h1> <a href="index.html"><span class="fa fa-key"></span> Login</a></h1>
+				<h1> <a><span class="fa fa-key"></span> Login</a></h1>
 			</div>
 			<div class="links">
 				<ul class="links-unordered-list">
@@ -30,7 +30,7 @@
 						<a href="#">Home</a>
 					</li>
 					<li >
-						<a routerLink="/signup" style="color: #fff;font-size: 20px;font-weight: 500;">Register</a>
+						<a routerLink="/signup" style="color: white;font-size: 20px;font-weight: 500;"><span style="color: white;">Register</span> </a>
 					</li>
 					<li class="active">
 						<a href="/contact">Contact</a>
@@ -47,7 +47,6 @@
 					<div class="field-group">
 						<span class="fa fa-user" aria-hidden="true"></span>
 						<div class="wthree-field">
-							<!-- <input name="text1" id="text1" type="text" value="" placeholder="Username" required> -->
 							<input  name="username" [(ngModel)]="credentials.username" id="text1" type="text" value="" placeholder="Username" required>
 						</div>
 					</div>
@@ -60,19 +59,7 @@
 					<div class="wthree-field">
 						<button type="submit" class="btn">Get Started</button>
 					</div>
-					<ul class="list-login">
-						<li class="switch-agileits">
-							<label class="switch">
-								<input type="checkbox">
-								<span class="slider round"></span>
-								keep Logged in
-							</label>
-						</li>
-						<li>
-							<a href="#" class="text-right">forgot password?</a>
-						</li>
-						<li class="clearfix"></li>
-					</ul>
+					
 					<ul class="list-login-bottom">
 						
 						<li class="clearfix"></li>
@@ -81,22 +68,9 @@
 			</div>
 		</div>
 		<div class="bottom-grid1">
-			<!-- <div class="links">
-				<ul class="links-unordered-list">
-					<li class="">
-						<a href="#" class="">About Us</a>
-					</li>
-					<li class="">
-						<a href="#" class="">Privacy Policy</a>
-					</li>
-					<li class="">
-						<a href="#" class="">Terms of Use</a>
-					</li>
-				</ul>
-			</div> -->
+			
 			<div class="copyright">
-				<p>© 2022 All rights reserved | Design by
-					<a href="">George & Sharon</a>
+				<p style="color: white;">All Rights Reserved George Ak & Sharon Frank &copy; {{date}}
 				</p>
 			</div>
 		</div>

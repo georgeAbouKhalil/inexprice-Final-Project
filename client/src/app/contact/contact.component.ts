@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { MailService } from '../services/mail.service';
+import { NotifyService } from '../services/notify.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,7 +16,7 @@ export class ContactComponent implements OnInit {
   userFullName: any;
   userDetails: FormGroup;
 
-  constructor(private mailService: MailService, private _formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(private mailService: MailService, private _formBuilder: FormBuilder, private authService: AuthService,private notify: NotifyService) { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -43,6 +44,9 @@ export class ContactComponent implements OnInit {
     console.log("this.user.email ",this.userDetails.value.email);
     
      await this.mailService.sendEmail(this.userDetails.value.email);
+
+     this.notify.success("Email sent successfully");
+     this.userDetails.reset();
 
     // here to continue send email to user
 

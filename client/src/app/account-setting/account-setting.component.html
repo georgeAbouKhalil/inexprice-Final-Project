@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Account Settings UI Design</title>
@@ -8,8 +9,9 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css"> -->
 </head>
+
 <body>
-    <header class="header_area sticky-header">
+	<header class="header_area sticky-header">
 		<!---navbar start -->
 		<app-navbar></app-navbar>
 		<div class="search_input" id="search_input_box">
@@ -31,22 +33,26 @@
 						<div class="img-circle text-center mb-3">
 							<img src="assets/img/user2.jpg" alt="Image" class="shadow">
 						</div>
-						<h4 class="text-center" >{{user.userName}}</h4>
+						<h4 class="text-center">{{user.userName}}</h4>
 					</div>
 					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
-							<i class="fa fa-home text-center mr-1"></i> 
+						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
+							aria-controls="account" aria-selected="true">
+							<i class="fa fa-home text-center mr-1"></i>
 							Account
 						</a>
-						<a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
-							<i class="fa fa-key text-center mr-1"></i> 
+						<a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab"
+							aria-controls="password" aria-selected="false">
+							<i class="fa fa-key text-center mr-1"></i>
 							Password
 						</a>
-						<a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
-							<i class="fas fa-wallet"></i> 
+						<a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab"
+							aria-controls="security" aria-selected="false">
+							<i class="fas fa-wallet"></i>
 							Wallet
 						</a>
-						<a class="nav-link" id="savingCreditCart-tab" data-toggle="pill" href="#savingCreditCart" role="tab" aria-controls="savingCreditCart" aria-selected="false">
+						<a class="nav-link" id="savingCreditCart-tab" data-toggle="pill" href="#savingCreditCart"
+							role="tab" aria-controls="savingCreditCart" aria-selected="false">
 							<i class="fas fa-credit-card"></i>
 							Saving credit cards
 						</a>
@@ -58,58 +64,57 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>First Name</label>
-								  	<input type="text" class="form-control" disabled value="{{user.firstName}}">
+									<label>First Name</label>
+									<input type="text" class="form-control" disabled value="{{user.firstName}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Last Name</label>
-								  	<input type="text" class="form-control" disabled value="{{user.lastName}}">
+									<label>Last Name</label>
+									<input type="text" class="form-control" disabled value="{{user.lastName}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Email</label>
-								  	<input type="text" class="form-control" disabled value="{{user.email}}">
+									<label>Email</label>
+									<input type="text" class="form-control" disabled value="{{user.email}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Phone number</label>
-								  	<input type="text" class="form-control" disabled value="{{user.phone}}">
+									<label>Phone number</label>
+									<input type="text" class="form-control" disabled value="{{user.phone}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Birthday</label>
-								  	<input type="text" class="form-control" disabled value="{{user.birthday}}">
+									<label>Birthday</label>
+									<input type="text" class="form-control" disabled value="{{user.birthday}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-								  	<label>Gender</label>
-								  	<input type="text" class="form-control" disabled value="{{user.gender}}">
+									<label>Gender</label>
+									<input type="text" class="form-control" disabled value="{{user.gender}}">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-								  	<!-- <label>Bio</label>
-									<textarea class="form-control" rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea> -->
 								</div>
 							</div>
 						</div>
 					</div>
-					
 
-						<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-							<form [formGroup]="Password_valid">
+
+					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+						<form [formGroup]="Password_valid">
 							<h3 class="mb-4">Password Settings</h3>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Old password</label>
-										<input type="password" class="form-control" [ngModel]="oldPassword" (ngModelChange)="sendOldPassword($event)" formControlName="oldPassword">
+										<input type="password" class="form-control" [ngModel]="oldPassword"
+											(ngModelChange)="sendOldPassword($event)" formControlName="oldPassword">
 									</div>
 								</div>
 							</div>
@@ -117,8 +122,10 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Confirm new password</label>
-										<input type="password" class="form-control" [ngModel]="confrimPassword" (ngModelChange)="sendConfrimPassword($event)" formControlName="confrimPassword">
-										
+										<input type="password" class="form-control" [ngModel]="confrimPassword"
+											(ngModelChange)="sendConfrimPassword($event)"
+											formControlName="confrimPassword">
+
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -133,200 +140,171 @@
 								<button class="btn btn-light">Cancel</button>
 							</div>
 						</form>
-						</div>
-					
-
-					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
-						
-						<h1 style="text-align: center;">Create Credit Card</h1>
-
-		<div class="wrapper" id="app" style=" margin-top: 15%">
-			<div class="card-form">
-				<div class="card-list">
-				<div class="card-item thecard"> 
-					<div class="card-item__side thefront" >
-					<div class="card-item__cover">
-						<img
-						src="/assets/17.jpeg" class="card-item__bg">
 					</div>
-					
-					<div class="card-item__wrapper">
-						<div class="card-item__top">
-						<img src="/assets/chip.png" class="card-item__chip">
-						<div class="card-item__type">
-							<div name="slide-fade-up">
-							<img src="/assets/visa.png" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
+					<div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+						<h1 style="text-align: center;">Create Credit Card</h1>
+						<div class="wrapper" id="app" style=" margin-top: 15%">
+							<div class="card-form">
+								<div class="card-list">
+									<div class="card-item thecard">
+										<div class="card-item__side thefront">
+											<div class="card-item__cover">
+												<img src="/assets/17.jpeg" class="card-item__bg">
+											</div>
+
+											<div class="card-item__wrapper">
+												<div class="card-item__top">
+													<img src="/assets/chip.png" class="card-item__chip">
+													<div class="card-item__type">
+														<div name="slide-fade-up">
+															<img src="/assets/visa.png" v-if="getCardType"
+																v-bind:key="getCardType" alt=""
+																class="card-item__typeImg">
+														</div>
+													</div>
+												</div>
+												<!-- card Number -->
+												<div class="card-item__content">
+													<p class="cardNumber">{{cardNumber}} </p>
+													<!-- card Holder -->
+													<div class="card-item__holder">
+														<p class=""> {{cardHolder}} </p>
+													</div>
+													<!-- card data -->
+													<div class="card-item__date" ref="cardDate">
+														<p class="card"> {{cardDateMM}} / {{cardDateYYYY}}</p>
+													</div>
+													<!--back side flip -->
+													<div class="card-item__side theback">
+														<div class="card-item__cover">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card-item__side -back">
+											<div class="card-item__cover">
+												<img src="/assets/17.jpeg" class="card-item__bg">
+											</div>
+											<div class="card-item__band"></div>
+											<div class="card-item__cvv">
+												<div class="card-item__cvvTitle">CVV</div>
+												<div class="card-item__cvvBand">
+													<P> {{cardCVV}} </P>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- start form -->
+								<form [formGroup]="credit_card">
+									<div class="card-form__inner">
+										<div class="card-input">
+											<!-- start card number -->
+											<label for="cardNumber" class="card-input__label">Card Number</label>
+											<input type="text" id="cardNumber" class="card-input__input"
+												[ngModel]="cardNumber" maxlength="19"
+												(ngModelChange)="changeCardNumber($event)"
+												formControlName="card_number">
+											<div *ngIf="!credit_card.controls.card_number!.valid && (credit_card.controls.card_number!.dirty || credit_card.controls.card_number?.touched)"
+												style="color: red"> Card number contains only numbers ( max length is 16
+												numbers)
+											</div>
+										</div>
+										<!-- end card number -->
+										<!-- start card holder -->
+										<div class="card-input">
+											<label for="cardName" class="card-input__label">Card Holders</label>
+											<input type="text" id="cardName" class="card-input__input" maxlength="25"
+												[ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)"
+												formControlName="card_holder">
+											<div *ngIf="!credit_card.controls.card_holder!.valid && (credit_card.controls.card_holder!.dirty || credit_card.controls.card_holder?.touched)"
+												style="color: red"> Card Holder contains only alphabet ( the min and max
+												length is 4 to 25 letters)
+											</div>
+										</div>
+										<!-- end card holder -->
+										<!-- start card date MM -->
+										<div class="card-form__row">
+											<div class="card-form__col">
+												<div class="card-form__group">
+													<label for="cardMonth" class="card-input__label">Expiration
+														Date</label>
+													<input class="card-input__input" id="cardMonth" maxlength="2"
+														[ngModel]="cardDateMM"
+														(ngModelChange)="changeCardDateMM($event)"
+														formControlName="date_mm">
+													<div *ngIf="!credit_card.controls.date_mm!.valid && (credit_card.controls.date_mm!.dirty || credit_card.controls.date_mm?.touched)"
+														style="color: red"> Card Date MM required
+													</div>
+													<!-- start card date YYYY -->
+													<input class="card-input__input" maxlength="2" id="cardYear"
+														[ngModel]="cardDateYYYY"
+														(ngModelChange)="changeCardDateYYYY($event)"
+														formControlName="date_yyyy">
+													<div *ngIf="!credit_card.controls.date_yyyy!.valid && (credit_card.controls.date_yyyy!.dirty || credit_card.controls.date_yyyy?.touched)"
+														style="color: red;"> Card Date YYYY required
+													</div>
+												</div>
+											</div>
+											<div class="card-form__col -cvv">
+												<div class="card-input">
+													<label for="cardCvv" class="card-input__label">CVV</label>
+													<input type="text" class="card-input__input" id="cardCvv"
+														maxlength="3" [ngModel]="cardCVV"
+														(ngModelChange)="changeCardCvv($event)" formControlName="cvv">
+													<div *ngIf="!credit_card.controls.cvv!.valid && (credit_card.controls.cvv!.dirty || credit_card.controls.cvv?.touched)"
+														style="color: red;"> There must be 3 numbers
+													</div>
+												</div>
+											</div>
+										</div>
+										<button class="card-form__button" [disabled]="!credit_card.valid"
+											(click)="onSubmit()"> Submit </button>
+									</div>
+								</form>
+								<!-- end form -->
 							</div>
 						</div>
-						</div>
-						<!-- card Number -->
-						<div class="card-item__content">
-						<p class="cardNumber"> {{cardNumber}} </p>
-						
-						<!-- card Holder -->
-						<div class="card-item__holder">
-							<p class=""> {{cardHolder}} </p>
-						</div>
-
-						<!-- card data -->
-						<div class="card-item__date" ref="cardDate">
-							<p class="card"> {{cardDateMM}} / {{cardDateYYYY}}</p>
-						</div>
-						<!--back side flip -->
-						<div class="card-item__side theback">
-						<div class="card-item__cover">
-						</div>
-					</div>
-						</div>
-					</div>
-					</div>
-					<div class="card-item__side -back">
-					<div class="card-item__cover">
-						<img
-						src="/assets/17.jpeg" class="card-item__bg">
-					</div>
-					<div class="card-item__band"></div>
-					<div class="card-item__cvv">
-						<div class="card-item__cvvTitle">CVV</div>
-						<div class="card-item__cvvBand">
-							<P> {{cardCVV}} </P>
-						</div>
-					</div>
-					</div>
-				</div>
-				</div>
-				<!-- start form -->
-				<form [formGroup]="credit_card">
-				<div class="card-form__inner">
-				<div class="card-input">
-					<!-- start card number -->
-					<label for="cardNumber" class="card-input__label">Card Number</label>
-					<input type="text" id="cardNumber" class="card-input__input" [ngModel]="cardNumber" maxlength="19" (ngModelChange)="changeCardNumber($event)" formControlName="card_number">
-					<div *ngIf="!credit_card.controls.card_number!.valid && (credit_card.controls.card_number!.dirty || credit_card.controls.card_number?.touched)" 
-						style="color: red"> Card number contains only numbers ( max length is 16 numbers)
-					</div>
-					<!-- <label for="cardNumber" class="card-input__label">Card Number</label>
-					<input type="text" id="cardNumber" class="card-input__input" [ngModel]="cardNumber" maxlength="19" (ngModelChange)="changeCardNumber($event)" formControlName="cardNumberValid">
-					<div *ngIf="!credit_card.controls.cardNumberValid!.valid && (credit_card.controls.cardNumberValid!.dirty || credit_card.controls.cardNumberValid?.touched)" 
-						style="color: red"> Card number contains only numbers ( max length is 16 numbers)
-					</div> -->
-				</div>
-				<!-- end card number -->
-				<!-- start card holder -->
-				<div class="card-input">
-					<label for="cardName" class="card-input__label">Card Holders</label>
-					<input type="text" id="cardName" class="card-input__input" maxlength="25" [ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)" formControlName="card_holder">
-					<div *ngIf="!credit_card.controls.card_holder!.valid && (credit_card.controls.card_holder!.dirty || credit_card.controls.card_holder?.touched)" 
-						style="color: red"> Card Holder contains only alphabet ( the min and max length is 4 to 25 letters)
-					</div>
-					<!-- <label for="cardName" class="card-input__label">Card Holders</label>
-					<input type="text" id="cardName" class="card-input__input" maxlength="25" [ngModel]="cardHolder" (ngModelChange)="changeCardHolder($event)" formControlName="cardHolderValid">
-					<div *ngIf="!credit_card.controls.cardHolderValid!.valid && (credit_card.controls.cardHolderValid!.dirty || credit_card.controls.cardHolderValid?.touched)" 
-						style="color: red"> Card Holder contains only alphabet ( the min and max length is 4 to 25 letters)
-					</div> -->
-				</div>
-				<!-- end card holder -->
-				<!-- start card date MM -->
-				<div class="card-form__row">
-					<div class="card-form__col">
-					<div class="card-form__group">
-						<label for="cardMonth" class="card-input__label">Expiration Date</label>
-						<input class="card-input__input" id="cardMonth" maxlength="2" [ngModel]="cardDateMM" (ngModelChange)="changeCardDateMM($event)" formControlName="date_mm">
-						<div *ngIf="!credit_card.controls.date_mm!.valid && (credit_card.controls.date_mm!.dirty || credit_card.controls.date_mm?.touched)" 
-						style="color: red"> Card Date MM required
-						<!-- <input class="card-input__input" id="cardMonth" maxlength="2" [ngModel]="cardDateMM" (ngModelChange)="changeCardDateMM($event)" formControlName="cardDateMM">
-						<div *ngIf="!credit_card.controls.cardDateMM!.valid && (credit_card.controls.cardDateMM!.dirty || credit_card.controls.cardDateMM?.touched)" 
-						style="color: red"> Card Date MM required -->
-
-
-
-
-						<!-- <label for="cardMonth" class="card-input__label">Expiration Date</label>
-						<input class="card-input__input" id="cardMonth" maxlength="2" [ngModel]="cardDateMM" (ngModelChange)="changeCardDateMM($event)" formControlName="cardDateMM">
-						<div *ngIf="!credit_card.controls.cardDateMM!.valid && (credit_card.controls.cardDateMM!.dirty || credit_card.controls.cardDateMM?.touched)" 
-						style="color: red"> Card Date MM required -->
-					</div>
-					
-						<!-- start card date YYYY -->
-						<input class="card-input__input" maxlength="2" id="cardYear" [ngModel]="cardDateYYYY" (ngModelChange)="changeCardDateYYYY($event)" formControlName="date_yyyy">
-						<div *ngIf="!credit_card.controls.date_yyyy!.valid && (credit_card.controls.date_yyyy!.dirty || credit_card.controls.date_yyyy?.touched)" 
-						style="color: red;"> Card Date YYYY required
-						<!-- <input class="card-input__input" maxlength="2" id="cardYear" [ngModel]="cardDateYYYY" (ngModelChange)="changeCardDateYYYY($event)" formControlName="cardDateYYYY">
-						<div *ngIf="!credit_card.controls.cardDateYYYY!.valid && (credit_card.controls.cardDateYYYY!.dirty || credit_card.controls.cardDateYYYY?.touched)" 
-						style="color: red;"> Card Date YYYY required -->
-					</div>
-					</div>
-					</div>
-					<div class="card-form__col -cvv">
-					<div class="card-input">
-						<label for="cardCvv" class="card-input__label">CVV</label>
-						<!-- <input type="text" class="card-input__input" id="cardCvv" maxlength="3" [ngModel]="cardCVV" (ngModelChange)="changeCardCvv($event)" formControlName="cvv" [ngStyle]="{'transform': 'rotateY(180deg)'}"> -->
-						<input type="text" class="card-input__input" id="cardCvv" maxlength="3" [ngModel]="cardCVV" (ngModelChange)="changeCardCvv($event)" formControlName="cvv" >
-						<div *ngIf="!credit_card.controls.cvv!.valid && (credit_card.controls.cvv!.dirty || credit_card.controls.cvv?.touched)" 
-						style="color: red;"> There must be 3 numbers
-						<!-- <input type="text" class="card-input__input" id="cardCvv" maxlength="3" [ngModel]="cardCVV" (ngModelChange)="changeCardCvv($event)" formControlName="cardCVVValid">
-						<div *ngIf="!credit_card.controls.cardCVVValid!.valid && (credit_card.controls.cardCVVValid!.dirty || credit_card.controls.cardCVVValid?.touched)" 
-						style="color: red;"> There must be 3 numbers -->
-					</div>
-					</div>
-					</div>
-				</div>
-		
-				<button class="card-form__button" [disabled]="!credit_card.valid" (click)="onSubmit()"> Submit </button>
-				</div>
-				</form>
-				<!-- end form -->
-
-				
-			</div>
-			</div>
-
-			
-
-
-
 					</div>
 					<!-- saving credit carts -->
-					<div class="tab-pane fade" id="savingCreditCart" role="tabpanel" aria-labelledby="savingCreditCart-tab">
-							<!-- start card saved for user -->
+					<div class="tab-pane fade" id="savingCreditCart" role="tabpanel"
+						aria-labelledby="savingCreditCart-tab">
+						<!-- start card saved for user -->
 						<div class="container" style="width: 800vh;">
-							<div  class="row col-md-6 col-md-offset-2 custyle">
-							<table class="table table-striped custab">
-							<thead>
-								<tr>
-									<th>Card Number</th>
-									<th>Card Holder</th>
-									<th>Date</th>
-									<th class="text-center">Action</th>
-								</tr>
-							</thead>
+							<div class="row col-md-6 col-md-offset-2 custyle">
+								<table class="table table-striped custab">
+									<thead>
+										<tr>
+											<th>Card Number</th>
+											<th>Card Holder</th>
+											<th>Date</th>
+											<th class="text-center">Action</th>
+										</tr>
+									</thead>
 									<tr style="width: 350vh;" *ngFor="let credit of creditCards">
-										<td style="width: 30vh;">{{credit.card_number}}</td>
+										<td style="width: 30vh;">xxxx xxxx xxxx {{credit.card_number|slice:14:19}}</td>
 										<td style="width: 20vh;">{{credit.card_holder}}</td>
 										<td>{{credit.date_mm}}/{{credit.date_yyyy}}</td>
-										<!-- <td class="text-center"> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span > Delete</a></td> -->
-										<td class="text-center"  style="cursor:pointer ;" (click)="deleteCreditCart(credit)"> ❌</td>
+										<td class="text-center" style="cursor:pointer ;"
+											(click)="deleteCreditCart(credit)"> ❌</td>
 									</tr>
-							</table>
+								</table>
 							</div>
 						</div>
-							<!-- end card saved for user -->
+						<!-- end card saved for user -->
 					</div>
 					<!-- ending saving credit cart -->
 				</div>
 			</div>
 		</div>
 	</section>
-    <app-footer></app-footer>
-    <!-- scroll to the top -->
-<div id="progress">
-    <a id="progress-value" class="gotopbtn" href="/account-setting"><i class="fas fa-arrow-up"></i></a>
-</div>
+	<app-footer></app-footer>
+	<!-- scroll to the top -->
+	<div id="progress">
+		<a id="progress-value" class="gotopbtn" href="/account-setting"><i class="fas fa-arrow-up"></i></a>
+	</div>
 
 </body>
+
 </html>
-
-
-
-
-

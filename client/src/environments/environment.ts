@@ -17,6 +17,7 @@ export const environment = {
   wishListUrl: 'http://localhost:3001/api/wishList/',
   messageUrl: 'http://localhost:3001/api/message/',
   mailUrl: 'http://localhost:3001/api/mail/sendMail/',
+  mailOrderUrl: 'http://localhost:3001/api/mail/sendMailOrder/',
   
 
 };

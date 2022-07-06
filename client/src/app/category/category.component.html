@@ -84,6 +84,9 @@
 									<i style="margin-right: 10px;" class="fas fa-trash-alt my_icons" (click)="delete(product)"></i>
 								</div>
 
+								<small *ngIf=" product.inStock ===  0 " class="badge badge-danger p-1 d-inline-block">
+									Not in stock </small>
+
 									<img class="img-fluid" src={{product.img}} alt="">
 								<div class="product-details">
 									<h6>{{product.name|titlecase}}</h6>
@@ -97,7 +100,8 @@
 									<div class="prd-bottom">
 
 										<!-- <a *ngIf="product.inStock != 0" class="social-info" data-bs-toggle="modal" -->
-										<a *ngIf="productStock > 0 || product.inStock > 0" class="social-info" data-bs-toggle="modal"
+										<!-- <a *ngIf="productStock > 0 || product.inStock > 0" class="social-info" data-bs-toggle="modal" -->
+										<a *ngIf=" product.inStock > 0" class="social-info" data-bs-toggle="modal"
 											[attr.data-bs-target]="'#product'+product._id">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>

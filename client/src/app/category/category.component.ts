@@ -42,6 +42,8 @@ export class CategoryComponent implements OnInit {
   wishProduct: WishListModel[] = [];
   clicked: boolean = false;
 
+  stockCheck:any="";
+
   correctNameCategory:string;
   ratesUser: any;
   constructor(private wishListService: WishListService, private authService: AuthService, private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
@@ -166,6 +168,7 @@ export class CategoryComponent implements OnInit {
 
       this.cartsService.addToCart(productToAdd);
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
+      
       this.notify.success("This product has been added to your shopping cart");
       // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToAdd.quantity;
       this.updateStockProduct.inStock = this.getProduct.inStock - productToAdd.quantity;
@@ -174,9 +177,7 @@ export class CategoryComponent implements OnInit {
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
       
 
-      this.productStock = this.productsService.products[indexToDelete].inStock;
-      
-
+      this.productStock = this.productsService.products[indexToDelete].inStock;     
 
     } else if (ifInCart) {
 

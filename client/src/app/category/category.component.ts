@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  currentPg:number =1; 
+  currentPg: number = 1;
   public categories: CategoryModel[];
   public cart: any;
   public error: string = '';
@@ -42,9 +42,9 @@ export class CategoryComponent implements OnInit {
   wishProduct: WishListModel[] = [];
   clicked: boolean = false;
 
-  stockCheck:any="";
+  stockCheck: any = "";
 
-  correctNameCategory:string;
+  correctNameCategory: string;
   ratesUser: any;
   constructor(private wishListService: WishListService, private authService: AuthService, private notify: NotifyService, public categoriesService: CategoriesService, public productsService: ProductsService, public cartsService: CartsService,) {
 
@@ -55,16 +55,16 @@ export class CategoryComponent implements OnInit {
     this.categories = await this.categoriesService.getAllCategories();
     this.user = this.authService.getUser();
     console.log(this.user);
-    
+
     // console.log(this.user.favorite);
-    
+
     this.ratesUser = JSON.parse(localStorage.getItem("rates"));
 
-//     this.ratesUser = await this.authService.getUserRating(this.user.userName);
-// console.log(this.ratesUser);
-    
-    
-    
+    //     this.ratesUser = await this.authService.getUserRating(this.user.userName);
+    // console.log(this.ratesUser);
+
+
+
 
     // get products
     this.productsService.getProducts().subscribe(
@@ -72,37 +72,71 @@ export class CategoryComponent implements OnInit {
         this.productsService.products = productsList;
         // check if categoryid in sessionStorage from home sent and get filtered category products
         let categoryId = sessionStorage.getItem('categoryId');
-        if ( categoryId ) {
+        if (categoryId) {
           this.productsService.products = await this.categoriesService.getProductsByCategory(categoryId);
           sessionStorage.clear();
         }
+
+
+
+        this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
+        this.wishProduct.forEach((follower) => {
+          this.productsService.products.forEach(product => {
+            if (follower.product._id === product._id) {
+              //  this.isWish = true;
+  product.follow = true;
+            }
+          })
+        })             
+
+
       },
       (serverErrorResponse) => {
         this.error = serverErrorResponse.error.error;
       }
     );
 
+
+
+
+
+
+
+
   }
+
+
+
+
+  public setCallToAction(): string {
+    return this.isWish ? 'red' : 'white';
+  }
+
+
+
+
+
+
 
   async filterCategories(categoryId: any) {
     this.productsService.productsCategory = categoryId;
     this.productsService.products = await this.categoriesService.getProductsByCategory(categoryId);
-    
 
-    
-    for(let item in this.categories){
-      if(this.categories[item]._id === categoryId)
-      this.correctNameCategory = this.categories[item].name; //insert the name we click to the variable
-      
+
+
+    for (let item in this.categories) {
+      if (this.categories[item]._id === categoryId)
+        this.correctNameCategory = this.categories[item].name; //insert the name we click to the variable
+
     }
 
-    for(let item in this.user.favorite){
-        if(this.user.favorite[item].name == this.correctNameCategory){
-          console.log("item ",this.user.favorite[item].name);
-          console.log("rating ",this.user.favorite[item].rating);
-          // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
-          this.user.favorite[item].rating += 1;
-          console.log("after ",this.user.favorite[item].rating);
+    for (let item in this.user.favorite) {
+      if (this.user.favorite[item].name == this.correctNameCategory) {
+        console.log("item ", this.user.favorite[item].name);
+        console.log("rating ", this.user.favorite[item].rating);
+        // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
+        this.user.favorite[item].rating += 1;
+        console.log("after ", this.user.favorite[item].rating);
       }
     }
     await this.authService.updateUser(this.user); // ask eliana why the array update only when I logout
@@ -164,20 +198,20 @@ export class CategoryComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      
+
 
       this.cartsService.addToCart(productToAdd);
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
-      
+
       this.notify.success("This product has been added to your shopping cart");
       // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToAdd.quantity;
       this.updateStockProduct.inStock = this.getProduct.inStock - productToAdd.quantity;
 
       const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
-      
 
-      this.productStock = this.productsService.products[indexToDelete].inStock;     
+
+      this.productStock = this.productsService.products[indexToDelete].inStock;
 
     } else if (ifInCart) {
 
@@ -192,12 +226,12 @@ export class CategoryComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      
+
 
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-      
+
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
@@ -205,7 +239,7 @@ export class CategoryComponent implements OnInit {
             this.notify.success("This product has been updated in your shopping cart");
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-           
+
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
@@ -214,12 +248,12 @@ export class CategoryComponent implements OnInit {
 
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-           
+
 
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
 
-            
+
 
             const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);
             this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
@@ -254,30 +288,40 @@ export class CategoryComponent implements OnInit {
     // if product is already in wishlist
     if (this.isWishProduct.length > 0) {
       await this.wishListService.removeWishList(this.isWishProduct[0]);
-      this.notify.error("product has removed from wishlist");
+      // this.notify.error("product has removed from wishlist");
       this.isWish = false;
+      product.follow = false;
+
       return;
     }
 
     // if product is NOT in wishlist
     this.isWish = true;
     await this.wishListService.addToWishList(follow);
-    this.notify.success("product has added from wishlist");
+    product.follow = true;
+
+    // this.notify.success("product has added from wishlist");
+
+    console.log({ follow });
+    console.log('this.wishListService ', this.wishListService);
+    console.log('this.productsService.products ', this.productsService.products);
+
+
 
   }
 
   public async delete(product) {
     try {
-        const answer = confirm("Are you sure?");
-        if (!answer) return;
-        await this.productsService.deleteProduct(product._id);
-        this.notify.success("Product has been deleted.")
-        const index = this.productsService.products.findIndex(p => p._id === product._id);
-        this.productsService.products.splice(index, 1);
+      const answer = confirm("Are you sure?");
+      if (!answer) return;
+      await this.productsService.deleteProduct(product._id);
+      this.notify.success("Product has been deleted.")
+      const index = this.productsService.products.findIndex(p => p._id === product._id);
+      this.productsService.products.splice(index, 1);
     }
     catch (err) {
-        this.notify.error(err);
+      this.notify.error(err);
     }
-}
+  }
 
 }

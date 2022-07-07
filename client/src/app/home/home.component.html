@@ -337,17 +337,17 @@
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6" *ngFor="let product of recomendProducts | slice:0:12">
 						<div class="single-product card_d">
-							<img class="img-fluid" style="width: auto;max-height: 118px;" src={{product.img}} alt="">
+							<img class="img-fluid" style="width: auto;max-height: 118px;" src={{product?.img}} alt="">
 							<div class="product-details">
-								<h6>{{product.name|titlecase | slice:0:15}}</h6>
+								<h6>{{product?.name|titlecase | slice:0:15}}</h6>
 								<div class="price">
-									<h6>{{product.price|currency}}</h6>
-									<h6 class="l-through">{{product.discount/100}}%</h6>
+									<h6>{{product?.price|currency}}</h6>
+									<h6 class="l-through">{{product?.discount/100}}%</h6>
 									<img src="https://i.imgur.com/uM1yzcX.png" style="width: 90px;">
 								</div>
 								<div class="prd-bottom">
 								
-									 <a [routerLink]="'/home/'+ product._id" class="social-info">
+									 <a [routerLink]="'/home/'+ product?._id" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">view more</p>
 									</a>

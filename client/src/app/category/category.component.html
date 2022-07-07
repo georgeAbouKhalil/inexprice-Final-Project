@@ -107,10 +107,35 @@
 											<p class="hover-text">add to bag</p>
 										</a>
 
-										<a class="social-info" (click)="wish(product)" >
+										<a *ngIf="!product.follow" class="social-info" (click)="wish(product)" >
 											<span class="lnr lnr-heart" ></span>
 											<p class="hover-text">Wishlist</p>
+										</a> 
+
+										<a *ngIf="product.follow" class="social-info" (click)="wish(product)" >
+											<i  style="color: red;" class="fas fa-heart"></i>
+											<p class="hover-text">Wishlist</p>
 										</a>
+										<!-- <a *ngIf="!product.follow" class="social-info" (click)="wish(product)" >
+											<i  class="fas fa-heart"></i>
+											<p class="hover-text">Wishlist</p>
+										</a> -->
+										
+										<!-- <div *ngFor="let nn of wishProduct">
+										<a *ngIf="nn._id === product._id" class="social-info" (click)="wish(product)" >
+											<i style="color: red;" class="fas fa-heart"></i>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										
+
+										</div> -->
+										<!-- <a *ngIf="isWish==false" class="social-info" (click)="wish(product)" >
+											<-- <span class="lnr lnr-heart" ></span> --
+											<i style="color: red;" class="fas fa-heart"></i>
+											<p class="hover-text">Wishlist</p>
+										</a> -->
+
+										
 
 										<!-- <a href="" class="social-info"> -->
 										<a [routerLink]="'/category/'+ product._id" class="social-info">

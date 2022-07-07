@@ -47,6 +47,8 @@ function sendEmailAfterBuying(to: string, subject: string, cartItems: any[], ord
 
 function createReceiptFile(cartItems, orderDetails) {
     let today = new Date()
+    console.log(cartItems);
+    
     let receipt = `<img style="width:150px;" src="https://i.imgur.com/0SKiD6J.png" >
         <div style="text-align: center;"><h1>Reception</h1> <h2>Thank you for buying from InexPrice!</h2>` +
         `<em>Here is your order from: ${today.toLocaleString()}:</em><br>`;
@@ -55,6 +57,7 @@ function createReceiptFile(cartItems, orderDetails) {
     receipt += `<table style="margin: auto; text-align: center;border: 1px solid; border-collapse: collapse">
             <thead>
             <tr style="border: 1px solid; border-collapse: collapse">
+            <th style="width: 300px">Image Product</th>
             <th style="width: 300px">Product</th>
             <th style="width: 100px">Amount</th>
             <th style="width: 100px">Price</th>
@@ -66,14 +69,16 @@ function createReceiptFile(cartItems, orderDetails) {
             receipt +=`
             <tbody style="margin: auto; text-align: center;border: 1px solid; border-collapse: collapse">
             <tr style="border: 1px solid; border-collapse: collapse" >
+            <td style="width: 100px;"> <img style="width: 30px;" src="${item.product.img.toString()}"></td>
             <td style="width: 300px;"><b>${item.product.name.toUpperCase()}</b></td>
             <td style="width: 100px;">${item.quantity}</td>
             <td style="width: 100px;">${item.totalPrice}$</td>
             </tr>
-`
+            `
         }
 
         receipt += ` <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>

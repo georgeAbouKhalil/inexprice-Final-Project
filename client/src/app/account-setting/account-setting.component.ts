@@ -44,10 +44,7 @@ export class AccountSettingComponent implements OnInit {
     
     
   }
-  
-//   onClickedItem(){
-//     this.rotato = "thecard";
-// }
+
 
   changeCardNumber(updateNumberValue){
     var cardNumber2 = updateNumberValue;
@@ -191,7 +188,7 @@ export class AccountSettingComponent implements OnInit {
         this.notify.error("wrong password");
       }
     }catch (err){
-      alert(err)
+      this.notify.error("something wrong");
     }
   }
 

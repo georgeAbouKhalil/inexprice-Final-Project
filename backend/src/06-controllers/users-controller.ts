@@ -104,10 +104,21 @@ router.post("/",async (request: Request, response: Response, next: NextFunction)
 router.put("/:id",async (request: Request, response: Response, next: NextFunction) => {
     try{
         const userToUpdate = new UserModel(request.body);
-
-        console.log({userToUpdate});
-        
         const updatedUser = await logic.updateUser(userToUpdate);
+        response.status(201).json(updatedUser);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+
+
+// Route for updating a user:
+router.patch("/:id",async (request: Request, response: Response, next: NextFunction) => {
+    try{
+        request.body._id = request.params.id;
+        const newDetails = new UserModel(request.body);
+        const updatedUser = await logic.updatePartialUser(newDetails);
         response.status(201).json(updatedUser);
     }
     catch(err: any) {

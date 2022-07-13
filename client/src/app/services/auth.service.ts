@@ -78,6 +78,11 @@ export class AuthService {
     return await this.http.put<UserModel>('http://localhost:3001/api/auth/' + user._id, user).toPromise();
   }
 
+  public async changeUserDetails(user: any, newDetails) {
+    // return this.http.put<UserModel>('http://localhost:3001/api/auth', password).toPromise();
+    return await this.http.patch<UserModel>('http://localhost:3001/api/auth/' + user._id, newDetails).toPromise();
+  }
+
 
   public async updateUser(user: any) {
     console.log({ user });

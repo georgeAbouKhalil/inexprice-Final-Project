@@ -14,6 +14,18 @@ async function getAllCartItem(cart_id: string): Promise<ICartItemModel[]> {
     // return CartItemModel.find().populate("category").exec();
 }
 
+// Get all:s
+async function getAll(): Promise<ICartItemModel[]> {
+    // Get all products without virtual fields:
+    // return await CartItemModel.find({ cart_id: cart_id }).exec();
+    return await CartItemModel.find().populate("product").populate("cart").exec();
+    // return await CartItemModel.find({cart_id: cart_id}).populate("product").populate("cart").exec();
+    // const carto = CartItemModel.find({"cart_id": cartId}).exec();
+
+    // Get all product with specific virtual fields:
+    // return CartItemModel.find().populate("category").exec();
+}
+
 // Get one:
 async function getOneCartItem(_id: string): Promise<ICartItemModel> {
 
@@ -146,5 +158,5 @@ export default {
     getSomeProducts,
     getPagedProducts,
     getProductsUsingRegex,
-    emptyCart
+    emptyCart,getAll
 };

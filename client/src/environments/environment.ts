@@ -18,6 +18,7 @@ export const environment = {
   messageUrl: 'http://localhost:3001/api/message/',
   mailUrl: 'http://localhost:3001/api/mail/sendMail/',
   mailOrderUrl: 'http://localhost:3001/api/mail/sendMailOrder/',
+  reviewUrl: 'http://localhost:3001/api/review/',
   
 
 };

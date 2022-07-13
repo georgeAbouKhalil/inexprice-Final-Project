@@ -78,18 +78,18 @@ export class CategoryComponent implements OnInit {
         }
 
 
-
-        this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
-        this.wishProduct.forEach((follower) => {
-          this.productsService.products.forEach(product => {
-            if (follower.product._id === product._id) {
-              //  this.isWish = true;
-  product.follow = true;
-            }
+        if (this.user) {
+          this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
+          this.wishProduct.forEach((follower) => {
+            this.productsService.products.forEach(product => {
+              if (follower.product._id === product._id) {
+                //  this.isWish = true;
+                product.follow = true;
+              }
+            })
           })
-        })             
 
-
+        }
       },
       (serverErrorResponse) => {
         this.error = serverErrorResponse.error.error;
@@ -130,16 +130,18 @@ export class CategoryComponent implements OnInit {
 
     }
 
-    for (let item in this.user.favorite) {
-      if (this.user.favorite[item].name == this.correctNameCategory) {
-        console.log("item ", this.user.favorite[item].name);
-        console.log("rating ", this.user.favorite[item].rating);
-        // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
-        this.user.favorite[item].rating += 1;
-        console.log("after ", this.user.favorite[item].rating);
+    if (this.user) {
+      for (let item in this.user.favorite) {
+        if (this.user.favorite[item].name == this.correctNameCategory) {
+          console.log("item ", this.user.favorite[item].name);
+          console.log("rating ", this.user.favorite[item].rating);
+          // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
+          this.user.favorite[item].rating += 1;
+          console.log("after ", this.user.favorite[item].rating);
+        }
       }
+      await this.authService.updateUser(this.user); // ask eliana why the array update only when I logout
     }
-    await this.authService.updateUser(this.user); // ask eliana why the array update only when I logout
   }
 
   public async addToCart(product) {

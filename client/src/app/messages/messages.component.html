@@ -24,7 +24,7 @@
                   </div>
                   <!-- <div class="name" >{{online.user}}</div> -->
                   <!-- <div class="name" >{{connectedUser.firstName}}</div> -->
-                  <div *ngFor="let user of usersList" class="name" >{{user.userName}}</div>
+                  <div *ngFor="let user of usersList" class="name" (click)="getMessages(user.userId)" >{{user.userName}}</div>
                   <!--<div class="mood">User mood</div>-->
             </div>
               
@@ -36,9 +36,9 @@
         <div class="col-inside-lg decor-default">
           <div class="chat-body">
             <!-- <h6>Mini Chat</h6> -->
-          <div #list class="list" [scrollTop]="list.scrollHeight">
+          <div #list class="list" [scrollTop]="list.scrollHeight" *ngIf="showMessageForUser" >
             <!-- <div [ngClass]="(chat.Name === Name)? 'left' : 'right'" class="answer " *ngFor="let chat of historyMessages"> -->
-            <div [ngClass]="(chat.userName === name)? 'left' : 'right'" class="answer " *ngFor="let chat of historyMessages">
+            <div [ngClass]="(chat.userName === name)? 'left' : 'right'" class="answer "  *ngFor="let chat of historyMessages">
               <div class="avatar">
                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
                 <div class="status offline"></div>

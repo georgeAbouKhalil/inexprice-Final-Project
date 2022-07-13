@@ -52,7 +52,7 @@
                     <li class="nav-item submenu dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                          aria-expanded="false">Account <span class="mar-20"> <i class="fas fa-user"></i> </span></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" *ngIf="user">
                             <p class="dropP">Welcome to InexPrice!</p>
                             <li class="nav-item"><a class="nav-link" href="/order">My Orders <span class="right-1"><i class="fas fa-shopping-bag"></i></span></a></li>
                             <li class="nav-item"><a class="nav-link" href="/messages">Messages <span class="right-2"><i class="fas fa-comment"></i></span></a></li>
@@ -63,7 +63,7 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" *ngIf="user">
                     <li class="nav-item"><a href="/cart" class="cart"><span class="ti-bag"></span></a></li>
                     <li class="nav-item">
                         <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>

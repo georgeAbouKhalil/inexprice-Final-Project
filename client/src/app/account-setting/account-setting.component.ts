@@ -1,3 +1,4 @@
+import { UserModel } from 'src/app/models/user.model';
 import { CreditCardModel } from './../models/creditCard.model';
 import { CreditCardService } from './../services/creditCard.service';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { stringify } from 'querystring';
 import { NotifyService } from '../services/notify.service';
 import { AuthService } from '../services/auth.service';
 import { style } from '@angular/animations';
+import { async } from 'rxjs';
 
 
 @Component({
@@ -31,11 +33,22 @@ export class AccountSettingComponent implements OnInit {
   creditCards:any = [] = [];
 
 
+  clickUpdate:boolean=false ;
+
+  userImage:string = ""
+
+  newDetail = new UserModel();
+   mask = [/[0-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
   constructor(public myAuthService: AuthService,private cr: FormBuilder,private ps: FormBuilder,private notify: NotifyService, private creditService: CreditCardService) { }
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
     
+    if(this.user.gender === "Male")
+      this.userImage = "assets/img/product/review-1.png"
+    else
+      this.userImage = "assets/img/blog/c3.jpg"
     
     this.validCreditCard();
     this.validPasswordUser();
@@ -190,6 +203,29 @@ export class AccountSettingComponent implements OnInit {
     }catch (err){
       this.notify.error("something wrong");
     }
+  }
+
+
+
+
+
+  async updateUserDetail(user){      
+    //check the new object of user (updated field if are empty or made change)
+    if (Object.keys(this.newDetail).length === 0 ) {
+      this.clickUpdate = false;
+      return ;
+    }
+    await this.myAuthService.changeUserDetails(user, this.newDetail);
+    this.notify.success("Please login again")
+    this.myAuthService.logout();
+    window.location.href = "home";
+
+
+  }
+
+
+  async onSubmitUser(){
+this.clickUpdate= true;
   }
 
 }

@@ -25,10 +25,12 @@ export class ContactComponent implements OnInit {
 
 
   getUserFullName() {
-    this.userFullName = this.user.userName + " " + this.user.lastName;
+    if(this.user)
+      this.userFullName = this.user.userName + " " + this.user.lastName;
   }
   getUserEmail() {
-    this.userEmail = this.user.email;
+    if(this.user)
+      this.userEmail = this.user.email;
   }
 
   userFormDetailsValid() {
@@ -38,11 +40,6 @@ export class ContactComponent implements OnInit {
     });
   }
   async sendMessage() {
-    console.log(this.userDetails.valid);
-    console.log(this.userDetails.value);
-
-    console.log("this.user.email ",this.userDetails.value.email);
-    
      await this.mailService.sendEmail(this.userDetails.value.email);
 
      this.notify.success("Email sent successfully");

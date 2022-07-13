@@ -6,20 +6,20 @@ import { IUserModel, UserModel } from "../03-models/user-model";
 
 // Register:
 async function register(user: IUserModel): Promise<string> {
-    
+
     // validate:
     const errors = user.validateSync();
-    if(errors) throw new ClientError(404, errors.message);
-    
+    if (errors) throw new ClientError(404, errors.message);
+
     // Validate username and email does not exist in DB:
     const users = await getAllUsers();
     const exist = users.find(u => u.userName === user.userName || u.email === user.email);
     if (exist) throw new ClientError(401, "User name or email already in use.");
-    
+
     // Using user logic:
     // const newUser = await userLogic.addUser(user);
     const newUser = await user.save();
-    
+
     // Delete password before generating token for security:
     delete user.password;
 
@@ -33,16 +33,16 @@ async function register(user: IUserModel): Promise<string> {
 async function login(credentials: ICredentialsModel): Promise<string> {
     // Validate:
     const errors = credentials.validateSync();
-    if(errors) throw new ClientError(404, errors.message);
+    if (errors) throw new ClientError(404, errors.message);
 
-    const users = await getAllUsers(); 
+    const users = await getAllUsers();
     // Check if user exist in database:
-    const user =  users.find(u => u.userName === credentials.username && u.password === credentials.password);
-    if(!user) throw new ClientError(401, "Incorrect username or password");
-    
+    const user = users.find(u => u.userName === credentials.username && u.password === credentials.password);
+    if (!user) throw new ClientError(401, "Incorrect username or password");
+
     // Delete password before generating token for security:
     delete user.password;
-    
+
     const token = jwt.getNewToken(user);
 
     return token;
@@ -55,14 +55,16 @@ async function getAllUsers(): Promise<IUserModel[]> {
 }
 
 async function getOneUser(_id: string): Promise<IUserModel> {
+    console.log("i am here");
+    
     // Validate _id:
-    if(!mongoose.isValidObjectId(_id)) throw new ClientError(404, `_id ${_id} is invalid`);
+    if (!mongoose.isValidObjectId(_id)) throw new ClientError(404, `_id ${_id} is invalid`);
 
     // Get user:
     const user = await UserModel.findById(_id).exec();
 
     // Validate user existence:
-    if(!user) throw new ClientError(404, "User not found");
+    if (!user) throw new ClientError(404, "User not found");
 
     return user;
 }
@@ -84,7 +86,7 @@ async function getRating(userName: string): Promise<Object> {
 async function addUser(user: IUserModel): Promise<IUserModel> {
     // Validation:
     const errors = user.validateSync();
-    if(errors) throw new ClientError(400, errors.message);
+    if (errors) throw new ClientError(400, errors.message);
 
     // save
     const addedUser = user.save();
@@ -94,26 +96,56 @@ async function addUser(user: IUserModel): Promise<IUserModel> {
 async function updateUser(user: IUserModel): Promise<IUserModel> {
     // Validation:
     const errors = user.validateSync();
-    if(errors) throw new ClientError(404, errors.message);
-    
-    console.log({user});
-    
+    if (errors) throw new ClientError(404, errors.message);
+
     // Update:
-    const updatedUser = await UserModel.findByIdAndUpdate(user._id, user, {returnOriginal: false}).exec();
+    const updatedUser = await UserModel.findByIdAndUpdate(user._id, user, { returnOriginal: false }).exec();
 
     // Validate if user exist in DB:
-    if(!updatedUser) throw new ClientError(404, "user is not found");
+    if (!updatedUser) throw new ClientError(404, "user is not found");
 
     return updatedUser;
 }
 
+
+async function updatePartialUser(newUser: IUserModel): Promise<IUserModel> {
+
+    //get details of the user
+    const dbUser = await getOneUser(newUser._id);
+
+    if (!dbUser) {
+        throw new ClientError(404, `user ${dbUser._id} not found`);
+    }
+    // Update it only with the given values from frontend:
+    for (const prop in newUser) {
+        if (newUser[prop] === undefined) {           
+            newUser[prop] = dbUser[prop];
+        }
+    }
+
+    // Update to database:
+    newUser = await updateUser(newUser);
+
+    // Return updated vacation:
+    return newUser;
+
+}
+
+
+
+
+
+
+
+
+
 async function deleteUser(_id: string): Promise<void> {
     // Validate _id:
-    if(!mongoose.isValidObjectId(_id)) throw new ClientError(404, `_id ${_id} is not valid`);
+    if (!mongoose.isValidObjectId(_id)) throw new ClientError(404, `_id ${_id} is not valid`);
 
     const deletedUser = await UserModel.findByIdAndDelete(_id).exec();
 
-    if(!deletedUser) throw new ClientError(404, "user is not found");
+    if (!deletedUser) throw new ClientError(404, "user is not found");
 }
 
 
@@ -126,5 +158,6 @@ export default {
     updateUser,
     deleteUser,
     getUserIdByUserName,
-    getRating
+    getRating,
+    updatePartialUser
 }

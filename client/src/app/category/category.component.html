@@ -97,47 +97,20 @@
 										<h6 class="l-through">{{product.discount/100}}%</h6>
 										<ng-template #elseBlock><h3>{{product.discount/100}}%</h3></ng-template>
 									</div>
-									<div class="prd-bottom">
-
-										<!-- <a *ngIf="product.inStock != 0" class="social-info" data-bs-toggle="modal" -->
-										<!-- <a *ngIf="productStock > 0 || product.inStock > 0" class="social-info" data-bs-toggle="modal" -->
+									<div class="prd-bottom" *ngIf="user">
 										<a *ngIf=" product.inStock > 0" class="social-info" data-bs-toggle="modal"
 											[attr.data-bs-target]="'#product'+product._id">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
 										</a>
-
 										<a *ngIf="!product.follow" class="social-info" (click)="wish(product)" >
 											<span class="lnr lnr-heart" ></span>
 											<p class="hover-text">Wishlist</p>
 										</a> 
-
 										<a *ngIf="product.follow" class="social-info" (click)="wish(product)" >
-											<i  style="color: red;" class="fas fa-heart"></i>
+											<span ><i style="color: red;" class="fas fa-heart"></i></span>
 											<p class="hover-text">Wishlist</p>
 										</a>
-										<!-- <a *ngIf="!product.follow" class="social-info" (click)="wish(product)" >
-											<i  class="fas fa-heart"></i>
-											<p class="hover-text">Wishlist</p>
-										</a> -->
-										
-										<!-- <div *ngFor="let nn of wishProduct">
-										<a *ngIf="nn._id === product._id" class="social-info" (click)="wish(product)" >
-											<i style="color: red;" class="fas fa-heart"></i>
-											<p class="hover-text">Wishlist</p>
-										</a>
-										
-
-										</div> -->
-										<!-- <a *ngIf="isWish==false" class="social-info" (click)="wish(product)" >
-											<-- <span class="lnr lnr-heart" ></span> --
-											<i style="color: red;" class="fas fa-heart"></i>
-											<p class="hover-text">Wishlist</p>
-										</a> -->
-
-										
-
-										<!-- <a href="" class="social-info"> -->
 										<a [routerLink]="'/category/'+ product._id" class="social-info">
 											<span class="lnr lnr-move"></span>
 											<p class="hover-text">view more</p>

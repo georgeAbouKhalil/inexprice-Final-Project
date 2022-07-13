@@ -35,6 +35,8 @@ export class MessagesComponent implements OnInit {
   connectedUser : any;
   usersList: any;
 
+  showMessageForUser:boolean =false;
+
   constructor(private chatService: ChatService, private router: Router, public authService: AuthService) {
  
   this.chatService.newMessageReceived()
@@ -56,8 +58,9 @@ export class MessagesComponent implements OnInit {
     this.connectedUser = this.authService.getUser();     
     this.username = this.connectedUser.firstName;
     this.name = this.connectedUser.userName;
+    if(this.connectedUser.role === 'user'){
     this.getMessages(this.connectedUser._id);
-
+    }
 console.log(this.connectedUser.role);
 
 
@@ -66,6 +69,17 @@ console.log(this.connectedUser.role);
       console.log(this.usersList);
       
     }
+
+    console.log(this.name);
+    console.log(this.connectedUser.userName);
+    
+console.log((this.name === this.connectedUser.userName));
+
+   if (this.name === this.connectedUser.userName) {
+    this.showMessageForUser = true;
+   }
+   
+    
   }
   
    
@@ -82,7 +96,13 @@ console.log(this.connectedUser.role);
     if(event.code === "Enter"){
     const date = new Date().toDateString();
     const time = new Date().toTimeString().split(' ')[0];
+    console.log('name ', this.name);
+    // const userId =  this.connectedUser._id
+    // if (this.connectedUser.userName !== this.name || this.connectedUser.role !=='admin') {
+    //   return;
+    // }
     this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+
     this.addMessage();
     this.showTypingPara = false;
     }
@@ -93,15 +113,21 @@ console.log(this.connectedUser.role);
   addMessage() {
     const date1 = new Date().toDateString();
     const time1 = new Date().toTimeString().split(' ')[0];
+    
     let newMsg = {
+      userId :this.connectedUser._id,
       name: this.connectedUser.firstname,
       userName: this.name ,
       email: this.connectedUser.email ,
       message: this.messageText,
       date: date1,
-      time: time1
+      time: time1,
+      toUser: "626980f33808d1c41ba27690"
     };
-    
+      
+    // if (this.connectedUser.userName !== newMsg.userName || this.connectedUser.role !=='admin') {
+    //   return;
+    // }
     this.chatService.saveMessage(newMsg)
     .subscribe(
       res => {
@@ -114,8 +140,17 @@ console.log(this.connectedUser.role);
     this.messageText = "";
   }
 
-  getMessages(userID) {
-    this.chatService.allMessages(userID)
+  getMessages(userId) {
+    console.log({userId});
+    
+    console.log('z11111111  this.connectedUser._id ', this.connectedUser._id);
+    console.log('z11111111  userId ', userId);
+    console.log('z11111111  this.connectedUser.role  ', this.connectedUser.role);
+    
+    // if (this.showMessageForUser || this.connectedUser.role !=='admin') {
+    //   return;
+    // }
+    this.chatService.allMessages(userId)
     .subscribe(
       res => { 
       

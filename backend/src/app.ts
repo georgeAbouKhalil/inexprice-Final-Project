@@ -16,6 +16,7 @@ import creditCardsController from "./06-controllers/creditCards-controller";
 import wishListController from "./06-controllers/wishlist-controller";
 import MessageController from "./06-controllers/message-controller";
 import MailController from "./06-controllers/email-controller";
+import ReviewController from "./06-controllers/review-controller";
 
 const server = express();
 
@@ -32,6 +33,7 @@ server.use("/api/creditCard", creditCardsController);
 server.use("/api/wishList", wishListController);
 server.use("/api/message", MessageController);
 server.use("/api/mail", MailController);
+server.use("/api/review",ReviewController );
 
 server.use(errorsHandler);
 

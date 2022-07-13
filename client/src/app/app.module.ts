@@ -27,6 +27,8 @@ import { OrderComponent } from './order/order.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddProductComponent } from './admin/add-product/add-product.component';
 import { UpdateProductComponent } from './admin/update-product/update-product.component';
+import { DialogComponent } from './dialog/dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { UpdateProductComponent } from './admin/update-product/update-product.co
     OrderComponent,
     AddProductComponent,
     UpdateProductComponent,
+    DialogComponent,
 
   ],
   imports: [
@@ -59,7 +62,8 @@ import { UpdateProductComponent } from './admin/update-product/update-product.co
     ReactiveFormsModule,
     TextMaskModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatDialogModule
 
   ],
   providers: [],

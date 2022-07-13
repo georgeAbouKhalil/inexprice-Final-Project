@@ -19,5 +19,4 @@ export class ProductModel {
     product?: ProductModel;
     wishlist?: boolean;
     follow?: boolean
-
 }

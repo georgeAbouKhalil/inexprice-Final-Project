@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductModel } from '../models/product.model';
+import { ReviewModel } from '../models/review.model';
 import { UserModel } from '../models/user.model';
 import { WishListModel } from '../models/wishlist.model';
 import { AuthService } from '../services/auth.service';
 import { CartsService } from '../services/cart.service';
 import { NotifyService } from '../services/notify.service';
 import { ProductsService } from '../services/products.service';
+import { ReviewsService } from '../services/reviews.service';
 import { WishListService } from '../services/wishlist.service';
 
 
@@ -41,51 +43,55 @@ export class ViewMoreComponent implements OnInit {
   isWish: boolean = false;
   user: UserModel;
 
-  stockCheck:any="";
+  stockCheck: any = "";
+  reviews: ReviewModel[];
+  review = new ReviewModel();
 
 
-  constructor(private authService: AuthService,public cartsService: CartsService, private notify: NotifyService, private actRoute: ActivatedRoute, private productsService: ProductsService,private wishListService: WishListService) { }
+  constructor(private reviewsService: ReviewsService, private authService: AuthService, public cartsService: CartsService, private notify: NotifyService, private actRoute: ActivatedRoute, private productsService: ProductsService, private wishListService: WishListService) { }
 
   async ngOnInit() {
     this.user = this.authService.getUser();
-    
+
     try {
       this.cart = JSON.parse(localStorage.getItem("cart"));
       const productID = this.actRoute.snapshot.params['id'];
       this.product = await this.productsService.getOneProduct(productID);
-      console.log(this.product);
+
+      this.reviews = await this.reviewsService.getReviews(productID)
       
-      if(this.product.inStock > 0){
+
+      if (this.product.inStock > 0) {
         this.stockCheck = "In Stock";
       }
       else {
         this.stockCheck = "Not Available";
       }
-      
+
 
     }
     catch (err) {
       this.notify.error(err)
     }
-
-
     
+
+
   }
   public async addToCart(product) {
-    
-  
+
+
 
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    
+
 
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-    
+
 
     this.getProduct = await this.productsService.getOneProduct(product._id);
-   
+
 
     if (this.amount < 0) {
       this.amount = 1;
@@ -93,7 +99,7 @@ export class ViewMoreComponent implements OnInit {
       return;
     };
 
-   
+
 
     if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
       this.quantityCart = 0
@@ -109,7 +115,7 @@ export class ViewMoreComponent implements OnInit {
 
     //If product already in cart
     let ifInCart = false;
-    
+
 
     if (this.cartP.length > 0) {
       ifInCart = true;
@@ -126,7 +132,7 @@ export class ViewMoreComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      
+
 
       this.cartsService.addToCart(productToAdd);
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
@@ -136,10 +142,10 @@ export class ViewMoreComponent implements OnInit {
 
       const indexToDelete = this.productsService.products.findIndex(t => t._id === productToAdd.product_id);
       this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
-      
+
 
       this.productStock = this.productsService.products[indexToDelete].inStock;
-      
+
 
 
     } else if (ifInCart) {
@@ -155,12 +161,12 @@ export class ViewMoreComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      
+
 
       this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
 
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-      
+
 
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
@@ -168,7 +174,7 @@ export class ViewMoreComponent implements OnInit {
             this.notify.success("This product has been updated in your shopping cart");
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
             // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            
+
 
 
             // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
@@ -177,12 +183,12 @@ export class ViewMoreComponent implements OnInit {
 
             // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-            
+
 
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
             // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
 
-            
+
 
             const indexToDelete = this.productsService.products.findIndex(t => t._id === productToUpdate.product_id);
             this.productsService.products[indexToDelete].inStock = this.updateStockProduct.inStock;
@@ -226,5 +232,16 @@ export class ViewMoreComponent implements OnInit {
     await this.wishListService.addToWishList(follow);
     this.notify.success("product has added from wishlist");
 
+  }
+
+  async addReview() {
+    this.review.userId = this.user._id;
+    this.review.productId = this.actRoute.snapshot.params['id'];
+    await this.reviewsService.addReview(this.review)
+
+    // to update the reviews in page
+    this.reviews = await this.reviewsService.getReviews(this.review.productId);
+    // reset the review textarea
+    this.review.review = "";
   }
 }

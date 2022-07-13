@@ -182,6 +182,7 @@
 	</section>
 	<!-- end features Area -->
 
+
 	<!-- Start category Area -->
 	<section class="category-area">
 		<div class="container">
@@ -323,17 +324,17 @@
 		</div>
 		
 		<!-- single product slide for you -->
-		<div class="single-product-slider">
+		<div class="single-product-slider" *ngIf="user?.role === 'user'">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6 text-center">
-						<div class="section-title">
+						<div class="section-title" >
 							<h1>Products For You</h1>
 							<p>Products we recommend for you. That they may interest you</p>
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" *ngIf="recomendProducts">
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6" *ngFor="let product of recomendProducts | slice:0:12">
 						<div class="single-product card_d">

@@ -30,7 +30,11 @@ const router = express.Router();
 router.get("/by-user/:userId",async (request: Request, response: Response, next: NextFunction) => {
     try{
         const userId = request.params.userId;
+        console.log({userId});
+        
         const msgByUserId = await logic.getMsgByUserId(userId);
+        console.log({ msgByUserId});
+        
         response.json(msgByUserId);
     }
     catch(err: any) {

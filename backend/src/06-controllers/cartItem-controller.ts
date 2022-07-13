@@ -20,6 +20,20 @@ router.get("/by-cart/:cartId", async (request: Request, response: Response, next
     }
 });
 
+router.get("/", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+
+        // console.log('1 ', cartId);
+        const cartItem = await logic.getAll();
+        // console.log({ cartItem });
+
+        response.json(cartItem);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
 router.get("/:_id", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const _id = request.params._id;

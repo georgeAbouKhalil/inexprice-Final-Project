@@ -1,3 +1,4 @@
+import { UserModel } from './../models/user.model';
 import { environment } from 'src/environments/environment';
 import { io, Socket } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +17,10 @@ export class ChatService {
     // Connect to server: 
     constructor(private http: HttpClient, public authService: AuthService) { }
     private socket = io('http://localhost:3001');
+    
+    private user = this.authService.getUser();
+
+
     
     // // Connecting to server: 
     // public connect(): void {
@@ -62,8 +67,10 @@ export class ChatService {
     }
     // get Email Marketing Messages
     allMessages(userId) {
-        // console.log({ userId });
-
+        console.log({ userId });
+        // if (this.user._id !==  userId){
+        //     return;
+        // }
         const msg = this.http.get<any>(environment.messageUrl + "by-user/" + userId);
         // console.log({ msg });
 
@@ -71,11 +78,21 @@ export class ChatService {
     }
 
     sendMessage(data) {       
+        console.log({data});
+        
+        // if (this.user.userName !== data.userName ){
+        //     return;
+        // }
         this.socket.emit('message', data);
     }
     newMessageReceived() {
+                
+
         const observable = new Observable<{ userName: string, message: string, date:string ,time: string }>(observer => {
             this.socket.on('new message', (data) => {
+                // if (this.user.role !== 'admin' && this.user.userName !== data.userName ){
+                //     return;
+                // }
                 observer.next(data);
             });
             return () => {
@@ -103,6 +120,12 @@ export class ChatService {
     allChat() {
         const observable = new Observable<any>(observer => {
             this.socket.on('chat history', (data) => {
+                console.log(this.user);
+                console.log({data});
+                
+                // if (this.user.role !== 'admin' && this.user.userName !== data.userName ){
+                //     return;
+                // }
                 observer.next(data);
             });
             return () => {

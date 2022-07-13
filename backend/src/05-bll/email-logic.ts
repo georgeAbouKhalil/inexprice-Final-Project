@@ -49,7 +49,7 @@ function createReceiptFile(cartItems, orderDetails) {
     let today = new Date()
     console.log(cartItems);
     
-    let receipt = `<img style="width:150px;" src="https://i.imgur.com/0SKiD6J.png" >
+    let receipt = `<table style="margin-left: auto;margin-right: auto;"><th><img style="width:150px;" src="https://i.imgur.com/0SKiD6J.png" ></th> </table>
         <div style="text-align: center;"><h1>Reception</h1> <h2>Thank you for buying from InexPrice!</h2>` +
         `<em>Here is your order from: ${today.toLocaleString()}:</em><br>`;
 

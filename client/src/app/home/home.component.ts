@@ -1,6 +1,7 @@
+import { DialogComponent } from './../dialog/dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription , interval } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CartModel } from '../models/cart.model';
 import { CategoryModel } from '../models/category.model';
@@ -10,6 +11,7 @@ import { CartsService } from '../services/cart.service';
 import { CategoriesService } from '../services/categories.service';
 import { NotifyService } from '../services/notify.service';
 import { ProductsService } from '../services/products.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
@@ -34,8 +36,8 @@ export class HomeComponent implements OnInit {
   productStock: number;
   sum: number;
   quantityCart: number;
-  disProducts:any[] = [];
-  chepProducts:any[] = [];
+  disProducts: any[] = [];
+  chepProducts: any[] = [];
 
   selectedWord: string;
   categories: CategoryModel[];
@@ -43,101 +45,99 @@ export class HomeComponent implements OnInit {
 
   //my add
   allcategorys: CategoryModel[];
-  categoryID:any="";
+  categoryID: any = "";
   recomendProducts: ProductModel[] = [];
   ratesUser: any;
   private subscription: Subscription;
-  constructor( private authService: AuthService,private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService,public myAuthService: AuthService, public cartsService: CartsService,public productsService: ProductsService) { }
+  DialogP = 'No';
+  
+  constructor(public dialog: MatDialog,private authService: AuthService, private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService, public myAuthService: AuthService, public cartsService: CartsService, public productsService: ProductsService) { }
 
   dateNow = new Date('Mar 19 2022 23:07:00');
   dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
-  
+
   timeDifference;
   seconds;
   minutes;
   hours;
   days;
 
-
-
-  private getTimeDifference () {
+  private getTimeDifference() {
     this.timeDifference = this.dDay.getTime() - new Date().getTime();
     this.allocateTimeUnits(this.timeDifference);
-}
+  }
 
-private allocateTimeUnits (timeDifference) {
+  private allocateTimeUnits(timeDifference) {
     this.seconds = Math.floor((timeDifference) / (1000) % 60);
     this.minutes = Math.floor((timeDifference) / (1000 * 60) % 60);
     this.hours = Math.floor((timeDifference) / (1000 * 60 * 60) % 24);
     this.days = Math.floor((timeDifference) / (1000 * 60 * 60 * 24));
-}
-  
+  }
+
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
-    
-    
+
+
     // console.log(this.recomendProducts);
     // console.log(this.categoryID);
-    
-   
+
+
     this.allcategorys = await this.categoriesService.getAllCategories();
 
 
-    if(this.user){
-    this.ratesUser = await this.authService.getUserRating(this.user.userName);
+    if (this.user) {
+      this.ratesUser = await this.authService.getUserRating(this.user.userName);
     }
-    
+
     this.getTimeDifference();
 
-    if(this.user != undefined)
+    if (this.user != undefined)
       this.getMax();
-    
-    
-    this.subscription = interval(1000).subscribe(x => { 
-        this.getTimeDifference(); 
-        if( this.days < 0 && this.hours < 0 && this.minutes < 0 && this.seconds < 0){
+
+
+    this.subscription = interval(1000).subscribe(x => {
+      this.getTimeDifference();
+      if (this.days < 0 && this.hours < 0 && this.minutes < 0 && this.seconds < 0) {
         this.dateNow = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
         this.dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
 
-        this.getTimeDifference();  
+        this.getTimeDifference();
       }
-        });
-        this.user = this.myAuthService.getUser();
+    });
+    this.user = this.myAuthService.getUser();
 
-if (this.user){
-        this.getCart();
-        // this.getCartItems();
-}
+    if (this.user) {
+      this.getCart();
+      // this.getCartItems();
+    }
 
-//get the products
-this.productsService.getProducts().subscribe(
-  (productsList) => {
-    this.productsService.products = productsList;
-    //get product they have discount
-    this.disProducts = this.productsService.products.filter((product) => product.discount > 0 );
-    this.chepProducts = this.productsService.products.filter((product) => product.price < 20);
+    //get the products
+    this.productsService.getProducts().subscribe(
+      (productsList) => {
+        this.productsService.products = productsList;
+        //get product they have discount
+        this.disProducts = this.productsService.products.filter((product) => product.discount > 0);
+        this.chepProducts = this.productsService.products.filter((product) => product.price < 20);
+
+
+      },
+      (serverErrorResponse) => {
+        this.error = serverErrorResponse.error.error;
+      }
+
+    );
+
     
-    
-  },
-  (serverErrorResponse) => {
-    this.error = serverErrorResponse.error.error;
+    this.openDialog();
+
   }
-  
-);
 
 
+  private getCart() {
 
-
-
-
-}
-
-
-private getCart() {
-
-  this.cartsService.getCart(this.user?._id).subscribe(
-    (cart) => {
+    this.cartsService.getCart(this.user?._id).subscribe(
+      (cart) => {
         if (cart) {
           this.cartsService.cart = cart
         }
@@ -149,73 +149,84 @@ private getCart() {
         }
 
         localStorage.setItem("cart", JSON.stringify(this.cartsService.cart));
-    },
-    (serverErrorResponse) => {
-      this.error = serverErrorResponse.error.error;
-    }
-  );
-}
-
-public createNewCart(userCart): void {
-  this.cartsService.createCart(userCart).subscribe(
-    (cart) => (this.cartsService.cart = cart),
-    (serverErrorResponse) => {
-      this.error = serverErrorResponse.error.error;
-    }
-  );
-}
-
-async categoryFilter(e: Event) {
-
-  // get all categories
-  this.categories = await this.categoriesService.getAllCategories();
- 
-  // get the category name from html
-  const categoryName = (e.target as any).innerHTML;
-
-  // get the category Id and store in sessionStorage
-  this.categoryDetails = this.categories.find((category) => category.name === categoryName);
-  
-  sessionStorage.setItem('categoryId', this.categoryDetails._id);
-
-  window.location.href = "/category";
-           
-}
-
-
-ngOnDestroy() {
-  this.subscription.unsubscribe();
-  }
-
-
-
-  async getMax(){
-    var max:any = 0;
-    var index:any = 0;
-    var mostViewCategoryName:any="";
-    
-    for(let item in this.ratesUser){
-      if(this.ratesUser[item].rating > max){
-        max = this.ratesUser[item].rating; //get the max rating number
-        index = item; //get the index of the product
-        mostViewCategoryName = this.ratesUser[item].name // get the name of the product
+      },
+      (serverErrorResponse) => {
+        this.error = serverErrorResponse.error.error;
       }
-    }
-    // console.log(max);
-    // console.log(index);
-    // console.log(mostViewCategoryName);
-    
-    for(let item in this.allcategorys){
-      if(this.allcategorys[item].name == mostViewCategoryName)
-        this.categoryID = this.allcategorys[item]._id;
-    }
-    // console.log(this.categoryID);
-    this.recomendProducts = await this.categoriesService.getProductsByCategory(this.categoryID);
-    // console.log(this.recomendProducts);
-    
+    );
+  }
+
+  public createNewCart(userCart): void {
+    this.cartsService.createCart(userCart).subscribe(
+      (cart) => (this.cartsService.cart = cart),
+      (serverErrorResponse) => {
+        this.error = serverErrorResponse.error.error;
+      }
+    );
+  }
+
+  async categoryFilter(e: Event) {
+
+    // get all categories
+    this.categories = await this.categoriesService.getAllCategories();
+
+    // get the category name from html
+    const categoryName = (e.target as any).innerHTML;
+
+    // get the category Id and store in sessionStorage
+    this.categoryDetails = this.categories.find((category) => category.name === categoryName);
+
+    sessionStorage.setItem('categoryId', this.categoryDetails._id);
+
+    window.location.href = "/category";
+
   }
 
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+
+
+  async getMax() {
+    var max: any = 0;
+    var index: any = 0;
+    var mostViewCategoryName: any = "";
+
+    if (this.user.role === 'user') {
+      for (let item in this.ratesUser) {
+        if (this.ratesUser[item].rating > max) {
+          max = this.ratesUser[item].rating; //get the max rating number
+          index = item; //get the index of the product
+          mostViewCategoryName = this.ratesUser[item].name // get the name of the product
+        }
+      }
+      // console.log(max);
+      // console.log(index);
+      // console.log(mostViewCategoryName);
+
+      for (let item in this.allcategorys) {
+        if (this.allcategorys[item].name == mostViewCategoryName)
+          this.categoryID = this.allcategorys[item]._id;
+      }
+      console.log(this.categoryID);
+      this.recomendProducts = await this.categoriesService.getProductsByCategory(this.categoryID);
+      console.log(this.recomendProducts);
+    }
+  }
+
+  //dialog for register
+  openDialog(): void {
+   const dialogP =  sessionStorage.getItem('dialogPreview');
+    if(dialogP !== "Yes"){
+    this.dialog.open(DialogComponent, {
+      width: '250px',
+    });
+  }
+  sessionStorage.setItem('dialogPreview', 'Yes');
+
+  }
 
 
 }

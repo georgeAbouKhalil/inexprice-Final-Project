@@ -9,7 +9,7 @@ export interface IReviewModel extends Document {
     userId:Schema.Types.ObjectId;
     review:string;
     productId: Schema.Types.ObjectId;
-    
+    rating: number
 }
 
 // Define model schema:
@@ -20,9 +20,13 @@ const ReviewSchema = new Schema<IReviewModel>({
     review: {
         type: String,
         required: [true, "Missing review"],
+        trim: true
     },
     productId: {
         type: Schema.Types.ObjectId,
+    },
+    rating: {
+        type: Number,
     },
 }, { 
     versionKey: false, // Don't create __v field

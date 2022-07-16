@@ -122,3 +122,12 @@
 button {
     margin-right: 8px;
   }
+.infoDialog{
+ position: relative;
+ left: 4%;
+ top: 10vh;
+ font-size: large;
+ color: #a2a1a1;
+ cursor: pointer;
+ z-index: 100;
+}

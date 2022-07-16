@@ -50,8 +50,13 @@ export class HomeComponent implements OnInit {
   ratesUser: any;
   private subscription: Subscription;
   DialogP = 'No';
+
+  public date: string;
+  holidayImage: string = "";
   
-  constructor(public dialog: MatDialog,private authService: AuthService, private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService, public myAuthService: AuthService, public cartsService: CartsService, public productsService: ProductsService) { }
+  constructor(public dialog: MatDialog,private authService: AuthService, private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService, public myAuthService: AuthService, public cartsService: CartsService, public productsService: ProductsService) {
+    this.date = this.getCurrentDate();
+   }
 
   dateNow = new Date('Mar 19 2022 23:07:00');
   dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -128,8 +133,9 @@ export class HomeComponent implements OnInit {
 
     );
 
-    
-    this.openDialog();
+    // this.openDialog();
+
+    this.changeHolidayImage();
 
   }
 
@@ -217,16 +223,88 @@ export class HomeComponent implements OnInit {
   }
 
   //dialog for register
-  openDialog(): void {
-   const dialogP =  sessionStorage.getItem('dialogPreview');
-    if(dialogP !== "Yes"){
+  openDialog() {
+    if(!this.user){
+  //  const dialogP =  sessionStorage.getItem('dialogPreview');
     this.dialog.open(DialogComponent, {
-      width: '250px',
+      width: '400px',
+      height:'300px',
     });
-  }
-  sessionStorage.setItem('dialogPreview', 'Yes');
+   // sessionStorage.setItem('dialogPreview', 'Yes');
 
   }
 
+}
+
+private getCurrentDate(): string {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const now = new Date();
+  const monthIndex = now.getMonth();
+  const year = now.getFullYear();
+  return months[monthIndex] + " " + year;
+}
+
+
+changeHolidayImage(){
+  switch(this.date){
+    case "Jan":  
+      this.holidayImage = "https://i.imgur.com/D5emcSG.jpg";
+      break;
+
+    case "Feb":
+      this.holidayImage = "https://i.imgur.com/PLVvLRD.jpg";
+      break;
+
+    case "Apr":
+      this.holidayImage = "https://i.imgur.com/MfaarxZ.jpg";
+      break;
+
+    case "May":  
+      this.holidayImage = "assets/img/category/c5.jpg";
+      break;
+
+    case "Jun":
+      this.holidayImage = "https://i.imgur.com/Ax1r6bj.jpg";
+      break;
+
+    case "Oct":  
+      this.holidayImage = "https://i.imgur.com/w752PtS.jpg";
+      break;
+
+    case "Nov":
+      this.holidayImage = "assets/img/category/c5.jpg";
+      break;
+
+    case "Dec":
+      this.holidayImage = "https://i.imgur.com/FlWyuuo.jpg";
+      break;
+
+    default:
+      this.holidayImage = "https://i.imgur.com/u9LABbF.jpg";
+      break;
+
+
+
+
+
+
+
+      
+
+    
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+  }
+}
 
 }

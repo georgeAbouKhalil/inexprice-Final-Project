@@ -46,7 +46,9 @@ export class ViewMoreComponent implements OnInit {
   stockCheck: any = "";
   reviews: ReviewModel[];
   review = new ReviewModel();
-
+  
+  currentRate = 3.14;
+averageRating :number;
 
   constructor(private reviewsService: ReviewsService, private authService: AuthService, public cartsService: CartsService, private notify: NotifyService, private actRoute: ActivatedRoute, private productsService: ProductsService, private wishListService: WishListService) { }
 
@@ -60,6 +62,8 @@ export class ViewMoreComponent implements OnInit {
 
       this.reviews = await this.reviewsService.getReviews(productID)
       
+      this.averageRating = (this.reviews.map(review => (review.rating)).reduce((a, b) => a + b, 0))/this.reviews.length;
+
 
       if (this.product.inStock > 0) {
         this.stockCheck = "In Stock";
@@ -237,11 +241,19 @@ export class ViewMoreComponent implements OnInit {
   async addReview() {
     this.review.userId = this.user._id;
     this.review.productId = this.actRoute.snapshot.params['id'];
+    if (this.review.review === undefined  || this.review.review.trim() === "" || isNaN(this.review.rating)) {
+      return;
+
+    }
+    
     await this.reviewsService.addReview(this.review)
 
     // to update the reviews in page
     this.reviews = await this.reviewsService.getReviews(this.review.productId);
+    this.averageRating = (this.reviews.map(review => (review.rating)).reduce((a, b) => a + b, 0))/this.reviews.length;
+
     // reset the review textarea
     this.review.review = "";
+    this.review.rating = 0;
   }
 }

@@ -30,10 +30,10 @@ const router = express.Router();
 router.get("/by-user/:userId",async (request: Request, response: Response, next: NextFunction) => {
     try{
         const userId = request.params.userId;
-        console.log({userId});
+        // console.log({userId});
         
         const msgByUserId = await logic.getMsgByUserId(userId);
-        console.log({ msgByUserId});
+        // console.log({ msgByUserId});
         
         response.json(msgByUserId);
     }
@@ -47,7 +47,7 @@ router.get("/by-user",async (request: Request, response: Response, next: NextFun
     try{
         // const userId = request.params.userId;
         const users = await logic.getAllMsgUsers();
-        console.log({users});
+        // console.log({users});
         
         response.json(users);
     }
@@ -58,7 +58,7 @@ router.get("/by-user",async (request: Request, response: Response, next: NextFun
 
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        console.log(request.body);
+        // console.log(request.body);
         const message = new MessageModel(request.body);
         const addedMessage= await logic.addMessage(message);
         response.status(201).json(addedMessage);

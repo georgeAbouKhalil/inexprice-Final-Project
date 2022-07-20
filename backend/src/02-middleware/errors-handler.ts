@@ -5,8 +5,6 @@ function errorsHandler(err: any, request: Request, response: Response, next: Nex
 
     console.log(err);
 
-    // Save to log file...
-
     // Crash, like throw...: 
     if (err instanceof Error) {
         response.status((err as any).status || 500).send(err.message);

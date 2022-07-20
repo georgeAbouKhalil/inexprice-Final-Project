@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
 import { ReviewModel } from "../03-models/review-model";
-import { UserModel } from "../03-models/user-model";
 import logic from "../05-BLL/review-logic"
 
 const router = express.Router();

@@ -111,3 +111,7 @@ img{
     }
 }
 
+ngb-rating {
+    color: yellow;
+    font-size: 25px;
+}

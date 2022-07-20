@@ -4,7 +4,7 @@
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
+
     <!-- Author Meta -->
     <meta name="author" content="CodePixar">
     <!-- Meta Description -->
@@ -13,7 +13,7 @@
     <meta name="keywords" content="">
     <!-- meta character set -->
     <meta charset="UTF-8">
-    
+
 
 
 </head>
@@ -21,19 +21,19 @@
 <body>
 
     <!-- Start Header Area -->
-	<header class="header_area sticky-header">
-		<app-navbar></app-navbar>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
-	</header>
-	<!-- End Header Area -->
+    <header class="header_area sticky-header">
+        <app-navbar></app-navbar>
+        <div class="search_input" id="search_input_box">
+            <div class="container">
+                <form class="d-flex justify-content-between">
+                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                    <button type="submit" class="btn"></button>
+                    <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+                </form>
+            </div>
+        </div>
+    </header>
+    <!-- End Header Area -->
 
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
@@ -50,7 +50,7 @@
         </div>
     </section>
     <!-- End Banner Area -->
-    
+
     <!--================Cart Area =================-->
     <section class="cart_area">
         <div class="container">
@@ -94,64 +94,22 @@
                                 </td>
                                 <td (click)="deleteProductFromCart(item)" style="cursor:pointer ;">❌</td>
                             </tr>
-                            <!-- <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="assets/img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="assets/img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr> -->
                             <tr class="bottom_button">
                                 <td>
-                                    
+
                                 </td>
                                 <td>
-                                    
+
                                 </td>
                                 <td>
-                                    
+
                                 </td>
                                 <td>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                   
+
 
                                 </td>
                                 <td>
@@ -161,9 +119,10 @@
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <!-- <h5>{{total| currency}}</h5> -->
                                     <h5 *ngIf="!total || total <0; else elseBlock">$0.00</h5>
-                                    <ng-template #elseBlock><h5>{{total| currency}}</h5></ng-template>
+                                    <ng-template #elseBlock>
+                                        <h5>{{total| currency}}</h5>
+                                    </ng-template>
                                 </td>
                             </tr>
                             <tr class="shipping_area">
@@ -173,7 +132,7 @@
                                 <td>
 
                                 </td>
-                                
+
                                 <td>
 
                                 </td>
@@ -190,7 +149,8 @@
                                 </td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a style="margin-left: 0%;" class="primary-btn" href="/checkout">Proceed to checkout</a>
+                                        <a style="margin-left: 0%;" class="primary-btn" href="/checkout">Proceed to
+                                            checkout</a>
                                     </div>
                                 </td>
                             </tr>
@@ -205,11 +165,11 @@
     <!-- start footer Area -->
     <app-footer></app-footer>
     <!-- End footer Area -->
-<!-- scroll to the top -->
-<div id="progress">
-    <a id="progress-value" class="gotopbtn" href="/cart"><i class="fas fa-arrow-up"></i></a>
-</div>
-    
+    <!-- scroll to the top -->
+    <div id="progress">
+        <a id="progress-value" class="gotopbtn" href="/cart"><i class="fas fa-arrow-up"></i></a>
+    </div>
+
 </body>
 
 </html>

@@ -2,7 +2,6 @@ import { DialogComponent } from './../dialog/dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { CartModel } from '../models/cart.model';
 import { CategoryModel } from '../models/category.model';
 import { ProductModel } from '../models/product.model';
@@ -11,7 +10,7 @@ import { CartsService } from '../services/cart.service';
 import { CategoriesService } from '../services/categories.service';
 import { NotifyService } from '../services/notify.service';
 import { ProductsService } from '../services/products.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -20,13 +19,12 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public user: any;
-  public error: string = '';
-
-  public cart: any;
-  public count: number = 0;
-  public amount: number = 1;
-  public productToAdd: ProductModel;
+  user: any;
+  error: string = '';
+  cart: any;
+  count: number = 0;
+  amount: number = 1;
+  productToAdd: ProductModel;
   cartProducts: any;
   cartP: any[];
   products: any;
@@ -38,25 +36,21 @@ export class HomeComponent implements OnInit {
   quantityCart: number;
   disProducts: any[] = [];
   chepProducts: any[] = [];
-
   selectedWord: string;
   categories: CategoryModel[];
   categoryDetails: CategoryModel;
-
-  //my add
   allcategorys: CategoryModel[];
   categoryID: any = "";
   recomendProducts: ProductModel[] = [];
   ratesUser: any;
   private subscription: Subscription;
   DialogP = 'No';
-
-  public date: string;
+  date: string;
   holidayImage: string = "";
-  
-  constructor(public dialog: MatDialog,private authService: AuthService, private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService, public myAuthService: AuthService, public cartsService: CartsService, public productsService: ProductsService) {
+
+  constructor(public dialog: MatDialog, private authService: AuthService, private myRouter: Router, public categoriesService: CategoriesService, private notify: NotifyService, public myAuthService: AuthService, public cartsService: CartsService, public productsService: ProductsService) {
     this.date = this.getCurrentDate();
-   }
+  }
 
   dateNow = new Date('Mar 19 2022 23:07:00');
   dDay = new Date(this.dateNow.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -82,12 +76,6 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
-
-
-    // console.log(this.recomendProducts);
-    // console.log(this.categoryID);
-
-
     this.allcategorys = await this.categoriesService.getAllCategories();
 
 
@@ -114,18 +102,14 @@ export class HomeComponent implements OnInit {
 
     if (this.user) {
       this.getCart();
-      // this.getCartItems();
     }
 
     //get the products
     this.productsService.getProducts().subscribe(
       (productsList) => {
         this.productsService.products = productsList;
-        //get product they have discount
         this.disProducts = this.productsService.products.filter((product) => product.discount > 0);
         this.chepProducts = this.productsService.products.filter((product) => product.price < 20);
-
-
       },
       (serverErrorResponse) => {
         this.error = serverErrorResponse.error.error;
@@ -133,15 +117,12 @@ export class HomeComponent implements OnInit {
 
     );
 
-    // this.openDialog();
-
     this.changeHolidayImage();
 
   }
 
 
   private getCart() {
-
     this.cartsService.getCart(this.user?._id).subscribe(
       (cart) => {
         if (cart) {
@@ -208,10 +189,6 @@ export class HomeComponent implements OnInit {
           mostViewCategoryName = this.ratesUser[item].name // get the name of the product
         }
       }
-      // console.log(max);
-      // console.log(index);
-      // console.log(mostViewCategoryName);
-
       for (let item in this.allcategorys) {
         if (this.allcategorys[item].name == mostViewCategoryName)
           this.categoryID = this.allcategorys[item]._id;
@@ -224,87 +201,62 @@ export class HomeComponent implements OnInit {
 
   //dialog for register
   openDialog() {
-    if(!this.user){
-  //  const dialogP =  sessionStorage.getItem('dialogPreview');
-    this.dialog.open(DialogComponent, {
-      width: '400px',
-      height:'300px',
-    });
-   // sessionStorage.setItem('dialogPreview', 'Yes');
+    if (!this.user) {
+      this.dialog.open(DialogComponent, {
+        width: '400px',
+        height: '300px',
+      });
+
+    }
 
   }
 
-}
-
-private getCurrentDate(): string {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const now = new Date();
-  const monthIndex = now.getMonth();
-  const year = now.getFullYear();
-  return months[monthIndex] + " " + year;
-}
-
-
-changeHolidayImage(){
-  switch(this.date){
-    case "Jan":  
-      this.holidayImage = "https://i.imgur.com/D5emcSG.jpg";
-      break;
-
-    case "Feb":
-      this.holidayImage = "https://i.imgur.com/PLVvLRD.jpg";
-      break;
-
-    case "Apr":
-      this.holidayImage = "https://i.imgur.com/MfaarxZ.jpg";
-      break;
-
-    case "May":  
-      this.holidayImage = "assets/img/category/c5.jpg";
-      break;
-
-    case "Jun":
-      this.holidayImage = "https://i.imgur.com/Ax1r6bj.jpg";
-      break;
-
-    case "Oct":  
-      this.holidayImage = "https://i.imgur.com/w752PtS.jpg";
-      break;
-
-    case "Nov":
-      this.holidayImage = "assets/img/category/c5.jpg";
-      break;
-
-    case "Dec":
-      this.holidayImage = "https://i.imgur.com/FlWyuuo.jpg";
-      break;
-
-    default:
-      this.holidayImage = "https://i.imgur.com/u9LABbF.jpg";
-      break;
-
-
-
-
-
-
-
-      
-
-    
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
+  private getCurrentDate(): string {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const now = new Date();
+    const monthIndex = now.getMonth();
+    const year = now.getFullYear();
+    return months[monthIndex] + " " + year;
   }
-}
 
+
+  changeHolidayImage() {
+    switch (this.date) {
+      case "Jan":
+        this.holidayImage = "https://i.imgur.com/D5emcSG.jpg";
+        break;
+
+      case "Feb":
+        this.holidayImage = "https://i.imgur.com/PLVvLRD.jpg";
+        break;
+
+      case "Apr":
+        this.holidayImage = "https://i.imgur.com/MfaarxZ.jpg";
+        break;
+
+      case "May":
+        this.holidayImage = "assets/img/category/c5.jpg";
+        break;
+
+      case "Jun":
+        this.holidayImage = "https://i.imgur.com/Ax1r6bj.jpg";
+        break;
+
+      case "Oct":
+        this.holidayImage = "https://i.imgur.com/w752PtS.jpg";
+        break;
+
+      case "Nov":
+        this.holidayImage = "assets/img/category/c5.jpg";
+        break;
+
+      case "Dec":
+        this.holidayImage = "https://i.imgur.com/FlWyuuo.jpg";
+        break;
+
+      default:
+        this.holidayImage = "https://i.imgur.com/u9LABbF.jpg";
+        break;
+    }
+  }
 }

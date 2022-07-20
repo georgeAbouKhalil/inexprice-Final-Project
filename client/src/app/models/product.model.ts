@@ -18,5 +18,6 @@ export class ProductModel {
     product_id?: string;
     product?: ProductModel;
     wishlist?: boolean;
-    follow?: boolean
+    follow?: boolean;
+    rating?: number
 }

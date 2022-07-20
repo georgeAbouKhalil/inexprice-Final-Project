@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Account Settings UI Design</title>
+	<title>Account Settings</title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 </head>
 
@@ -62,43 +62,52 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>First Name</label>
-									<input type="text" class="form-control" placeholder="{{user.firstName}}"  [disabled]="!clickUpdate ? true : false"  [(ngModel)]='newDetail.firstName'>
+									<input type="text" class="form-control" placeholder="{{user.firstName}}"
+										[disabled]="!clickUpdate ? true : false" [(ngModel)]='newDetail.firstName'>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Last Name</label>
-									<input type="text" class="form-control"  placeholder="{{user.lastName}}" [disabled]="!clickUpdate ? true : false" value="{{user.lastName}}" [(ngModel)]='newDetail.lastName'>
+									<input type="text" class="form-control" placeholder="{{user.lastName}}"
+										[disabled]="!clickUpdate ? true : false" value="{{user.lastName}}"
+										[(ngModel)]='newDetail.lastName'>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Email</label>
-									<input type="text" class="form-control" placeholder="{{user.email}}" [disabled]="!clickUpdate ? true : false" value="{{user.email}}" [(ngModel)]='newDetail.email'>
+									<input type="text" class="form-control" placeholder="{{user.email}}"
+										[disabled]="!clickUpdate ? true : false" value="{{user.email}}"
+										[(ngModel)]='newDetail.email'>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Phone number</label>
-									<input type="text" class="form-control"  placeholder="{{user.phone}}" [disabled]="!clickUpdate ? true : false" [textMask]="{mask:mask}" value="{{user.phone}}" [(ngModel)]='newDetail.phone'>
+									<input type="text" class="form-control" placeholder="{{user.phone}}"
+										[disabled]="!clickUpdate ? true : false" [textMask]="{mask:mask}"
+										value="{{user.phone}}" [(ngModel)]='newDetail.phone'>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Birthday</label>
-									<input type="text" class="form-control" disabled value="{{user.birthday}}" >
+									<input type="text" class="form-control" disabled value="{{user.birthday}}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Gender</label>
-									<input type="text" class="form-control" disabled value="{{user.gender}}" >
+									<input type="text" class="form-control" disabled value="{{user.gender}}">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<button class="btn btn-primary" *ngIf="!clickUpdate" (click)="onSubmitUser()">Click to Update</button>
-									<button class="btn btn-primary" *ngIf="clickUpdate" (click)="updateUserDetail(user)">Update</button>
+									<button class="btn btn-primary" *ngIf="!clickUpdate" (click)="onSubmitUser()">Click
+										to Update</button>
+									<button class="btn btn-primary" *ngIf="clickUpdate"
+										(click)="updateUserDetail(user)">Update</button>
 
 								</div>
 							</div>

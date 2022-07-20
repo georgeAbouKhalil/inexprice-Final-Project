@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
 import { CredentialsModel } from "../03-models/credentials-model";
-// import { Role } from "../03-models/role-model";
 import { UserModel } from "../03-models/user-model";
 import logic from "../05-BLL/users-logic"
 
@@ -57,6 +56,17 @@ router.post("/login", async (request : Request, response: Response, next: NextFu
 router.get("/",async (request: Request, response: Response, next: NextFunction) => {
     try{
         const users = await logic.getAllUsers();
+        response.json(users);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+// Route for getting all users:
+router.get("/user/:userName",async (request: Request, response: Response, next: NextFunction) => {
+    try{
+        const userName = request.params.userName;
+        const users = await logic.getUserIdByUserName(userName);
         response.json(users);
     }
     catch(err: any) {

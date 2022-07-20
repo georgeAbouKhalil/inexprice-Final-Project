@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-public user;
+  public user;
   constructor(public authservice: AuthService, private cartsService: CartsService) { }
 
   ngOnInit(): void {
@@ -18,7 +18,6 @@ public user;
 
   logout() {
     this.authservice.logout();
-    // this.cartsService.cart = {};
     this.cartsService.cartItems = [];
     window.location.href = "home"
   }

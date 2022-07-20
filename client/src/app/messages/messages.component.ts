@@ -1,7 +1,6 @@
-import { UserModel } from 'src/app/models/user.model';
 import { AuthService } from './../services/auth.service';
 import { ChatService } from './../services/chat.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemModel } from '../models/item.model';
 
@@ -14,7 +13,7 @@ export class MessagesComponent implements OnInit {
 
   msgToSend: string = "";
   messages: string[]= [];
-
+  clickedUser: string;
 
 
   AllUsersOnline = [];
@@ -24,7 +23,10 @@ export class MessagesComponent implements OnInit {
   user = '';
   room: string;
   messageText: string;
-  messageArray: Array<{userName: string, message: string, time: string}> = [];
+  // messageArray: Array<{userName: string, message: string, time: string}> = [];
+  messageArray: Array<{userId?:string, name?:string, userName?: string,email?:string, message?: string, time?: string, toUser?:string}> = [];
+
+
   historyArray: ItemModel[] = [];
   typingShow = {};
   name = '';
@@ -36,11 +38,17 @@ export class MessagesComponent implements OnInit {
   usersList: any;
 
   showMessageForUser:boolean =false;
+  newMsg:any;
+  userDetails: any;
 
-  constructor(private chatService: ChatService, private router: Router, public authService: AuthService) {
- 
+  constructor(private cdref: ChangeDetectorRef ,private chatService: ChatService, private router: Router, public authService: AuthService) {
+
+
+    
   this.chatService.newMessageReceived()
   .subscribe(data => {
+    console.log({data});
+    
     this.messageArray.push(data);
     this.typingShow = {};
     this.messageText = '';
@@ -54,12 +62,16 @@ export class MessagesComponent implements OnInit {
 
    }
 
+
+ 
+
+
   async ngOnInit() {
     this.connectedUser = this.authService.getUser();     
     this.username = this.connectedUser.firstName;
     this.name = this.connectedUser.userName;
     if(this.connectedUser.role === 'user'){
-    this.getMessages(this.connectedUser._id);
+    this.getMessagesUser(this.connectedUser._id);
     }
 console.log(this.connectedUser.role);
 
@@ -68,6 +80,13 @@ console.log(this.connectedUser.role);
       this.usersList = await this.chatService.getUsersList();
       console.log(this.usersList);
       
+      const indexToDelete = this.usersList.findIndex(t => t._id.userId == "626980f33808d1c41ba27690");
+      console.log({indexToDelete});
+      if(indexToDelete >=0) {
+      this.usersList.splice(indexToDelete, 1);
+console.log(this.usersList);
+      }
+
     }
 
     console.log(this.name);
@@ -81,13 +100,26 @@ console.log((this.name === this.connectedUser.userName));
    
     
   }
+
   
    
   sendMessage(event) {
     console.log(event)
     const date = new Date().toDateString();
     const time = new Date().toTimeString().split(' ')[0];
-    this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+    // this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+    if (this.connectedUser.role == 'user') {
+      console.log(this.connectedUser.role);
+      
+    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: "626980f33808d1c41ba27690"});
+    }
+    if (this.connectedUser.role == 'admin') {
+      console.log(this.connectedUser.role);
+
+    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: this.clickedUser});
+    }
+
+      
     this.addMessage();
   }
 
@@ -101,7 +133,27 @@ console.log((this.name === this.connectedUser.userName));
     // if (this.connectedUser.userName !== this.name || this.connectedUser.role !=='admin') {
     //   return;
     // }
-    this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+    // this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+
+    // this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: "626980f33808d1c41ba27690"});
+    if (this.connectedUser.role == 'user') {
+      console.log(this.connectedUser.role);
+      
+    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: "626980f33808d1c41ba27690"});
+    }
+    if (this.connectedUser.role == 'admin') {
+      console.log(this.connectedUser.role);
+      this.clickedUser =  sessionStorage.getItem('userId');
+
+    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: this.clickedUser});
+    }
+
+
+
+
+
+
+
 
     this.addMessage();
     this.showTypingPara = false;
@@ -114,7 +166,8 @@ console.log((this.name === this.connectedUser.userName));
     const date1 = new Date().toDateString();
     const time1 = new Date().toTimeString().split(' ')[0];
     
-    let newMsg = {
+    if (this.connectedUser.role === 'user'){
+    this.newMsg = {
       userId :this.connectedUser._id,
       name: this.connectedUser.firstname,
       userName: this.name ,
@@ -124,11 +177,29 @@ console.log((this.name === this.connectedUser.userName));
       time: time1,
       toUser: "626980f33808d1c41ba27690"
     };
+  }
       
+   
+  if (this.connectedUser.role === 'admin'){
+    this.clickedUser =  sessionStorage.getItem('userId');
+    
+    this.newMsg = {
+      userId :this.connectedUser._id,
+      name: this.connectedUser.firstname,
+      userName: this.name ,
+      email: this.connectedUser.email ,
+      message: this.messageText,
+      date: date1,
+      time: time1,
+      toUser: this.clickedUser,
+    };
+  }
+console.log('this.newMsg  ', this.newMsg);
+
     // if (this.connectedUser.userName !== newMsg.userName || this.connectedUser.role !=='admin') {
     //   return;
     // }
-    this.chatService.saveMessage(newMsg)
+    this.chatService.saveMessage(this.newMsg)
     .subscribe(
       res => {
         // console.log('Message saved!!');
@@ -140,21 +211,14 @@ console.log((this.name === this.connectedUser.userName));
     this.messageText = "";
   }
 
-  getMessages(userId) {
-    console.log({userId});
+  getMessagesUser(userId) {
     
-    console.log('z11111111  this.connectedUser._id ', this.connectedUser._id);
-    console.log('z11111111  userId ', userId);
-    console.log('z11111111  this.connectedUser.role  ', this.connectedUser.role);
-    
-    // if (this.showMessageForUser || this.connectedUser.role !=='admin') {
-    //   return;
-    // }
     this.chatService.allMessages(userId)
     .subscribe(
       res => { 
       
         this.historyMessages = res;
+        console.log(this.historyMessages);
         
              },
       err => { console.log(err); }
@@ -162,9 +226,58 @@ console.log((this.name === this.connectedUser.userName));
   }
 
 
+  // getMessages(userId) {
+    
+  //   this.chatService.allMessages(userId)
+  //   .subscribe(
+  //     res => { 
+      
+  //       this.historyMessages = res;
+        
+  //            },
+  //     err => { console.log(err); }
+  //   );
+  // }
+
+
+
+
+ async getMessages(e: Event) {
+
+        // get the category name from html
+        const userName = (e.target as any).innerHTML;
+    //     // get the category Id and store in sessionStorage
+    //     this.userDetails = this.usersList.find((user) => user.name === userName);
+    // console.log(this.userDetails);
+    this.userDetails = await this.authService.getUserDetail(userName);
+
+    console.log('this.userDetails._id    ', this.userDetails._id);
+    
+        sessionStorage.setItem('userId',this.userDetails._id);
+        // localStorage.setItem('userId',this.userDetails._id);
+
+
+    this.chatService.allMessages(this.userDetails._id)
+    .subscribe(
+      res => { 
+      
+        this.historyMessages = res;
+        console.log(this.historyMessages);
+
+             },
+      err => { console.log(err); }
+    );
+  }
+
+
+
+  // to solver error  NG0100
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
+
+
 }
-
-
 
 
 

@@ -43,14 +43,13 @@ const CartItemSchema = new Schema<ICartItemModel>({
     versionKey: false, // Don't create __v field
     toJSON: { virtuals: true }, // Fill also the virtual fields when we're calling a "populate" function
     id: false, // Don't duplicate _id to id field
-    // timestamps: true // 01/01/1970 12:00:00
 });
 
 CartItemSchema.virtual("cart", {
     ref: CartModel, // Which model are you describing
     localField: "cart_id", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true // each product has one category and not many
 });
 
 CartItemSchema.virtual("product", {

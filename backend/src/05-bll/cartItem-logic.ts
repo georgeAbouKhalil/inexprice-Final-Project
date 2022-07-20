@@ -4,26 +4,12 @@ import { ICartItemModel, CartItemModel } from "../03-models/cartItem-model";
 
 // Get all:s
 async function getAllCartItem(cart_id: string): Promise<ICartItemModel[]> {
-    // Get all products without virtual fields:
-    // return await CartItemModel.find({ cart_id: cart_id }).exec();
     return await CartItemModel.find({"cart_id": cart_id}).populate("product").populate("cart").exec();
-    // return await CartItemModel.find({cart_id: cart_id}).populate("product").populate("cart").exec();
-    // const carto = CartItemModel.find({"cart_id": cartId}).exec();
-
-    // Get all product with specific virtual fields:
-    // return CartItemModel.find().populate("category").exec();
 }
 
 // Get all:s
 async function getAll(): Promise<ICartItemModel[]> {
-    // Get all products without virtual fields:
-    // return await CartItemModel.find({ cart_id: cart_id }).exec();
     return await CartItemModel.find().populate("product").populate("cart").exec();
-    // return await CartItemModel.find({cart_id: cart_id}).populate("product").populate("cart").exec();
-    // const carto = CartItemModel.find({"cart_id": cartId}).exec();
-
-    // Get all product with specific virtual fields:
-    // return CartItemModel.find().populate("category").exec();
 }
 
 // Get one:
@@ -56,14 +42,7 @@ async function checkIfProductExistInCart(product) {
 // Update:
 async function updateCartItem(product: ICartItemModel): Promise<ICartItemModel> {
 
-    // if (!mongoose.Types.ObjectId.isValid(product._id)) throw new ClientError(404, `_id ${product._id} not valid`);
-
-    // Validation:
-    // const errors = product.validateSync();
-    // if (errors) throw new ClientError(400, errors.message);
-
     // Update:
-    // const updatedProduct = await CartItemModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
     const updatedProduct = await CartItemModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
     if (!updatedProduct) throw new ClientError(404, `_id ${product._id} not found`);
 
@@ -81,71 +60,8 @@ async function deleteCartItem(_id: string): Promise<void> {
 async function emptyCart(cartId) {
   
     if (!mongoose.Types.ObjectId.isValid(cartId)) throw new ClientError(404, `_id ${cartId} not valid`);
-    // await CartItemModel.findByIdAndDelete({"cart_id" : cartId}).exec();
     await CartItemModel.deleteMany({"cart_id" : cartId}).exec();
   };
-
-// ------------------------------------------------------------------------------
-
-// Mongo Query Language
-
-// SELECT ___, ___, ___ FROM...
-async function getPartialProducts(): Promise<ICartItemModel[]> {
-
-    // SELECT _id, name, price FROM Products
-    // return CartItemModel.find({}, ["name", "price"]).exec();
-
-    // SELECT name, price FROM Products
-    return CartItemModel.find({}, { name: true, price: true, _id: false }).exec();
-}
-
-// SELECT * FROM Products WHERE ....
-async function getSomeProducts(): Promise<ICartItemModel[]> {
-
-    // SELECT * FROM Products WHERE price = 10
-    // return CartItemModel.find({ price: 10 }).exec();
-
-    // SELECT * FROM Products WHERE price = 10 AND name = 'Longlife Tofu'
-    // return CartItemModel.find({ price: 10, name: 'Longlife Tofu' }).exec();
-
-    // SELECT * FROM Products WHERE price = 10 OR name = 'Chai'
-    // return CartItemModel.find({ $or: [{ price: 10 }, { name: "Chai" }] }).exec();
-
-    // SELECT * FROM Products WHERE price BETWEEN 10 AND 20
-    // >    $gt
-    // >=   $gte
-    // <    $lt
-    // <=   $lte
-    // ==   $eq
-    // !=   $ne
-    // return CartItemModel.find({ price: { $gte: 10, $lte: 20 }}).exec();
-
-    // SELECT * FROM Products ORDER BY price
-    // return CartItemModel.find({}, null, { sort: { price: 1 } }).exec();
-
-    // SELECT * FROM Products ORDER BY price DESC
-    // return CartItemModel.find({}, null, { sort: { price: -1 } }).exec();
-
-    // SELECT * FROM Products ORDER BY price, name
-    // return CartItemModel.find({}, null, { sort: { price: 1, name: 1 } }).exec();
-
-    // SELECT _id, name, price FROM Products WHERE price BETWEEN 10 AND 20 ORDER BY price, name
-    return CartItemModel.find({ price: { $gte: 10, $lte: 20 } }, ["name", "price"], { sort: { price: 1, name: 1 } }).exec();
-}
-
-// SELECT * FROM Products LIMIT 20, 7
-// (skip 20 items, get next 7 items)
-async function getPagedProducts(): Promise<ICartItemModel[]> {
-    return CartItemModel.find({}, null, { skip: 20, limit: 7 }).exec();
-}
-
-// SELECT * FROM Products WHERE ProductName LIKE '% %'
-async function getProductsUsingRegex(): Promise<ICartItemModel[]> {
-    return CartItemModel.find({ name: { $regex: /^.+ .+$/ } }).exec();
-}
-
-// INNER JOIN:
-// return CartItemModel.find({ categoryId: { $ne: null }}).exec();
 
 export default {
     getAllCartItem,
@@ -154,9 +70,5 @@ export default {
     addCartItem,
     updateCartItem,
     deleteCartItem,
-    getPartialProducts,
-    getSomeProducts,
-    getPagedProducts,
-    getProductsUsingRegex,
     emptyCart,getAll
 };

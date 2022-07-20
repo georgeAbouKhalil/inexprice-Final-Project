@@ -9,10 +9,7 @@ router.get("/by-cart/:cartId", async (request: Request, response: Response, next
     try {
 
         const cartId = request.params.cartId;
-        // console.log('1 ', cartId);
         const cartItem = await logic.getAllCartItem(cartId);
-        // console.log({ cartItem });
-
         response.json(cartItem);
     }
     catch (err: any) {
@@ -22,11 +19,7 @@ router.get("/by-cart/:cartId", async (request: Request, response: Response, next
 
 router.get("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
-
-        // console.log('1 ', cartId);
         const cartItem = await logic.getAll();
-        // console.log({ cartItem });
-
         response.json(cartItem);
     }
     catch (err: any) {
@@ -50,8 +43,7 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
         request.body.price = request.body.price * (1 - request.body.discount / 100);
         request.body.totalPrice = request.body.totalPrice * (1 - request.body.discount / 100);
         const cartItem = new CartItemModel(request.body);
-        // console.log({cartItem});
-        
+       
         //update inStock in database
         const oldProduct = await productsLogic.getOneProduct(cartItem.product_id.toString());
         oldProduct.inStock = oldProduct.inStock - cartItem.quantity;
@@ -125,39 +117,5 @@ router.delete("/by-cart/:cartId", async (request: Request, response: Response, n
         next(err);
     }
 });
-
-router.get("/test", async (request: Request, response: Response, next: NextFunction) => {
-    try {
-
-        // const products = await logic.getPartialProducts();
-
-        // const products = await logic.getSomeProducts();
-
-        // const products = await logic.getPagedProducts();
-
-        // const products = await logic.getHolidaysUsingRegex();
-
-        // response.json(products);
-    }
-    catch (err: any) {
-        next(err);
-    }
-});
-
-// router.get("/products-paging/:page", async (request: Request, response: Response, next: NextFunction) => {
-//     try {
-
-//         const page = +request.params.page;
-
-//         // const products = await logic.getPartialProducts();
-
-//         const products = await logic.getSomeProducts();
-
-//         response.json(products);
-//     }
-//     catch(err: any) {
-//         next(err);
-//     }
-// });
 
 export default router;

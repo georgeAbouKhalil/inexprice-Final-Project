@@ -16,7 +16,7 @@ export class ContactComponent implements OnInit {
   userFullName: any;
   userDetails: FormGroup;
 
-  constructor(private mailService: MailService, private _formBuilder: FormBuilder, private authService: AuthService,private notify: NotifyService) { }
+  constructor(private mailService: MailService, private _formBuilder: FormBuilder, private authService: AuthService, private notify: NotifyService) { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -25,11 +25,11 @@ export class ContactComponent implements OnInit {
 
 
   getUserFullName() {
-    if(this.user)
+    if (this.user)
       this.userFullName = this.user.userName + " " + this.user.lastName;
   }
   getUserEmail() {
-    if(this.user)
+    if (this.user)
       this.userEmail = this.user.email;
   }
 
@@ -40,13 +40,9 @@ export class ContactComponent implements OnInit {
     });
   }
   async sendMessage() {
-     await this.mailService.sendEmail(this.userDetails.value.email);
-
-     this.notify.success("Email sent successfully");
-     this.userDetails.reset();
-
-    // here to continue send email to user
-
+    await this.mailService.sendEmail(this.userDetails.value.email);
+    this.notify.success("Email sent successfully");
+    this.userDetails.reset();
   }
 
 }

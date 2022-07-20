@@ -16,8 +16,6 @@ export interface IProductModel extends Document {
     inStock: number;
     discount: number;
     wishlist: boolean;
-    // p_id: number; //delete this
-    // categoryId: Schema.Types.ObjectId;
 }
 
 // Define model schema:
@@ -25,10 +23,6 @@ const ProductSchema = new Schema<IProductModel>({
     type: {
         type: Schema.Types.ObjectId,
         required: [true, "Missing category/type"]
-        // minlength: [2, "Name too short"],
-        // maxlength: [100, "Name too long"],
-        // trim: true,
-        // unique: true
     },
     brand: {
         type: String,
@@ -90,14 +84,13 @@ const ProductSchema = new Schema<IProductModel>({
     versionKey: false, // Don't create __v field
     toJSON: { virtuals: true }, // Fill also the virtual fields when we're calling a "populate" function
     id: false, // Don't duplicate _id to id field
-    // timestamps: true // 01/01/1970 12:00:00
 });
 
 ProductSchema.virtual("category", {
     ref: TypesModel, // Which model are you describing
     localField: "type", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true // each product has one category and not many
 });
 
 // Define model:

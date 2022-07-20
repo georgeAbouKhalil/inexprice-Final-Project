@@ -62,12 +62,6 @@ router.delete("/:_id", async (request: Request, response: Response, next: NextFu
 
 router.get("/by-user/:userId", async (request: Request, response: Response, next: NextFunction) => {
     try {
-
-        // const products = await logic.getPartialProducts();
-        
-        // const products = await logic.getSomeProducts();
-
-        // const products = await logic.getPagedProducts();
         const userId = request.params.userId;
         const creditItem = await logic.getAllCreditCardsByUserId(userId);
         response.json(creditItem);
@@ -76,21 +70,5 @@ router.get("/by-user/:userId", async (request: Request, response: Response, next
         next(err);
     }
 });
-
-// router.get("/products-paging/:page", async (request: Request, response: Response, next: NextFunction) => {
-//     try {
-
-//         const page = +request.params.page;
-
-//         // const products = await logic.getPartialProducts();
-        
-//         const products = await logic.getSomeProducts();
-        
-//         response.json(products);
-//     }
-//     catch(err: any) {
-//         next(err);
-//     }
-// });
 
 export default router;

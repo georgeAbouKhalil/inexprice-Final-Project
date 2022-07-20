@@ -4,18 +4,13 @@ import { IProductModel, ProductModel } from "../03-models/product-model";
 
 // Get all:
 async function getAllProduct(): Promise<IProductModel[]> {
-
-    // Get all products without virtual fields:
-    // return ProductModel.find().exec();
-
-    // Get all product with specific virtual fields:
     return ProductModel.find().populate("category").exec();
 }
 
 // Get one:
 async function getOneProduct(_id: string): Promise<IProductModel> {
 
-    if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`); // להיות יותר צדיק מאפיפיור...
+    if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`); 
 
     const product = await ProductModel.findById(_id).populate("category").exec();
     if (!product) throw new ClientError(404, `_id ${_id} not found`);
@@ -70,77 +65,11 @@ async function deleteProduct(_id: string): Promise<void> {
     if (!deletedProduct) throw new ClientError(404, `_id ${_id} not found`);
 }
 
-// ------------------------------------------------------------------------------
-
-// Mongo Query Language
-
-// SELECT ___, ___, ___ FROM...
-async function getPartialProducts(): Promise<IProductModel[]> {
-
-    // SELECT _id, name, price FROM Products
-    // return ProductModel.find({}, ["name", "price"]).exec();
-
-    // SELECT name, price FROM Products
-    return ProductModel.find({}, { name: true, price: true, _id: false }).exec();
-}
-
-// SELECT * FROM Products WHERE ....
-async function getSomeProducts(): Promise<IProductModel[]> {
-
-    // SELECT * FROM Products WHERE price = 10
-    // return ProductModel.find({ price: 10 }).exec();
-
-    // SELECT * FROM Products WHERE price = 10 AND name = 'Longlife Tofu'
-    // return ProductModel.find({ price: 10, name: 'Longlife Tofu' }).exec();
-
-    // SELECT * FROM Products WHERE price = 10 OR name = 'Chai'
-    // return ProductModel.find({ $or: [{ price: 10 }, { name: "Chai" }] }).exec();
-
-    // SELECT * FROM Products WHERE price BETWEEN 10 AND 20
-    // >    $gt
-    // >=   $gte
-    // <    $lt
-    // <=   $lte
-    // ==   $eq
-    // !=   $ne
-    // return ProductModel.find({ price: { $gte: 10, $lte: 20 }}).exec();
-
-    // SELECT * FROM Products ORDER BY price
-    // return ProductModel.find({}, null, { sort: { price: 1 } }).exec();
-
-    // SELECT * FROM Products ORDER BY price DESC
-    // return ProductModel.find({}, null, { sort: { price: -1 } }).exec();
-
-    // SELECT * FROM Products ORDER BY price, name
-    // return ProductModel.find({}, null, { sort: { price: 1, name: 1 } }).exec();
-
-    // SELECT _id, name, price FROM Products WHERE price BETWEEN 10 AND 20 ORDER BY price, name
-    return ProductModel.find({ price: { $gte: 10, $lte: 20 } }, ["name", "price"], { sort: { price: 1, name: 1 } }).exec();
-}
-
-// SELECT * FROM Products LIMIT 20, 7
-// (skip 20 items, get next 7 items)
-async function getPagedProducts(): Promise<IProductModel[]> {
-    return ProductModel.find({}, null, { skip: 20, limit: 7 }).exec();
-}
-
-// SELECT * FROM Products WHERE ProductName LIKE '% %'
-async function getProductsUsingRegex(): Promise<IProductModel[]> {
-    return ProductModel.find({ name: { $regex: /^.+ .+$/ } }).exec();
-}
-
-// INNER JOIN:
-// return ProductModel.find({ categoryId: { $ne: null }}).exec();
-
 export default {
     getAllProduct,
     getOneProduct,
     addProduct,
     updateProduct,
     deleteProduct,
-    getPartialProducts,
-    getSomeProducts,
-    getPagedProducts,
-    getProductsUsingRegex,
     getProductsByTypes
 };

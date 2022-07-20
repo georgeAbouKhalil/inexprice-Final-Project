@@ -12,7 +12,7 @@
 	<meta name="keywords" content="">
 	<!-- meta character set -->
 	<meta charset="UTF-8">
-	
+
 </head>
 
 <body>
@@ -51,8 +51,9 @@
 	<!--================Contact Area =================-->
 	<section class="contact_area section_gap_bottom">
 		<div class="container">
-			<div id="mapBox" class="mapBox" data-lat="40.701083" data-lon="-74.1522848" data-zoom="13" data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
-			 data-mlat="40.701083" data-mlon="-74.1522848">
+			<div id="mapBox" class="mapBox" data-lat="40.701083" data-lon="-74.1522848" data-zoom="13"
+				data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia." data-mlat="40.701083"
+				data-mlon="-74.1522848">
 			</div>
 			<h1 style="text-align: center; margin-bottom: 6%;">You can double click to get your name and email</h1>
 			<div class="row">
@@ -65,36 +66,48 @@
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-phone-handset"></i>
-							<h6><a >1-809-494-152</a></h6>
+							<h6><a>1-809-494-152</a></h6>
 							<p>Mon to Fri 9am to 6 pm</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-envelope"></i>
-							<h6><a >InexPriceOfficial@gmail.com</a></h6>
+							<h6><a>InexPriceOfficial@gmail.com</a></h6>
 							<p>Send us your query anytime!</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-9">
-					<form [formGroup]="userDetails" class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+					<form [formGroup]="userDetails" class="row contact_form" action="contact_process.php" method="post"
+						id="contactForm" novalidate="novalidate">
 						<div class="col-md-6">
 							<div class="form-group">
-								<input style="border: 1px solid #0250c5;color: black;" type="text" class="form-control" name="userFullName" (dblclick)="getUserFullName()" value="{{userFullName}}" [(ngModel)]="userFullName" formControlName="userFullName2" placeholder="Enter your name">
+								<input style="border: 1px solid #0250c5;color: black;" type="text" class="form-control"
+									name="userFullName" (dblclick)="getUserFullName()" value="{{userFullName}}"
+									[(ngModel)]="userFullName" formControlName="userFullName2"
+									placeholder="Enter your name">
 							</div>
 							<div class="form-group">
-								<input style="border: 1px solid #0250c5;color: black;" type="email" class="form-control" name="email" (dblclick)="getUserEmail()" value="{{userEmail}}" [(ngModel)]="userEmail" formControlName="email" placeholder = "Enter email address">
+								<input style="border: 1px solid #0250c5;color: black;" type="email" class="form-control"
+									name="email" (dblclick)="getUserEmail()" value="{{userEmail}}"
+									[(ngModel)]="userEmail" formControlName="email" placeholder="Enter email address">
 							</div>
 							<div class="form-group">
-								<input style="border: 1px solid #0250c5;color: black;" type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'">
+								<input style="border: 1px solid #0250c5;color: black;" type="text" class="form-control"
+									id="subject" name="subject" placeholder="Enter Subject"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<textarea style="border: 1px solid #0250c5;color: black;" class="form-control" name="message" id="message" rows="1" placeholder="Enter Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'"></textarea>
+								<textarea style="border: 1px solid #0250c5;color: black;" class="form-control"
+									name="message" id="message" rows="1" placeholder="Enter Message"
+									onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Enter Message'"></textarea>
 							</div>
 						</div>
 						<div class="col-md-12 text-right">
-							<button type="submit" value="submit" class="primary-btn" (click)="sendMessage()">Send Message</button>
+							<button type="submit" value="submit" class="primary-btn" (click)="sendMessage()">Send
+								Message</button>
 						</div>
 					</form>
 				</div>

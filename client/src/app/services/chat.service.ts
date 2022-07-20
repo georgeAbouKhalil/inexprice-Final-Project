@@ -1,6 +1,5 @@
-import { UserModel } from './../models/user.model';
 import { environment } from 'src/environments/environment';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,8 +10,7 @@ import { AuthService } from './auth.service';
 })
 export class ChatService {
 
-    // // Client Socket:
-    // private socket: Socket;
+    // Client Socket:
     connectedUser: any;
     // Connect to server: 
     constructor(private http: HttpClient, public authService: AuthService) { }
@@ -20,8 +18,6 @@ export class ChatService {
     
     private user = this.authService.getUser();
 
-
-    
     // // Connecting to server: 
     // public connect(): void {
         
@@ -62,9 +58,11 @@ export class ChatService {
     }
     
     // save messagep
-    saveMessage(user) {
-        return this.http.post<any>(environment.messageUrl, user);
+    saveMessage(msg) {      
+        return this.http.post<any>(environment.messageUrl, msg);
     }
+
+
     // get Email Marketing Messages
     allMessages(userId) {
         console.log({ userId });
@@ -80,20 +78,107 @@ export class ChatService {
     sendMessage(data) {       
         console.log({data});
         
-        // if (this.user.userName !== data.userName ){
-        //     return;
-        // }
         this.socket.emit('message', data);
     }
+
+
     newMessageReceived() {
+        // const observable = new Observable<{ userName: string, message: string, date:string ,time: string }>(observer => {
+        const observable = new Observable<{ userId:string, name?:string, userName: string,email:string, message: string, time: string, toUser:string }>(observer => {
+            this.socket.on('new message', (data) => {
+                console.log('111 ' ,data);
+                
+                // console.log((this.user._id !== data.userId && data.toUser !== '626980f33808d1c41ba27690') || (data.userId !== '626980f33808d1c41ba27690' && data.toUser !== this.user._id));
+  
+                
+                console.log(this.user._id , data.userId , data.toUser);
+
+                // if(this.user.role == 'user') {
+                //     if ((this.user._id != data.userId && data.toUser != '626980f33808d1c41ba27690')) {
+                //         console.log(this.user._id != data.userId && data.toUser != '626980f33808d1c41ba27690');
+                        
+                //     if ((data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id)) {
+                //         console.log(data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id);
+                        
+                //         observer.next(data);
+    
+                //     }
+                //     }
+                // }
                 
 
-        const observable = new Observable<{ userName: string, message: string, date:string ,time: string }>(observer => {
-            this.socket.on('new message', (data) => {
+
+                // if(this.user.role == 'user') {
+                //     if ((this.user._id == data.userId || data.toUser ==this.user._id)) {
+                //         console.log(this.user._id == data.userId || data.toUser ==this.user._id);
+                //         observer.next(data);
+                //     }
+                // }
+                
+
+
+                // if (this.user.role == 'admin') {
+
+                //     if ((data.userId == '626980f33808d1c41ba27690' || data.toUser == '626980f33808d1c41ba27690')) {
+                //         console.log(data.userId == '626980f33808d1c41ba27690' || data.toUser == '626980f33808d1c41ba27690');
+                     
+                //             observer.next(data);
+        
+                        
+                //         }
+                // }
+
+
+
+                // if (this.user.role == 'admin') {
+
+                //     if ((data.userId != '626980f33808d1c41ba27690' && data.toUser != this.user._id)) {
+                //         console.log(data.userId != '626980f33808d1c41ba27690' && data.toUser != this.user._id);
+                //     if ((this.user._id == data.userId && data.toUser == '626980f33808d1c41ba27690')) {
+                //         console.log(this.user._id == data.userId && data.toUser == '626980f33808d1c41ba27690');
+                                                
+                //             observer.next(data);
+        
+                //         }
+                //         }
+                // }
+
+// console.log('1   ', this.user.userName == data.userName && data.toUser == '626980f33808d1c41ba27690') 
+// console.log(this.user.userName , data.userName , data.toUser );
+
+const clickedUser =  sessionStorage.getItem('userId');
+console.log('1   ',data.userId == '626980f33808d1c41ba27690' && data.toUser == clickedUser);
+console.log(data.userId , data.toUser ,clickedUser );
+                
+
+console.log('2   ',data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id);
+console.log(data.userId , data.toUser , this.user._id );
+
+console.log('3   ', data.userId == clickedUser && data.toUser == '626980f33808d1c41ba27690')
+console.log('4   ', data.userId == this.user._id && data.toUser == '626980f33808d1c41ba27690')
+
+console.log({clickedUser});
+
+
+
+
+                // if ((this.user.userName == data.userName && data.toUser == '626980f33808d1c41ba27690') || (data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id)){
+// if (this.user.userName == data.userName && data.toUser == '626980f33808d1c41ba27690') observer.next(data);
+
+if (data.userId == '626980f33808d1c41ba27690' && data.toUser == clickedUser) observer.next(data);
+if (data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id) observer.next(data);
+if ( data.userId == clickedUser && data.toUser == '626980f33808d1c41ba27690') observer.next(data);
+if (data.userId == this.user._id && data.toUser == '626980f33808d1c41ba27690') observer.next(data);
+
+                // observer.next(data);}
+                // if (this.user.userName !== data.userName && data.toUser !== '626980f33808d1c41ba27690' || data.userId !== '626980f33808d1c41ba27690' && data.toUser !== this.user._id){
+                // if (this.user.userName !== data.userName ||  data.toUser !== this.user._id){
+            
                 // if (this.user.role !== 'admin' && this.user.userName !== data.userName ){
                 //     return;
                 // }
-                observer.next(data);
+
+
             });
             return () => {
                 this.socket.disconnect();
@@ -136,6 +221,16 @@ export class ChatService {
     }
 
 
+
+
+
+
+
+
+
+
+
+    
 }
 
 

@@ -30,8 +30,19 @@
     color: #1e90ff;
   }
   .bad {
-    color: #deb0b0;
+    color: red;
   }
   .filled.bad {
     color: #ff1e1e;
+  }
+  
+
+
+
+
+  .two{
+    color: yellow;
+  }
+  .five{
+    color: #7ED321;
   }

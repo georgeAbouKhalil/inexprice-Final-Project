@@ -38,7 +38,7 @@ export class UpdateProductComponent implements OnInit {
         private myActivatedRoute: ActivatedRoute,
         private myProductsService: ProductsService,
         private notify: NotifyService,
-        private myRouter: Router, public categoriesService: CategoriesService,) {
+        public categoriesService: CategoriesService,) {
         this.typeControl = new FormControl(null, Validators.required);
         this.brandControl = new FormControl(null, Validators.required);
         this.nameControl = new FormControl(null, Validators.required);

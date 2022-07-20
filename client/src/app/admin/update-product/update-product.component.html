@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
     <div class="box">
         <form (submit)="update()" [formGroup]="productForm">
@@ -27,47 +29,49 @@
                     <span *ngIf="sizeControl.errors?.required && sizeControl.touched">Missing size.</span>
                 </div>
                 <div class="column">
-                    <label >Color:</label>
+                    <label>Color:</label>
                     <input type="text" [formControl]="colorControl">
                     <span *ngIf="colorControl.errors?.required && colorControl.touched">Missing color.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <label >Image:</label>
+                    <label>Image:</label>
                     <input type="url" [formControl]="imgControl">
                     <span *ngIf="imgControl.errors?.required && imgControl.touched">Missing image.</span>
                 </div>
                 <div class="column">
-                    <label >Price:</label>
+                    <label>Price:</label>
                     <input type="number" [formControl]="priceControl">
                     <span *ngIf="priceControl.invalid && priceControl.touched">Missing price.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <label >description:</label>
+                    <label>description:</label>
                     <input type="text" [formControl]="descriptionControl">
-                    <span *ngIf="descriptionControl.errors?.required && descriptionControl.touched">Missing description.</span>
+                    <span *ngIf="descriptionControl.errors?.required && descriptionControl.touched">Missing
+                        description.</span>
                 </div>
                 <div class="column">
-                    <label >Stock quantity:</label>
+                    <label>Stock quantity:</label>
                     <input type="number" [formControl]="stockControl">
                     <span *ngIf="stockControl.invalid && stockControl.touched">Missing stock.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <label >discount:</label>
+                    <label>discount:</label>
                     <input type="number" [formControl]="discountControl">
                     <span *ngIf="discountControl.invalid && discountControl.touched">Missing discount.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <label >Category: </label>
+                    <label>Category: </label>
                     <select name="type" [formControl]="typeControl" required>
-                        <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
+                        <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}
+                        </option>
                     </select>
                     <span *ngIf="typeControl.errors?.required && typeControl.touched">Missing category.</span>
                 </div>
@@ -76,7 +80,7 @@
                 <div class="column">
                     <button [disabled]="productForm.invalid">Update</button>
                 </div>
-            </div>    
+            </div>
         </form>
     </div>
     <!-- scroll to the top -->
@@ -86,4 +90,5 @@
         </div>
     </div>
 </body>
+
 </html>

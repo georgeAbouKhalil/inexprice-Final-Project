@@ -24,36 +24,8 @@ export class CartComponent implements OnInit {
 
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.cartItems = await this.cartsService.getCartItems(this.cart._id);
-
-
-    // if (this.cartItems.length > 0){
     this.total = this.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b, 0);
-    // this.total = this.cartsService.cartItems.map(product => (product.totalPrice)).reduce((a, b) => a + b);
-    // }
   }
-
-  // public getCartItems(): void {
-  //   let observable = this.cartsService.getCartItems(this.cart._id);
-
-  //   observable.subscribe(
-  //     (cartItems) => {
-  //       this.cartsService.total = 0;
-  //       this.cartsService.cartItems = cartItems;
-  //       cartItems.map(
-  //         (product) => (this.cartsService.total += product.totalPrice)
-  //       );
-  //     },
-  //     (serverErrorResponse) => {
-  //       this.error = serverErrorResponse.error.error;
-  //     }
-  //   );
-  // }
-
-
-  // public removeFromCart(product: ProductModel) {
-  //   this.cartsService.removeFromCart(product);
-  //   this.cartItem = this.cartsService.getCartItems(this.cart._id);
-  // }
 
   public async deleteProductFromCart(cartProduct: CartItemModel) {
     try {
@@ -69,12 +41,9 @@ export class CartComponent implements OnInit {
   }
 
   public emptyCart(): void {
-   
+
     this.cartsService.emptyCart(this.cart._id).subscribe(
       () => {
-        // this.productsService.products.map(
-        //   (product) => product.amount != 0 && (product.amount = 0)
-        // );
         this.cartsService.cartItems = [];
         this.cartItems = [];
         this.total = 0;

@@ -231,39 +231,13 @@
 
 									<div class="box_total" *ngIf="reviews">
 										<h5>Overall</h5>
-										<!-- <ngb-rating [(rate)]="averageRating" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating> -->
+
 
 										<h4>{{averageRating | number: '1.1-1'}}</h4>
 										<h6>{{reviews?.length}} Reviews</h6>
 									</div>
 
 								</div>
-								<!-- <div class="col-6">
-									<div class="rating_list">
-										<h2>Custom rating Display</h2>
-
-
-
-
-										<h3>Based on 3 Reviews</h3> 										<ul class="list">
-											<li><a>5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i> 01</a></li>
-											<li><a>4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i> 01</a></li>
-											<li><a>3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i> 01</a></li>
-											<li><a>2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i> 01</a></li>
-											<li><a>1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i><i class="fa fa-star"></i><i
-														class="fa fa-star"></i> 01</a></li>
-										</ul>
-									</div>
-								</div> -->
 							</div>
 							<br>
 							<div class="review_list">
@@ -279,25 +253,16 @@
 
 										</div>
 										<div class="media-body">
-											<h4><b style="color: black;">{{review?.user?.userName}}</b></h4>
-											<!-- <i class="fa fa-star"></i> --  check here we need to take it from the DB like review.stars --
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i> -->
-
-											<!-- <ngb-rating [(rate)]="review.rating"  [starTemplate]="t" [readonly]="true"
-												max="5" ></ngb-rating> -->
-
-												<ngb-rating [(rate)]="review.rating" max="5" [readonly]="true">
-													<ng-template let-fill="fill" let-index="index">
-													  <span class="star" [class.filled]="fill === 100" [class.bad]="index < 1">&#9733;</span>
-													</ng-template>
-												  </ngb-rating>
-
-												
-											<!-- <ngb-rating [(rate)]="review.rating"  [starTemplate]="t" [readonly]="true"
-												max="5" ></ngb-rating> -->
+											<h4><b style="color: black;">{{review?.user?.firstName}}
+													{{review?.user?.lastName}}</b></h4>
+											<ngb-rating [(rate)]="review.rating" max="5" [readonly]="true">
+												<ng-template let-fill="fill" let-index="index">
+													<span class="star" [class.filled]="fill === 100"
+														[class.bad]="index < 1"
+														[class.two]="index > 0 && index <3 && fill === 100"
+														[class.five]="index > 2 && fill === 100">&#9733;</span>
+												</ng-template>
+											</ngb-rating>
 											<p>{{review?.review}}</p>
 											<hr>
 
@@ -307,54 +272,27 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							
+
 							<div class="review_box" *ngIf="user">
 								<h4>Add a Review</h4>
-								<p>Your Rating:</p>
-
-								<!-- <ngb-rating [(rate)]="review.rating" [starTemplate]="t" [readonly]="false"
-								max="5" ></ngb-rating> -->
-				
-
+								<p>Your Rating :</p> &nbsp;
 								<ngb-rating [(rate)]="review.rating" max="5">
 									<ng-template let-fill="fill" let-index="index">
-									  <span class="star" [class.filled]="fill === 100" [class.bad]="index < 1">&#9733;</span>
+										<span class="star" [class.filled]="fill === 100" [class.bad]="index < 1"
+											[class.two]="index > 0 && index <3 && fill === 100"
+											[class.five]="index > 2 && fill === 100">&#9733;</span>
 									</ng-template>
-								  </ngb-rating>
-
-
-
-
-								<!-- <ul class="list">
-									<li><a><i class="fa fa-star"></i></a></li>
-									<li><a><i class="fa fa-star"></i></a></li>
-									<li><a><i class="fa fa-star"></i></a></li>
-									<li><a><i class="fa fa-star"></i></a></li>
-									<li><a><i class="fa fa-star"></i></a></li>
-								</ul>
-								<p>Outstanding</p> -->
-
+								</ngb-rating>
 								<form class="row contact_form" action="contact_process.php" method="post"
 									id="contactForm" novalidate="novalidate">
-
 									<div class="col-md-12">
 										<div class="form-group">
-
-
-
 											<textarea style="color: black;" class="form-control" name="message"
 												id="message" rows="1" placeholder="Review" [(ngModel)]='review.review'
 												required></textarea>
-
-
 										</div>
 									</div>
-									<div  class="col-md-12 text-right">
-
-
-										<!-- <ngb-rating [(rate)]="review.rating" [starTemplate]="t" [readonly]="false"
-											max="5"></ngb-rating> -->
-
+									<div class="col-md-12 text-right">
 										<button type="submit" value="submit" class="primary-btn"
 											(click)="addReview()">Time For Review</button>
 									</div>
@@ -362,33 +300,17 @@
 							</div>
 						</div>
 					</div>
-					<!-- <ng-template #t let-fill="fill">
-						<span *ngIf="fill === 5" class="star full">&#9733;</span>
-						<span *ngIf="fill === 0" class="star">&#9733;</span>
-						<span *ngIf="fill < 5 && fill > 0" class="star">
-						  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-						</span>
-					  </ng-template> -->
 				</div>
 			</div>
 		</div>
 	</section>
-
-
-
 	<!--================End Product Description Area =================-->
-
 	<!-- start footer Area -->
 	<app-footer></app-footer>
 	<!-- End footer Area -->
-
 	<!-- scroll to the top -->
 	<div hidden id="progress">
 		<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
 	</div>
-
-
-	
 </body>
-
 </html>

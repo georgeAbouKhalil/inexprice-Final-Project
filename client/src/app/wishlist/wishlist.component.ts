@@ -32,43 +32,25 @@ export class WishlistComponent implements OnInit {
   quantityCart: number;
   cart: any;
   error: string = '';
-
-
   constructor(private wishListService: WishListService, private notify: NotifyService, private authService: AuthService, public cartsService: CartsService, public productsService: ProductsService) { }
-
   async ngOnInit() {
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.user = await this.authService.getUser();
     this.wishProducts = await this.wishListService.getAllWishListByUserId(this.user._id);
     this.arrayLength = this.wishProducts.length;
-
-    
-
   }
-
-
   public async addToCart(product) {
-    
-
     // Get PRODUCTS FROM CART
     this.cartProducts = await this.cartsService.getCartItems(this.cart._id);
-    
-
     this.cartP = this.cartProducts.filter((a: any) => {
       return a.product_id === product._id;
     });
-    
-
     this.getProduct = await this.productsService.getOneProduct(product._id);
-    
-
     if (this.amount < 0) {
       this.amount = 1;
       this.notify.error("Positive Quantity only allowed");
       return;
     };
-
-    
 
     if (!this.cartP[0]?.quantity || this.cartP[0]?.quantity === undefined) {
       this.quantityCart = 0
@@ -84,12 +66,9 @@ export class WishlistComponent implements OnInit {
 
     //If product already in cart
     let ifInCart = false;
-   
-
     if (this.cartP.length > 0) {
       ifInCart = true;
     }
-
     if (!ifInCart) {
       let productToAdd = {
         quantity: this.amount,
@@ -101,30 +80,14 @@ export class WishlistComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-     
-
       this.cartsService.addToCart(productToAdd);
-      // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToAdd.product_id);
       this.updateStockProduct = this.wishProducts.find((product) => product.productId === productToAdd.product_id);
       this.notify.success("This product has been added to your shopping cart");
-      // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToAdd.quantity;
-      
-      
-      
       this.updateStockProduct.inStock = this.getProduct.inStock - productToAdd.quantity;
-
       const indexToDelete = this.wishProducts.findIndex(t => t.productId === productToAdd.product_id);
-     
-      
-      
       this.wishProducts[indexToDelete].inStock = this.updateStockProduct.inStock;
-
       this.productStock = this.wishProducts[indexToDelete].inStock;
-     
-
-
     } else if (ifInCart) {
-
       let productToUpdate = {
         _id: this.cartP[0]._id,
         quantity: this.amount,
@@ -136,35 +99,13 @@ export class WishlistComponent implements OnInit {
         img: product.img,
         name: product.name,
       };
-      
-
       this.updateStockProduct = this.wishProducts.find((product) => product.productId === productToUpdate.product_id);
-
       this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-     
-
       if (productToUpdate.quantity != this.cartP[0].amount) {
         this.cartsService.updateOnCart(productToUpdate).subscribe(
           (newProductInCart) => {
             this.notify.success("This product has been updated in your shopping cart");
-            // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            // this.updateStockProduct = this.productsService.products.find((product) => product._id === productToUpdate.product_id);
-            
-
-
-            // this.updateStockProduct.inStock = this.getProduct.inStock + this.amount;
-            // this.updateStockProduct.inStock = this.getProduct.inStock + productToUpdate.quantity;
-            // this.updateStockProduct.inStock = this.getProduct.inStock + this.cartP[0].quantity;
-
-            // this.updateStockProduct.inStock = this.getProduct.inStock - productToUpdate.quantity;
             this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-            
-
-            // this.updateStockProduct.inStock = this.updateStockProduct.inStock + productToUpdate.quantity;
-            // this.updateStockProduct.inStock = this.updateStockProduct.inStock - productToUpdate.quantity;
-
-            
-
             const indexToDelete = this.wishProducts.findIndex(t => t.productId === productToUpdate.product_id);
             this.wishProducts[indexToDelete].inStock = this.updateStockProduct.inStock;
             this.productStock = this.wishProducts[indexToDelete].inStock;
@@ -176,8 +117,6 @@ export class WishlistComponent implements OnInit {
       }
     }
   }
-
-
   public async wish(product) {
 
     this.isWishProduct = this.wishProducts.filter((a: any) => {

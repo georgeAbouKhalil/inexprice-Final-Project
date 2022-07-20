@@ -32,21 +32,20 @@ const ReviewSchema = new Schema<IReviewModel>({
     versionKey: false, // Don't create __v field
     toJSON: { virtuals: true }, // Fill also the virtual fields when we're calling a "populate" function
     id: false, // Don't duplicate _id to id field
-    // timestamps: true // 01/01/1970 12:00:00
 });
 
 ReviewSchema.virtual("product", {
     ref: ProductModel, // Which model are you describing
     localField: "productId", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true //each product has one category and not many
 });
 
 ReviewSchema.virtual("user", {
     ref: UserModel, // Which model are you describing
     localField: "userId", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true //  each product has one category and not many
 });
 
 // Define model:

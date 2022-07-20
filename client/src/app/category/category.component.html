@@ -49,7 +49,8 @@
 			</div>
 		</div>
 	</section>
-	<a  *ngIf="user?.role === 'admin'" routerLink="Product/new" class="primary-btn" style="position: absolute; top: 430px; right: 50px;font-weight: bold;">Add Product</a>
+	<a *ngIf="user?.role === 'admin'" routerLink="Product/new" class="primary-btn"
+		style="position: absolute; top: 430px; right: 50px;font-weight: bold;">Add Product</a>
 	<!-- End Banner Area -->
 	<div class="container">
 		<div class="row">
@@ -67,7 +68,7 @@
 				</div>
 
 			</div>
-			
+
 
 			<div class="col-xl-9 col-lg-8 col-md-7">
 				<div class="filter-bar d-flex flex-wrap align-items-center">
@@ -77,38 +78,50 @@
 				</div>
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						<div class="col-lg-4 col-md-6" *ngFor="let product of productsService.products | paginate: {itemsPerPage:21, currentPage: currentPg}">
+						<div class="col-lg-4 col-md-6"
+							*ngFor="let product of productsService.products | paginate: {itemsPerPage:21, currentPage: currentPg}">
 							<div class="single-product">
 								<div style="float:right" *ngIf="user?.role === 'admin'">
-									<a routerLink="/category/edit/{{product?._id}}"><i class="far fa-edit my_icons"></i></a>
-									<i style="margin-right: 10px;" class="fas fa-trash-alt my_icons" (click)="delete(product)"></i>
+									<a routerLink="/category/edit/{{product?._id}}"><i
+											class="far fa-edit my_icons"></i></a>
+									<i style="margin-right: 10px;" class="fas fa-trash-alt my_icons"
+										(click)="delete(product)"></i>
 								</div>
 
 								<small *ngIf=" product.inStock ===  0 " class="badge badge-danger p-1 d-inline-block">
 									Not in stock </small>
 
-									<img class="img-fluid" src={{product.img}} alt="">
+								<img class="img-fluid" src={{product.img}} alt="">
 								<div class="product-details">
+
+
 									<h6>{{product.name|titlecase}}</h6>
 									<div class="price">
-										<!-- <h6>{{product.price|currency}}</h6> -->
-										<h6 *ngIf="product.discount == 0 ; else elseBlock"> {{product.price |currency}}</h6>
-										<ng-template #elseBlock><h6>{{product.price *(1-product.discount/100) | currency}}</h6></ng-template>
+										<h6 *ngIf="product.discount == 0 ; else elseBlock"> {{product.price |currency}}
+										</h6>
+										<ng-template #elseBlock>
+											<h6>{{product.price *(1-product.discount/100) | currency}}</h6>
+										</ng-template>
 										<h6 class="l-through">{{product.discount/100}}%</h6>
-										<ng-template #elseBlock><h3>{{product.discount/100}}%</h3></ng-template>
+										<ng-template #elseBlock>
+											<h3>{{product.discount/100}}%</h3>
+										</ng-template>
 									</div>
+									<ngb-rating *ngIf="product.rating" [(rate)]="product.rating" [readonly]="true"
+										max="5"></ngb-rating>
+
 									<div class="prd-bottom" *ngIf="user">
 										<a *ngIf=" product.inStock > 0" class="social-info" data-bs-toggle="modal"
 											[attr.data-bs-target]="'#product'+product._id">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
 										</a>
-										<a *ngIf="!product.follow" class="social-info" (click)="wish(product)" >
-											<span class="lnr lnr-heart" ></span>
+										<a *ngIf="!product.follow" class="social-info" (click)="wish(product)">
+											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>
-										</a> 
-										<a *ngIf="product.follow" class="social-info" (click)="wish(product)" >
-											<span ><i style="color: red;" class="fas fa-heart"></i></span>
+										</a>
+										<a *ngIf="product.follow" class="social-info" (click)="wish(product)">
+											<span><i style="color: red;" class="fas fa-heart"></i></span>
 											<p class="hover-text">Wishlist</p>
 										</a>
 										<a [routerLink]="'/category/'+ product._id" class="social-info">
@@ -160,25 +173,19 @@
 							</div>
 						</div>
 					</div>
-
-
-
 				</section>
-
-
 			</div>
 			<!-- pagination -->
-				<div style="position:relative; left:38vh" class="col-xl-9 col-lg-8 col-md-7">
-					<div class="filter-bar d-flex flex-wrap align-items-center">
-						<div class="pagination">
-							<pagination-controls (pageChange)="currentPg = $event"></pagination-controls>
-						</div>
+			<div style="position:relative; left:38vh" class="col-xl-9 col-lg-8 col-md-7">
+				<div class="filter-bar d-flex flex-wrap align-items-center">
+					<div class="pagination">
+						<pagination-controls (pageChange)="currentPg = $event"></pagination-controls>
 					</div>
 				</div>
+			</div>
 		</div>
 		<!-- </div> -->
 	</div>
-
 	<!-- start footer Area -->
 	<app-footer></app-footer>
 	<!-- End footer Area -->

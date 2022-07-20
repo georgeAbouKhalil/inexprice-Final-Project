@@ -20,46 +20,46 @@ export class AccountSettingComponent implements OnInit {
 
   credit_card: FormGroup;
   Password_valid: FormGroup;
-  oldPassword:String = "";
-  confrimPassword:String = "";
-  oldPasswordFromDB:string = "";
+  oldPassword: String = "";
+  confrimPassword: String = "";
+  oldPasswordFromDB: string = "";
 
-  cardNumber:string = "";
-  cardHolder:string = "";
-  cardDateMM:string = "";
-  cardDateYYYY:string = "";
-  cardCVV:string = "";
+  cardNumber: string = "";
+  cardHolder: string = "";
+  cardDateMM: string = "";
+  cardDateYYYY: string = "";
+  cardCVV: string = "";
   rotato: any;
-  creditCards:any = [] = [];
+  creditCards: any = [] = [];
 
 
-  clickUpdate:boolean=false ;
+  clickUpdate: boolean = false;
 
-  userImage:string = ""
+  userImage: string = ""
 
   newDetail = new UserModel();
-   mask = [/[0-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  mask = [/[0-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  constructor(public myAuthService: AuthService,private cr: FormBuilder,private ps: FormBuilder,private notify: NotifyService, private creditService: CreditCardService) { }
+  constructor(public myAuthService: AuthService, private cr: FormBuilder, private ps: FormBuilder, private notify: NotifyService, private creditService: CreditCardService) { }
 
   async ngOnInit() {
     this.user = this.myAuthService.getUser();
-    
-    if(this.user.gender === "Male")
+
+    if (this.user.gender === "Male")
       this.userImage = "assets/img/product/review-1.png"
     else
       this.userImage = "assets/img/blog/c3.jpg"
-    
+
     this.validCreditCard();
     this.validPasswordUser();
     this.creditCards = await this.creditService.getCreditCardById(this.user._id);
-    
-    
-    
+
+
+
   }
 
 
-  changeCardNumber(updateNumberValue){
+  changeCardNumber(updateNumberValue) {
     var cardNumber2 = updateNumberValue;
     // Do not allow users to write invalid characters
     var formattedCardNumber = cardNumber2.replace(/[^\d]/g, "");
@@ -68,7 +68,7 @@ export class AccountSettingComponent implements OnInit {
     // Split the card number is groups of 4
     var cardNumberSections = formattedCardNumber.match(/\d{1,4}/g);
     if (cardNumberSections !== null) {
-        formattedCardNumber = cardNumberSections.join(' ');	
+      formattedCardNumber = cardNumberSections.join(' ');
     }
     this.cardNumber = formattedCardNumber;
 
@@ -78,7 +78,7 @@ export class AccountSettingComponent implements OnInit {
     }
   }
 
-  changeCardHolder(updateHolderValue){
+  changeCardHolder(updateHolderValue) {
     var cardholder2 = updateHolderValue;
     // var cardHolderSections = cardholder2.match('^[A-Z|a-z| ]+$');
     this.cardHolder = updateHolderValue;
@@ -88,20 +88,20 @@ export class AccountSettingComponent implements OnInit {
     }
   }
 
-  changeCardDateMM(updateDateMM){
+  changeCardDateMM(updateDateMM) {
     var cardDateMM2 = updateDateMM;
 
     var formattedCardDateMM = cardDateMM2.replace(/[^\d]/g, "");
-    formattedCardDateMM =formattedCardDateMM.substring(0, 2);
+    formattedCardDateMM = formattedCardDateMM.substring(0, 2);
 
     this.cardDateMM = formattedCardDateMM;
 
-    if(cardDateMM2 !== formattedCardDateMM){
+    if (cardDateMM2 !== formattedCardDateMM) {
       this.cardDateMM = formattedCardDateMM;
     }
   }
 
-  changeCardDateYYYY(updateDateYYYY){
+  changeCardDateYYYY(updateDateYYYY) {
     var cardDateYYYY2 = updateDateYYYY;
 
     var formattedCardDateYYYY = cardDateYYYY2.replace(/[^\d]/g, "");
@@ -109,14 +109,14 @@ export class AccountSettingComponent implements OnInit {
 
     this.cardDateYYYY = formattedCardDateYYYY;
 
-    if(cardDateYYYY2 !== formattedCardDateYYYY){
+    if (cardDateYYYY2 !== formattedCardDateYYYY) {
       this.cardDateYYYY = formattedCardDateYYYY;
     }
   }
 
-  changeCardCvv(updateCvv){
+  changeCardCvv(updateCvv) {
     // this.rotato = "thecard";
-    for(let i=0; i<1; i++){
+    for (let i = 0; i < 1; i++) {
       this.notify.success("hover the card to see the CVV");
     }
     var cardCVV2 = updateCvv;
@@ -125,74 +125,74 @@ export class AccountSettingComponent implements OnInit {
 
     this.cardCVV = formattedCardCvv;
 
-    if(cardCVV2 !== formattedCardCvv){
+    if (cardCVV2 !== formattedCardCvv) {
       this.cardCVV = formattedCardCvv;
     }
   }
 
-  validCreditCard(){
+  validCreditCard() {
     this.credit_card = this.cr.group({
-      user_id:[this.user._id],
-      card_number: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'),Validators.maxLength(19),Validators.minLength(19)]],
-      card_holder: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'),Validators.maxLength(25),Validators.minLength(4)]],
-      cvv: ['',[Validators.required,Validators.pattern('^[0-9]+$'),Validators.minLength(3),Validators.maxLength(3)]],
-      date_mm: ['',[Validators.required,Validators.pattern('^(0[1-9]|1[0-2])$'),Validators.minLength(2),Validators.maxLength(2)]],
-      date_yyyy: ['',[Validators.required,Validators.pattern('^(2[2-9])$'),Validators.minLength(2),Validators.maxLength(2)]],
+      user_id: [this.user._id],
+      card_number: ['', [Validators.required, Validators.pattern('^[0-9| ]+$'), Validators.maxLength(19), Validators.minLength(19)]],
+      card_holder: ['', [Validators.required, Validators.pattern('^[A-Z|a-z| ]+$'), Validators.maxLength(25), Validators.minLength(4)]],
+      cvv: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(3), Validators.maxLength(3)]],
+      date_mm: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])$'), Validators.minLength(2), Validators.maxLength(2)]],
+      date_yyyy: ['', [Validators.required, Validators.pattern('^(2[2-9])$'), Validators.minLength(2), Validators.maxLength(2)]],
     });
   }
-  async onSubmit(){
-    try{
-      if(this.credit_card.valid){
+  async onSubmit() {
+    try {
+      if (this.credit_card.valid) {
         const newCard = await this.creditService.addCreditCard({ ...this.credit_card.value });
         this.notify.success("credit card successfuly added");
         this.creditCards.push(newCard);
         this.credit_card.reset();
 
       }
-      
-    }catch (err){
+
+    } catch (err) {
       alert(err)
     }
   }
-  
+
   public async deleteCreditCart(creditCard: CreditCardModel) {
     try {
 
       await this.creditService.deleteCreditCard(creditCard._id);
       const indexToDelete = this.creditCards.findIndex(t => t._id === creditCard._id);
       this.creditCards.splice(indexToDelete, 1);
-      
+
     }
     catch (err: any) {
       this.notify.error(err);
     }
   }
 
-  validPasswordUser(){
+  validPasswordUser() {
     this.Password_valid = this.ps.group({
-      password: ['',[Validators.required,Validators.minLength(4),Validators.maxLength(10)]],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       oldPassword: [this.oldPassword],
       confrimPassword: [this.confrimPassword]
     });
   }
 
-  sendOldPassword(updateOldPassword){
+  sendOldPassword(updateOldPassword) {
     this.oldPassword = updateOldPassword;
 
   }
-  sendConfrimPassword(updateConfirmPassword){
+  sendConfrimPassword(updateConfirmPassword) {
     this.confrimPassword = updateConfirmPassword;
   }
 
 
 
-  async onSubmitPassword(){
-    
-    try{
-      if(this.oldPassword === this.user.password && this.oldPassword !== this.confrimPassword ){
-        if(this.Password_valid.valid){
+  async onSubmitPassword() {
+
+    try {
+      if (this.oldPassword === this.user.password && this.oldPassword !== this.confrimPassword) {
+        if (this.Password_valid.valid) {
           this.user.password = this.confrimPassword;
-          await this.myAuthService.changePassword(this.user);          
+          await this.myAuthService.changePassword(this.user);
           this.Password_valid.reset();
           this.notify.success("password has been changed please login again")
           this.myAuthService.logout();
@@ -200,7 +200,7 @@ export class AccountSettingComponent implements OnInit {
       } else {
         this.notify.error("wrong password");
       }
-    }catch (err){
+    } catch (err) {
       this.notify.error("something wrong");
     }
   }
@@ -209,11 +209,11 @@ export class AccountSettingComponent implements OnInit {
 
 
 
-  async updateUserDetail(user){      
+  async updateUserDetail(user) {
     //check the new object of user (updated field if are empty or made change)
-    if (Object.keys(this.newDetail).length === 0 ) {
+    if (Object.keys(this.newDetail).length === 0) {
       this.clickUpdate = false;
-      return ;
+      return;
     }
     await this.myAuthService.changeUserDetails(user, this.newDetail);
     this.notify.success("Please login again")
@@ -224,8 +224,8 @@ export class AccountSettingComponent implements OnInit {
   }
 
 
-  async onSubmitUser(){
-this.clickUpdate= true;
+  async onSubmitUser() {
+    this.clickUpdate = true;
   }
 
 }

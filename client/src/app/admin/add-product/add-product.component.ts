@@ -19,7 +19,6 @@ export class AddProductComponent implements OnInit {
 
     constructor(
         private myProductsService: ProductsService,
-        private myRouter: Router,
         private notify: NotifyService, public categoriesService: CategoriesService,) { }
 
     async ngOnInit() {

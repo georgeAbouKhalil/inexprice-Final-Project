@@ -1,196 +1,194 @@
 <!DOCTYPE html>
 <!-- Created By CodingNepal -->
 <html lang="en" dir="ltr">
-   <head>
-      <meta charset="utf-8">
-      <title>Multi Step Form | CodingNepal</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-   </head>
-   <body>
-      <div class="container">
-         <header>Signup Form</header>
-         <!-- form start -->
-         
-         <mat-horizontal-stepper [labelPosition]="'bottom'">
-            <mat-step errorMessage="Error!" [stepControl]="firstFormGroup" label="Name" >
-              <form [formGroup]="firstFormGroup" >
-                    <div>
-                        
-                            <div class="title">Basic Info:</div>
-                            <div class="field">
-                                <div class="label">First Name <span style="color: red;">*</span></div>
-                                <input formControlName="firstName" type="text" >
-                                <div *ngIf="!firstFormGroup.controls.firstName!.valid && (firstFormGroup.controls.firstName!.dirty || firstFormGroup.controls.firstName?.touched)" 
-                                    style="color: red"> It must contain at least One lowercase | uppercase alphabetical character
-                                </div>
-                                  
-                            </div>
-                            <div class="field">
-                                <div class="label">Last Name <span style="color: red;">*</span></div>
-                                <input formControlName="lastName" type="text"  >
-                                <div *ngIf="!firstFormGroup.controls.lastName!.valid && (firstFormGroup.controls.lastName!.dirty || firstFormGroup.controls.lastName?.touched)" 
-                                    style="color: red"> It must contain at least One lowercase | uppercase alphabetical character
-                                </div>
-                                  
-                            </div>
-                            <div class="field">
-                                <button class="firstNext next"  matStepperNext>Next</button>                    
-                        </div>
-                    </div>  
-                    <a routerLink="/login">Already registered? Click to login!!</a>
-                  </form>
-            </mat-step>
-            
-            <mat-step state="iconContact" errorMessage="Error!" [stepControl]="secondFormGroup" label="Contact Info:">
-              <form [formGroup]="secondFormGroup">
-                <div class="title">Contact Info:</div>
-            <div class="field">
-              <div class="label">Email Address <span style="color: red;">*</span></div>
-              <input formControlName="email" type="email" >
-              <div *ngIf="!secondFormGroup.controls.email!.valid && (secondFormGroup.controls.email!.dirty || secondFormGroup.controls.email?.touched)" 
-                    style="color: red"> Invalid email
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label" >Phone Number <span style="color: red;">*</span></div>
-              <input id="phone" formControlName="phone" type="text" [textMask]="{mask:mask}" placeholder="_ _ _-_ _ _-_ _ _ _" >
-              <div *ngIf="!secondFormGroup.controls.phone!.valid && (secondFormGroup.controls.phone!.dirty || secondFormGroup.controls.phone?.touched)" 
-                    style="color: red"> Invalid phone 
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label">Address <span style="color: red;">*</span></div>
-              <input formControlName="address" type="text" >
-              <div *ngIf="!secondFormGroup.controls.address!.valid && (secondFormGroup.controls.address!.dirty || secondFormGroup.controls.address?.touched)" 
-                    style="color: red"> Address is required
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label">City <span style="color: red;">*</span></div>
-              <input formControlName="city" type="text" >
-              <div *ngIf="!secondFormGroup.controls.city!.valid && (secondFormGroup.controls.city!.dirty || secondFormGroup.controls.city?.touched)" 
-                    style="color: red"> City is required
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label">Country <span style="color: red;">*</span></div>
-              <input formControlName="country" type="text" >
-              <div *ngIf="!secondFormGroup.controls.country!.valid && (secondFormGroup.controls.country!.dirty || secondFormGroup.controls.country?.touched)" 
-                    style="color: red"> country is required
-                </div>
-                
-            </div>
-            <div class="field btns"> <br>
-              <button class="prev-1 prev" matStepperPrevious>Previous</button>
-              <button class="next-1 next" matStepperNext>Next</button>
-            </div>
-          </form>
-            </mat-step>
 
-            <mat-step state="iconBirth" label="Birth" errorMessage="Error!" [stepControl]="thirdFormGroup">
-              <form [formGroup]="thirdFormGroup">
-                <div class="title">Date of Birth: </div>
-            <div class="field">
-              <div class="label">Date <span style="color: red;">*</span></div>
-              <input formControlName="birthday" type="date" >
-              <div *ngIf="!thirdFormGroup.controls.birthday!.valid && (thirdFormGroup.controls.birthday!.dirty || thirdFormGroup.controls.birthday?.touched)" 
-                    style="color: red"> Date is required
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label">Gender <span style="color: red;">*</span></div> <br>
-              <input type="text" formControlName="gender" placeholder="Female or Male">
-              <div *ngIf="!thirdFormGroup.controls.gender!.valid && (thirdFormGroup.controls.gender!.dirty || thirdFormGroup.controls.gender?.touched)" 
-                    style="color: red"> gender is required and The first alphabet should be a capital letter (Female | Male)
-                </div>
-              
-            </div>
-            
-            <div class="field btns"> <br> <br> <br><br>
-              <button class="prev-1 prev" matStepperPrevious>Previous</button>
-              <button class="next-1 next" matStepperNext>Next</button>
-            </div>
-            </form>
-            </mat-step>
+<head>
+  <meta charset="utf-8">
+  <title>Multi Step Form | CodingNepal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
 
-            <mat-step state="iconSubmit" label="Submit" [stepControl]="fourFormGroup">
-              <form [formGroup]="fourFormGroup">
-                <div class="title">Login Details:</div>
-            <div class="field">
-              <div class="label">Username <span style="color: red;">*</span></div>
-              <input formControlName="userName" type="text">
-              <div *ngIf="!fourFormGroup.controls.userName!.valid && (fourFormGroup.controls.userName!.dirty || fourFormGroup.controls.userName?.touched)" 
-                    style="color: red"> Invalid username is required
-                </div>
-                
-            </div>
-            <div class="field">
-              <div class="label">Password <span style="color: red;">*</span></div>
-              <input formControlName="password" type="password" >
-              <div *ngIf="!fourFormGroup.controls.password!.valid && (fourFormGroup.controls.password!.dirty || fourFormGroup.controls.password?.touched)" 
-                    style="color: red"> min length 3 to 19 is the max
-                </div>
-            </div>
-            <div class="field">
-              <div class="label">Business Declaration <span style="color: red;">*</span></div> <br>
-              <input type="text" formControlName="business" placeholder="Business or Private">
-              <div *ngIf="!fourFormGroup.controls.business!.valid && (fourFormGroup.controls.business!.dirty || fourFormGroup.controls.business?.touched)" 
-                    style="color: red"> Business Declaration is required and The first alphabet should be a capital letter (Business | Private)
-                </div>
-              
-            </div>
-            <div class="field btns"> <br>
-              <button class="prev-1 prev" matStepperPrevious>Previous</button>
-              <button type="submit" class="next-1 next" [disabled]="!firstFormGroup.valid" [disabled]="!secondFormGroup.valid" [disabled]="!thirdFormGroup.valid" [disabled]="!fourFormGroup.valid" matStepperNext (click)="onSubmit()">Submit</button>
-            </div>
-            </form>
-            </mat-step>
-        
+<body>
+  <div class="container">
+    <header>Signup Form</header>
+    <!-- form start -->
 
-          <!-- Change Icons-->
-        <ng-template matStepperIcon="iconContact">
-            <i class="fas fa-address-book"></i>
-        </ng-template>
+    <mat-horizontal-stepper [labelPosition]="'bottom'">
+      <mat-step errorMessage="Error!" [stepControl]="firstFormGroup" label="Name">
+        <form [formGroup]="firstFormGroup">
+          <div>
 
-        <ng-template matStepperIcon="iconBirth">
-            <i class="fas fa-calendar-alt"></i>
-        </ng-template>
+            <div class="title">Basic Info:</div>
+            <div class="field">
+              <div class="label">First Name <span style="color: red;">*</span></div>
+              <input formControlName="firstName" type="text">
+              <div
+                *ngIf="!firstFormGroup.controls.firstName!.valid && (firstFormGroup.controls.firstName!.dirty || firstFormGroup.controls.firstName?.touched)"
+                style="color: red"> It must contain at least One lowercase | uppercase alphabetical character
+              </div>
 
-        <ng-template matStepperIcon="iconSubmit">
-            <i class="far fa-check-circle"></i>
-        </ng-template>
-        </mat-horizontal-stepper>
-      
-      </div>
-      <!-- scroll to the top -->
-	<div hidden id="progress">
-		<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
-	</div>
-   </body>
+            </div>
+            <div class="field">
+              <div class="label">Last Name <span style="color: red;">*</span></div>
+              <input formControlName="lastName" type="text">
+              <div
+                *ngIf="!firstFormGroup.controls.lastName!.valid && (firstFormGroup.controls.lastName!.dirty || firstFormGroup.controls.lastName?.touched)"
+                style="color: red"> It must contain at least One lowercase | uppercase alphabetical character
+              </div>
+
+            </div>
+            <div class="field">
+              <button class="firstNext next" matStepperNext>Next</button>
+            </div>
+          </div>
+          <a routerLink="/login">Already registered? Click to login!!</a>
+        </form>
+      </mat-step>
+
+      <mat-step state="iconContact" errorMessage="Error!" [stepControl]="secondFormGroup" label="Contact Info:">
+        <form [formGroup]="secondFormGroup">
+          <div class="title">Contact Info:</div>
+          <div class="field">
+            <div class="label">Email Address <span style="color: red;">*</span></div>
+            <input formControlName="email" type="email">
+            <div
+              *ngIf="!secondFormGroup.controls.email!.valid && (secondFormGroup.controls.email!.dirty || secondFormGroup.controls.email?.touched)"
+              style="color: red"> Invalid email
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">Phone Number <span style="color: red;">*</span></div>
+            <input id="phone" formControlName="phone" type="text" [textMask]="{mask:mask}"
+              placeholder="_ _ _-_ _ _-_ _ _ _">
+            <div
+              *ngIf="!secondFormGroup.controls.phone!.valid && (secondFormGroup.controls.phone!.dirty || secondFormGroup.controls.phone?.touched)"
+              style="color: red"> Invalid phone
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">Address <span style="color: red;">*</span></div>
+            <input formControlName="address" type="text">
+            <div
+              *ngIf="!secondFormGroup.controls.address!.valid && (secondFormGroup.controls.address!.dirty || secondFormGroup.controls.address?.touched)"
+              style="color: red"> Address is required
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">City <span style="color: red;">*</span></div>
+            <input formControlName="city" type="text">
+            <div
+              *ngIf="!secondFormGroup.controls.city!.valid && (secondFormGroup.controls.city!.dirty || secondFormGroup.controls.city?.touched)"
+              style="color: red"> City is required
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">Country <span style="color: red;">*</span></div>
+            <input formControlName="country" type="text">
+            <div
+              *ngIf="!secondFormGroup.controls.country!.valid && (secondFormGroup.controls.country!.dirty || secondFormGroup.controls.country?.touched)"
+              style="color: red"> country is required
+            </div>
+
+          </div>
+          <div class="field btns"> <br>
+            <button class="prev-1 prev" matStepperPrevious>Previous</button>
+            <button class="next-1 next" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step state="iconBirth" label="Birth" errorMessage="Error!" [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <div class="title">Date of Birth: </div>
+          <div class="field">
+            <div class="label">Date <span style="color: red;">*</span></div>
+            <input formControlName="birthday" type="date">
+            <div
+              *ngIf="!thirdFormGroup.controls.birthday!.valid && (thirdFormGroup.controls.birthday!.dirty || thirdFormGroup.controls.birthday?.touched)"
+              style="color: red"> Date is required
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">Gender <span style="color: red;">*</span></div> <br>
+            <input type="text" formControlName="gender" placeholder="Female or Male">
+            <div
+              *ngIf="!thirdFormGroup.controls.gender!.valid && (thirdFormGroup.controls.gender!.dirty || thirdFormGroup.controls.gender?.touched)"
+              style="color: red"> gender is required and The first alphabet should be a capital letter (Female | Male)
+            </div>
+
+          </div>
+
+          <div class="field btns"> <br> <br> <br><br>
+            <button class="prev-1 prev" matStepperPrevious>Previous</button>
+            <button class="next-1 next" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step state="iconSubmit" label="Submit" [stepControl]="fourFormGroup">
+        <form [formGroup]="fourFormGroup">
+          <div class="title">Login Details:</div>
+          <div class="field">
+            <div class="label">Username <span style="color: red;">*</span></div>
+            <input formControlName="userName" type="text">
+            <div
+              *ngIf="!fourFormGroup.controls.userName!.valid && (fourFormGroup.controls.userName!.dirty || fourFormGroup.controls.userName?.touched)"
+              style="color: red"> Invalid username is required
+            </div>
+
+          </div>
+          <div class="field">
+            <div class="label">Password <span style="color: red;">*</span></div>
+            <input formControlName="password" type="password">
+            <div
+              *ngIf="!fourFormGroup.controls.password!.valid && (fourFormGroup.controls.password!.dirty || fourFormGroup.controls.password?.touched)"
+              style="color: red"> min length 3 to 19 is the max
+            </div>
+          </div>
+          <div class="field">
+            <div class="label">Business Declaration <span style="color: red;">*</span></div> <br>
+            <input type="text" formControlName="business" placeholder="Business or Private">
+            <div
+              *ngIf="!fourFormGroup.controls.business!.valid && (fourFormGroup.controls.business!.dirty || fourFormGroup.controls.business?.touched)"
+              style="color: red"> Business Declaration is required and The first alphabet should be a capital letter
+              (Business | Private)
+            </div>
+
+          </div>
+          <div class="field btns"> <br>
+            <button class="prev-1 prev" matStepperPrevious>Previous</button>
+            <button type="submit" class="next-1 next" [disabled]="!firstFormGroup.valid"
+              [disabled]="!secondFormGroup.valid" [disabled]="!thirdFormGroup.valid" [disabled]="!fourFormGroup.valid"
+              matStepperNext (click)="onSubmit()">Submit</button>
+          </div>
+        </form>
+      </mat-step>
+
+
+      <!-- Change Icons-->
+      <ng-template matStepperIcon="iconContact">
+        <i class="fas fa-address-book"></i>
+      </ng-template>
+
+      <ng-template matStepperIcon="iconBirth">
+        <i class="fas fa-calendar-alt"></i>
+      </ng-template>
+
+      <ng-template matStepperIcon="iconSubmit">
+        <i class="far fa-check-circle"></i>
+      </ng-template>
+    </mat-horizontal-stepper>
+
+  </div>
+  <!-- scroll to the top -->
+  <div hidden id="progress">
+    <a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+  </div>
+</body>
+
 </html>
-
-
-
-
-
-
-
-<!-- <mat-step state="iconContact" -->
-  <!-- Change Icons-->
-  <!-- <ng-template matStepperIcon="iconContact"> -->
-    <!-- <i class="fas fa-address-book"></i>
-</ng-template>
-
-<ng-template matStepperIcon="iconBirth">
-    <i class="fas fa-calendar-alt"></i>
-</ng-template>
-
-<ng-template matStepperIcon="iconSubmit">
-    <i class="far fa-check-circle"></i>
-</ng-template>
-</mat-horizontal-stepper> -->

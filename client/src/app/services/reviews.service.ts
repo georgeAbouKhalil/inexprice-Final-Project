@@ -15,12 +15,11 @@ export class ReviewsService {
   constructor(private http: HttpClient) { }
 
   public async getReviews(productId) {
-    // return this.http.get<ReviewModel[]>('http://localhost:3001/api/products');
-    return await this.http.get<ReviewModel[]>(environment.reviewUrl+ productId).toPromise();
+    return await this.http.get<ReviewModel[]>(environment.reviewUrl + productId).toPromise();
   }
 
   public async addReview(review: any) {
-    return await this.http.post<ReviewModel>(environment.reviewUrl, review).toPromise();   
+    return await this.http.post<ReviewModel>(environment.reviewUrl, review).toPromise();
 
   }
 

@@ -30,6 +30,8 @@ function socketIo(httpServer: HttpServer): void {
 
 
         socket.on('message', async function(data) {
+            console.log({data});
+            
             
             // const user = await usersLogic.getUserIdByUserName(data.userName)
             // console.log({data});
@@ -38,11 +40,15 @@ function socketIo(httpServer: HttpServer): void {
             // }
             // var d = new Date();
             // socketIoServer.in(data.userName).emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
-            socketIoServer.emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
+
+
+            // socketIoServer.emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
+            socketIoServer.emit('new message', {userId: data.userId, name:data.name,email: data.email, userName: data.userName, message: data.message, date: data.date ,  time: data.Time , toUser: data.toUser}); 
            
           });
           
-          socket.on('typing', function(data) {                                         
+          socket.on('typing', function(data) {      
+                                  
             // socket.broadcast.to(data.userName).emit('user typing', {user: data.userName, message:' is typing ...!!'});
             // socket.broadcast.emit('user typing', {userName: data.userName, message:'is typing ...!!'});
             socket.emit('user typing', {userName: data.userName, message:'is typing ...!!'});

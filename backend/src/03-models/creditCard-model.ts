@@ -10,10 +10,6 @@ export interface ICreditCardModel extends Document {
     cvv:string;
     date_mm:string;
     date_yyyy:string;
-
-    
-    // p_id: number; //delete this
-    // categoryId: Schema.Types.ObjectId;
 }
 
 // Define model schema:
@@ -21,8 +17,6 @@ const CreditCardSchema = new Schema<ICreditCardModel>({
     user_id: {
         type: Schema.Types.ObjectId,
         required: [true, "Missing user_id"]
-        // trim: true,
-        // unique: true
     },
     card_number: {
         type: String,
@@ -33,8 +27,6 @@ const CreditCardSchema = new Schema<ICreditCardModel>({
         type: String,
         required: [true, "Missing card_holder"],
         trim: true,
-        // min: [0, "Stock can't be negative"],
-        // max: [1000, "Stock can't exceed 1000"]
     },
     cvv: {
         type: String,
@@ -54,14 +46,13 @@ const CreditCardSchema = new Schema<ICreditCardModel>({
     versionKey: false, // Don't create __v field
     toJSON: { virtuals: true }, // Fill also the virtual fields when we're calling a "populate" function
     id: false, // Don't duplicate _id to id field
-    // timestamps: true // 01/01/1970 12:00:00
 });
 
 CreditCardSchema.virtual("user", {
     ref: UserModel, // Which model are you describing
     localField: "user_id", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true // each product has one category and not many
 });
 
 // Define model:

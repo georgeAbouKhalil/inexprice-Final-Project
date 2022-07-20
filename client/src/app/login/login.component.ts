@@ -4,7 +4,6 @@ import { AuthService } from '../services/auth.service';
 import { CredentialsModel } from 'src/app/models/credentials.model';
 import { CartsService } from '../services/cart.service';
 import { NotifyService } from '../services/notify.service';
-import { CartModel } from '../models/cart.model';
 
 @Component({
   selector: 'app-login',
@@ -19,11 +18,9 @@ export class LoginComponent implements OnInit {
   public user: any;
   public date: string;
 
-  constructor(public myAuthService: AuthService,private myRouter: Router,public cartsService: CartsService,private notify: NotifyService, ) { this.date = this.getCurrentDate(); }
+  constructor(public myAuthService: AuthService, private myRouter: Router, public cartsService: CartsService, private notify: NotifyService,) { this.date = this.getCurrentDate(); }
 
   ngOnInit(): void {
-    // this.cart = JSON.parse(localStorage.getItem("cart"));
-    
   }
 
   private getCurrentDate(): string {
@@ -32,32 +29,17 @@ export class LoginComponent implements OnInit {
     const monthIndex = now.getMonth();
     const year = now.getFullYear();
     return months[monthIndex] + " " + year;
-}
+  }
 
   public async login() {
     try {
       await this.myAuthService.login(this.credentials);
       this.notify.success("You are logged-in ");
-      // this.myRouter.navigateByUrl("/home");
-
-      
-      // if (this.cartsService.cart?.status == 'open') {
-      //   this.getCartItems();
-  
-      // } 
-      // else {
-        //   this.createNewCart();
-      // }
-      
       window.location.href = "home";
       this.myAuthService.isLoggedIn = true;
-      
     }
     catch (err) {
       this.notify.error("wrong username or password");
     }
   }
-
-
-
 }

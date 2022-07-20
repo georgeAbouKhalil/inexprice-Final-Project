@@ -17,7 +17,6 @@ async function register(user: IUserModel): Promise<string> {
     if (exist) throw new ClientError(401, "User name or email already in use.");
 
     // Using user logic:
-    // const newUser = await userLogic.addUser(user);
     const newUser = await user.save();
 
     // Delete password before generating token for security:
@@ -68,6 +67,7 @@ async function getOneUser(_id: string): Promise<IUserModel> {
 
     return user;
 }
+
 
 // Get one user by username:
 async function getUserIdByUserName(userName: string): Promise<IUserModel> {
@@ -130,14 +130,6 @@ async function updatePartialUser(newUser: IUserModel): Promise<IUserModel> {
     return newUser;
 
 }
-
-
-
-
-
-
-
-
 
 async function deleteUser(_id: string): Promise<void> {
     // Validate _id:

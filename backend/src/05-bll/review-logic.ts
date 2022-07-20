@@ -1,9 +1,5 @@
-import mongoose from "mongoose";
 import ClientError from "../03-models/client-error";
-import { IUserModel, UserModel } from "../03-models/user-model";
 import { IReviewModel, ReviewModel} from "../03-models/review-model";
-
-
 
 //get all reviees
 async function getAllReview(): Promise<IReviewModel[]> {
@@ -28,30 +24,8 @@ async function addReview(review: IReviewModel): Promise<IReviewModel> {
 }
 
 
-
-// // Get all
-// async function getAverageRating(): Promise<IReviewModel[]> {
-
-//     // get the sum of quantity per product
-//     const averageRating = ReviewModel.aggregate([
-//         {
-//             $group: {
-//                 _id: {
-//                 }, quantity: { "$avg": "$rating" }
-//             }
-//         },
-//     ]);
-
-//     console.log({averageRating});
-    
-
-//     return averageRating;
-// }
-
-
 export default {
     getAllReview,
     addReview,
     getAllReviewByProductId,
-    // getAverageRating
 }

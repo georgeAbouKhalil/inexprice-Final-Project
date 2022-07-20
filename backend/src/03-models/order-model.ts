@@ -61,13 +61,13 @@ OrderSchema.virtual("cart", {
     ref: CartModel, // Which model are you describing
     localField: "cart_id", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true // each product has one category and not many
 });
 OrderSchema.virtual("user", {
     ref: UserModel, // Which model are you describing
     localField: "user_id", // Our model relation field
     foreignField: "_id", // Other model relation field
-    justOne: true // One-to-Many relation --> each product has one category and not many
+    justOne: true // each product has one category and not many
 });
 
 // Define model:

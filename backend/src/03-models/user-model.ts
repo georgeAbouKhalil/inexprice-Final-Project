@@ -25,14 +25,12 @@ const UserSchema = new Schema<IUserModel>({
         type: String,
         required: [true,"firstName is required"],
         minlength: [2, "firstName must be min 2 chars"],
-        // maxlength: [10, "firstName must be max 10 chars"],
         trim: true
     },
     lastName: {
         type: String,
         required: [true,"lastName is required"],
         minlength: [2, "lastName must be min 2 chars"],
-        // maxlength: [15, "lastName must be max 15 chars"],
         trim: true
     },
     phone: {
@@ -49,13 +47,11 @@ const UserSchema = new Schema<IUserModel>({
         type: String,
         required: [true,"Address is required"],
         minlength: [4, "Address must be min 4 chars"],
-        // maxlength: [10, "Address must be max 15 chars"],
     },
     city: {
         type: String,
         required: [true,"City is required"],
         minlength: [4, "City must be min 4 chars"],
-        // maxlength: [10, "City must be max 15 chars"],
     },
     birthday: {
         type: String,
@@ -69,7 +65,6 @@ const UserSchema = new Schema<IUserModel>({
         type: String,
         required: [true,"username is required"],
         minlength: [2, "username must be min 2 chars"],
-        // maxlength: [15, "username must be max 15 chars"],
         trim: true,
         unique: true
     },
@@ -77,7 +72,6 @@ const UserSchema = new Schema<IUserModel>({
         type: String,
         required: [true,"password is required"],
         minlength: [6, "password must be min 6 chars"],
-        // maxlength: [40, "password must be max 40 chars"],
     },
     gender: {
         type: String,

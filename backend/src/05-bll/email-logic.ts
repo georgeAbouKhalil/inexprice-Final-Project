@@ -27,12 +27,7 @@ function sendEmail(to: string, subject: string) {
 
 function sendEmailAfterBuying(to: string, subject: string, cartItems: any[], orderDetails: any) {
     return new Promise((resolve, reject) => {
-        // console.log("cartItems from logic  ", cartItems);
-        // console.log("orderDetails from logic  ", orderDetails);
-
         let receipt = this.createReceiptFile(cartItems, orderDetails);
-        // console.log({ receipt });
-
         const message = { to, subject, html: receipt };
         transport.sendMail(message, (err, info) => {
             if (err) {

@@ -2,155 +2,123 @@
 <html lang="zxx" class="no-js">
 
 <head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	
+  <!-- Mobile Specific Meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Author Meta -->
+  <meta name="author" content="CodePixar">
+  <!-- Meta Description -->
+  <meta name="description" content="">
+  <!-- Meta Keyword -->
+  <meta name="keywords" content="">
+  <!-- meta character set -->
+  <meta charset="UTF-8">
+
 </head>
 
 <body>
-	<!-- Start Header Area -->
-	<header class="header_area sticky-header">
-		<!---navbar start -->
-		<app-navbar></app-navbar>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
-	</header>
-
-    <section style="margin-top: 8%;">
-        <div class="container py-5">
-          <div class="row d-flex justify-content-center">
-            <div class="col-md-12 col-lg-10 col-xl-8">
-              <div class="card">
-                <div class="card-body p-md-5">
-                  <div>
-                    <h4>Payment</h4>
-                    <p class="text-muted pb-2">
-                        Please provide your CVC number so we can accept your order and start working on it!
-                    </p>
-                  </div>
-      
-                  <div
-                    class="px-3 py-4 border border-primary border-2 rounded mt-4 d-flex justify-content-between"
-                  >
-                    <div class="d-flex flex-row align-items-center">
-                      <img src="https://i.imgur.com/oG7ChSR.png" class="rounded" width="60" />
-                      <div class="d-flex flex-column ms-4">
-                        <span class="h5 mb-1">{{user.firstName}}</span>
-                        
-                      </div>
-                    </div>
-                    <div class="d-flex flex-row align-items-center">
-                      <sup class="dollar font-weight-bold text-muted">$</sup>
-                      <!-- <span class="h2 mx-1 mb-0">{{total}}</span> -->
-                      <!-- <span class="h2 mx-1 mb-0">{{total}}</span> -->
-                      <span class="h2 mx-1 mb-0" *ngIf="!total || total <0; else elseBlock">$0.00</span>
-                      <ng-template #elseBlock> <span class="h2 mx-1 mb-0">{{total}}</span></ng-template>
-
-                      <span class="text-muted font-weight-bold mt-2">/ Total</span>
-                    </div>
-                  </div>
-      
-                  <h4 class="mt-5">Payment details</h4>
-      
-                  <div class="mt-4 d-flex justify-content-between align-items-center" *ngFor="let credit of creditCards">
-                    <div class="d-flex flex-row align-items-center" >
-                      <img src="https://i.imgur.com/qHX7vY1.webp" class="rounded" width="70" />
-                      <div class="d-flex flex-column ms-3" >
-                        <span class="h5 mb-1">Credit Card</span>
-
-                        <!-- <span class="small text-muted">XXXX XXXX XXXX 2570</span> -->
-                        <span class="small text-muted">xxxx xxxx xxxx{{credit.card_number | slice:14:19}}</span>
-                      </div>
-                    </div>
-                    
-                    <!-- <div>
-                      <input
-                      type="text"
-                      class="form-control"
-                      placeholder="CVC"
-                      style="width: 70px;"
-                      maxlength="3"
-                      />
-                    </div> -->
-                    <input type="radio" name="credit_card" [(ngModel)]="myRadio" [value]="credit.card_number" />
-                  </div>
-      
-                  <a href="/account-setting"> <h6 class="mt-4 mb-3 text-primary text-uppercase">ADD PAYMENT METHOD</h6></a>
-      
-                  
-                  <div class="mt-3">
-                    <button [disabled]="total===0 || creditCards?.length===0 || myRadio===''"  class="btn btn-primary btn-block btn-lg" 
-                    data-bs-toggle="modal" [attr.data-bs-target]="'#modal'" (click)="makeOrder()" >
-                      Proceed to payment <i class="fas fa-long-arrow-alt-right"></i>
-                    </button>
-                  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="{{'modal'}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    data-bs-backdrop="static" data-bs-keyboard="false">
-    <!-- <img id="img2" src="../../../../assets/img/logo-name.png"> -->
-
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content ">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel"> <b style="color: blue;">THANK YOU FOR YOUR ORDER!</b>     <img id="img2" src="../../../../assets/img/logo-name.png">
-          </h3>
-        </div>
-        <div class="modal-body row">
-          <p class="col"><a [href]="receiptTrustedUrl" download="{{this.orderDetails?.order_date}}.txt">Click here to
-              download your receipt</a>
-          </p>
-
-        </div>
-
-        <div class=" modal-footer">
-          <svg type="button" data-bs-dismiss="modal" aria-label="Close" xmlns="http://www.w3.org/2000/svg" width="16"
-            height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" (click)="close()">
-            <path fill-rule="evenodd"
-              d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
-            <path fill-rule="evenodd"
-              d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
-          </svg>
-
-        </div>
+  <!-- Start Header Area -->
+  <header class="header_area sticky-header">
+    <!---navbar start -->
+    <app-navbar></app-navbar>
+    <div class="search_input" id="search_input_box">
+      <div class="container">
+        <form class="d-flex justify-content-between">
+          <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+          <button type="submit" class="btn"></button>
+          <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+        </form>
       </div>
     </div>
-  </div>
+  </header>
+  <section style="margin-top: 8%;">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-12 col-lg-10 col-xl-8">
+          <div class="card">
+            <div class="card-body p-md-5">
+              <div>
+                <h4>Payment</h4>
+                <p class="text-muted pb-2">
+                  Please provide your CVC number so we can accept your order and start working on it!
+                </p>
+              </div>
+              <div class="px-3 py-4 border border-primary border-2 rounded mt-4 d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                  <img src="https://i.imgur.com/oG7ChSR.png" class="rounded" width="60" />
+                  <div class="d-flex flex-column ms-4">
+                    <span class="h5 mb-1">{{user.firstName}}</span>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                  <sup class="dollar font-weight-bold text-muted">$</sup>
+                  <span class="h2 mx-1 mb-0" *ngIf="!total || total <0; else elseBlock">$0.00</span>
+                  <ng-template #elseBlock> <span class="h2 mx-1 mb-0">{{total}}</span></ng-template>
+                  <span class="text-muted font-weight-bold mt-2">/ Total</span>
+                </div>
+              </div>
+              <h4 class="mt-5">Payment details</h4>
+              <div class="mt-4 d-flex justify-content-between align-items-center" *ngFor="let credit of creditCards">
+                <div class="d-flex flex-row align-items-center">
+                  <img src="https://i.imgur.com/qHX7vY1.webp" class="rounded" width="70" />
+                  <div class="d-flex flex-column ms-3">
+                    <span class="h5 mb-1">Credit Card</span>
+                    <span class="small text-muted">xxxx xxxx xxxx{{credit.card_number | slice:14:19}}</span>
+                  </div>
+                </div>
+                <input type="radio" name="credit_card" [(ngModel)]="myRadio" [value]="credit.card_number" />
+              </div>
+              <a href="/account-setting">
+                <h6 class="mt-4 mb-3 text-primary text-uppercase">ADD PAYMENT METHOD</h6>
+              </a>
+              <div class="mt-3">
+                <button [disabled]="total===0 || creditCards?.length===0 || myRadio===''"
+                  class="btn btn-primary btn-block btn-lg" data-bs-toggle="modal" [attr.data-bs-target]="'#modal'"
+                  (click)="makeOrder()">
+                  Proceed to payment <i class="fas fa-long-arrow-alt-right"></i>
+                </button>
+              </div>
 
-
-
-
+              <!-- Modal -->
+              <div class="modal fade" id="{{'modal'}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content ">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="exampleModalLabel"> <b style="color: blue;">THANK YOU FOR YOUR
+                          ORDER!</b> <img id="img2" src="../../../../assets/img/logo-name.png">
+                      </h3>
+                    </div>
+                    <div class="modal-body row">
+                      <p class="col"><a [href]="receiptTrustedUrl"
+                          download="{{this.orderDetails?.order_date}}.txt">Click here to
+                          download your receipt</a>
+                      </p>
+                    </div>
+                    <div class=" modal-footer">
+                      <svg type="button" data-bs-dismiss="modal" aria-label="Close" xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16"
+                        (click)="close()">
+                        <path fill-rule="evenodd"
+                          d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+                        <path fill-rule="evenodd"
+                          d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+  <app-footer></app-footer>
+  <!-- scroll to the top -->
+  <div id="progress">
+    <a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
+  </div>
 
-
-
-
-	<app-footer></app-footer>
-	<!-- scroll to the top -->
-	<div id="progress">
-		<a id="progress-value" class="gotopbtn" href="#"><i class="fas fa-arrow-up"></i></a>
-	</div>
-	
 </body>
 
 </html>

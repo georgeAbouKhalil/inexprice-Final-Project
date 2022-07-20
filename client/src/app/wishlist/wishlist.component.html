@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 	<!-- Start Header Area -->
 	<header class="header_area sticky-header">
@@ -29,66 +31,67 @@
 			<th>Price</th>
 			<th>Stock Status</th>
 			<th>add to bag</th>
-	  </tr>
-	  <tr *ngFor="let wishP of wishProducts">
+		</tr>
+		<tr *ngFor="let wishP of wishProducts">
 			<td> <a (click)="wish(wishP.product)" style="cursor: pointer;">❌</a></td>
-			<td><img src="{{wishP.product.img}}" ></td>
+			<td><img src="{{wishP.product.img}}"></td>
 			<td style="color: #FF6666;">{{wishP.product.name|titlecase | slice:0:20}}</td>
 			<td>{{wishP.product.discount/100}}%</td>
 			<td>{{wishP.product.price |currency}} </td>
 			<td *ngIf="wishP.product.inStock == 0 ; else elseBlock" style="color: red;"> Out Of Stock</td>
-			<ng-template #elseBlock> <td style=" text-align: center;">In Stock</td></ng-template>
-			<!-- <td><button  class="btn btn-primary">Add</button></td> -->
+			<ng-template #elseBlock>
+				<td style=" text-align: center;">In Stock</td>
+			</ng-template>
 			<td>
 				<div style="margin-bottom: 60%; cursor: pointer;" class="add-bag d-flex align-items-center">
-					<a *ngIf="productStock != 0 || wishP.product.inStock != 0" class="social-info" data-bs-toggle="modal"
-					[attr.data-bs-target]="'#product'+wishP.product._id" class="add-btn" ><span class="lnr lnr-cross"></span></a>
+					<a *ngIf="productStock != 0 || wishP.product.inStock != 0" class="social-info"
+						data-bs-toggle="modal" [attr.data-bs-target]="'#product'+wishP.product._id"
+						class="add-btn"><span class="lnr lnr-cross"></span></a>
 					<!-- Modal -->
-							<div class="modal fade" id="{{'product'+wishP.product._id}}" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered">
-									<div class="modal-content ">
-										<div class="modal-header">
-											<h3 class="modal-title" id="exampleModalLabel">{{wishP.product.name|titlecase}}
-											</h3>
+					<div class="modal fade" id="{{'product'+wishP.product._id}}" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content ">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalLabel">{{wishP.product.name|titlecase}}
+									</h3>
 
-											<svg type="button" data-bs-dismiss="modal" aria-label="Close"
-												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-												fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-												<path fill-rule="evenodd"
-													d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
-												<path fill-rule="evenodd"
-													d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
-											</svg>
+									<svg type="button" data-bs-dismiss="modal" aria-label="Close"
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-x-lg" viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" />
+										<path fill-rule="evenodd"
+											d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" />
+									</svg>
 
-										</div>
-										<div class="modal-body row">
-											<p class="col">Price: {{wishP.product.price}}$</p>
-											<div class="amount col">
-												<label for="amount" class="col">Amount: </label>
-												<input type="number" class="col" min="1" [(ngModel)]="amount"
-													value="{{ amount }}" name="amount" />
-											</div>
-										</div>
-
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-
-											<button type="button" class="btn btn-primary"
-												[disabled]="amount===0||amount===null" (click)="addToCart(wishP.product)"
-												data-bs-dismiss="modal">Add to cart</button>
-										</div>
+								</div>
+								<div class="modal-body row">
+									<p class="col">Price: {{wishP.product.price}}$</p>
+									<div class="amount col">
+										<label for="amount" class="col">Amount: </label>
+										<input type="number" class="col" min="1" [(ngModel)]="amount"
+											value="{{ amount }}" name="amount" />
 									</div>
 								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+
+									<button type="button" class="btn btn-primary" [disabled]="amount===0||amount===null"
+										(click)="addToCart(wishP.product)" data-bs-dismiss="modal">Add to cart</button>
+								</div>
 							</div>
+						</div>
+					</div>
 				</div>
 			</td>
-	  </tr>
-	  
+		</tr>
+
 	</table>
-	
-	
+
+
 	<app-footer></app-footer>
 
 	<!-- scroll to the top -->
@@ -97,49 +100,5 @@
 	</div>
 
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-				<section class="lattest-product-area pb-40 category-list">
-					<div class="row">
-						- <app-product-card [product]="product" (click)="updateProduct(product)"></app-product-card> -
-						-- <app-product-card [product]="product" ></app-product-card> --
-						<div class="col-lg-4 col-md-6" *ngFor="let wishP of wishProducts">
-							<div class="single-product">
-									<img class="img-fluid" src={{wishP.product.img}} alt="">
-								<div class="product-details">
-									<h6>{{wishP.product.name|titlecase}}</h6>
-									<div class="price">
-										- <h6>{{product.price|currency}}</h6> --
-										<h6 *ngIf="wishP.discount == 0 ; else elseBlock"> {{wishP.product.price |currency}}</h6>
-										<ng-template #elseBlock><h6>{{wishP.product.price *(1-wishP.product.discount/100) | currency}}</h6></ng-template>
-										<h6 class="l-through">{{wishP.product.discount/100}}%</h6>
-										<ng-template #elseBlock><h3>{{wishP.product.discount/100}}%</h3></ng-template>
-									</div>
-									<div class="prd-bottom">
-
-										<a class="social-info" (click)="wish(wishP.product)">
-											<span class="lnr lnr-heart" ></span>
-											<p class="hover-text">Wishlist</p>
-										</a> -->

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
     <div class="box">
         <h1>ADD A NEW PRODUCT</h1>
         <p>Please pay attention to filling in the details gently<br>you can not add until you fill everything.</p>
         <form #myForm="ngForm" (submit)="send()">
-    
+
             <div class="row">
                 <div class="column">
                     <label>Brand: </label>
-                    <input #brandBox="ngModel" type="text" [(ngModel)]="product.brand" name="brand" required >
+                    <input #brandBox="ngModel" type="text" [(ngModel)]="product.brand" name="brand" required>
                     <span *ngIf="brandBox.errors?.required && brandBox.touched">Missing brand.</span>
                 </div>
                 <div class="column">
@@ -51,19 +53,22 @@
             <div class="row">
                 <div class="column">
                     <label>description: </label>
-                    <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description" required>
+                    <input #descriptionBox="ngModel" type="text" [(ngModel)]="product.description" name="description"
+                        required>
                     <span *ngIf="descriptionBox.errors?.required && descriptionBox.touched">Missing description.</span>
                 </div>
                 <div class="column">
                     <label>Stock quantity: </label>
-                    <input #inStockBox="ngModel" type="number" min="0" [(ngModel)]="product.inStock" name="inStock" required>
+                    <input #inStockBox="ngModel" type="number" min="0" [(ngModel)]="product.inStock" name="inStock"
+                        required>
                     <span *ngIf="inStockBox.errors?.required && inStockBox.touched">Missing inStock.</span>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
                     <label>discount: </label>
-                    <input #discountBox="ngModel" type="number" min="0" [(ngModel)]="product.discount" name="discount" required>
+                    <input #discountBox="ngModel" type="number" min="0" [(ngModel)]="product.discount" name="discount"
+                        required>
                     <span *ngIf="discountBox.invalid && discountBox.touched">Missing discount.</span>
                 </div>
             </div>
@@ -71,7 +76,8 @@
                 <div class="column">
                     <label>Category: </label>
                     <select #typeBox="ngModel" name="type" [(ngModel)]="product.type" required>
-                            <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}</option>
+                        <option *ngFor="let category of categories" value={{category._id}}>{{category.name | titlecase}}
+                        </option>
                     </select>
                 </div>
             </div>
@@ -80,9 +86,9 @@
                     <button [disabled]="myForm.form.invalid">Add</button>
                 </div>
             </div>
-    
+
         </form>
-    
+
     </div>
     <!-- scroll to the top -->
     <div style="display: none;">
@@ -91,4 +97,5 @@
         </div>
     </div>
 </body>
+
 </html>

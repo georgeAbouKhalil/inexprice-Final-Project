@@ -22,12 +22,12 @@ export class WishListService {
     this.searchInCartResults = [];
   }
 
- 
-  public async getAllWishListByUserId(userId: string) {   
+
+  public async getAllWishListByUserId(userId: string) {
     return await this.http.get<WishListModel[]>(environment.wishListUrl + 'by-user/' + userId).toPromise();
   }
 
-  public createCart(cart: WishListModel): Observable<WishListModel> {  
+  public createCart(cart: WishListModel): Observable<WishListModel> {
     return this.http.post<WishListModel>(environment.cartUrl, cart);
   }
 
@@ -36,42 +36,34 @@ export class WishListService {
   // CART ITEMS
   public async getCartItems(cartId: string) {
     return await this.http.get<CartItemModel[]>(
-      environment.cartItemUrl + '/by-cart/' +cartId
-      // 'http://localhost:3001/api/carts/items'
+      environment.cartItemUrl + '/by-cart/' + cartId
     ).toPromise();
-   
+
   }
 
 
   public async addToWishList(Wishlist: WishListModel) {
-   console.log({Wishlist});
-   
-    const aaa = await this.http.post<WishListModel>(environment.wishListUrl, Wishlist).toPromise();
-    console.log({aaa});
-    return aaa;
-    
+    return await this.http.post<WishListModel>(environment.wishListUrl, Wishlist).toPromise();
+
   }
 
 
+  public updateOnCart(productToUpdate: ProductModel): Observable<ProductModel> {
 
-  public updateOnCart(productToUpdate: ProductModel): Observable<ProductModel> { 
-    
     return this.http.put<ProductModel>(
       environment.cartItemUrl,
-      // 'http://localhost:3001/api/carts/items',
       productToUpdate
     );
   }
 
   public async removeWishList(wishList: WishListModel) {
-    return await this.http.delete<void>( environment.wishListUrl + wishList._id).toPromise();
+    return await this.http.delete<void>(environment.wishListUrl + wishList._id).toPromise();
   }
 
 
   public emptyCart(cartId: string): Observable<void> {
     return this.http.delete<void>(
-      // 'http://localhost:3001/api/carts/items'
-      environment.cartItemUrl +'/by-cart/' + cartId
+      environment.cartItemUrl + '/by-cart/' + cartId
     );
   }
 
@@ -82,7 +74,7 @@ export class WishListService {
 
 
   getCartItemsByCartId(_id: string): Observable<any> {
-    return this.http.get(environment.cartItemUrl  + _id);
+    return this.http.get(environment.cartItemUrl + _id);
   }
 
 }

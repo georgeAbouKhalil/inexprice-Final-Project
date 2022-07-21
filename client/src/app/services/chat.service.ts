@@ -11,6 +11,7 @@ import { NotifyService } from './notify.service';
 })
 export class ChatService {
 
+    listOfUsers: any;
     // Client Socket:
     connectedUser: any;
     // Connect to server: 
@@ -67,7 +68,11 @@ export class ChatService {
                 }
 
                 if(this.user.role == 'admin' && data.toUser == '626980f33808d1c41ba27690' ) {
-                    this.notify.success(` ${data.userName} sent a msg `)
+                    this.notify.success(` ${data.userName} sent a msg `);
+
+
+                    
+                    this.listOfUsers.push({ _id: { 'userId':data.userId   , 'userName':data.userName}});
                 }
             });
             return () => {

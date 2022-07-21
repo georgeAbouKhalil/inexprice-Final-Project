@@ -28,7 +28,6 @@ export class MessagesComponent implements OnInit {
   name = '';
   username = '';
   showJoin = false;
-  // showTypingPara = false;
   @ViewChild('chatWindow') chatWindow: ElementRef;
   connectedUser: any;
   usersList: any;
@@ -49,7 +48,10 @@ export class MessagesComponent implements OnInit {
             this.messageArray.push(this.lastInsertedMsg);
           }
 
-        }
+
+       }
+
+
 
         this.messageText = '';
       });
@@ -70,15 +72,29 @@ export class MessagesComponent implements OnInit {
       this.getMessagesUser(this.connectedUser._id);
     }
 
-    if (this.connectedUser.role === "admin") {
-      this.usersList = await this.chatService.getUsersList();
-      // find and remove the username of admin from list of users
-      const indexToDelete = this.usersList.findIndex(t => t._id.userId == "626980f33808d1c41ba27690");
-      if (indexToDelete >= 0) {
-        this.usersList.splice(indexToDelete, 1);
-      }
+    // GET USERLIST FOR ADMIN
 
-    }
+    // // if (this.connectedUser.role === "admin") {
+    //   this.usersList = await this.chatService.getUsersList();
+    //   // find and remove the username of admin from list of users
+    //   const indexToDelete = this.usersList.findIndex(t => t._id.userId == "626980f33808d1c41ba27690");
+    //   if (indexToDelete >= 0) {
+    //     this.usersList.splice(indexToDelete, 1);
+    //   }
+
+
+
+      this.chatService.listOfUsers = await this.chatService.getUsersList();
+      // find and remove the username of admin from list of users
+      const indexToDelete = this.chatService.listOfUsers.findIndex(t => t._id.userId == "626980f33808d1c41ba27690");
+      if (indexToDelete >= 0) {
+        this.chatService.listOfUsers.splice(indexToDelete, 1);
+
+        console.log(this.chatService.listOfUsers);
+        
+      }
+      
+
 
     if (this.name === this.connectedUser.userName) {
       this.showMessageForUser = true;
@@ -87,26 +103,33 @@ export class MessagesComponent implements OnInit {
 
   }
 
-  sendMsg(event) {
-    // this.showTypingPara = true;
+  async sendMsg(event) {
     if (event.code === "Enter") {
       const date = new Date().toDateString();
       const time = new Date().toTimeString().split(' ')[0];
       if (this.connectedUser.role == 'user') {
         this.chatService.sendMessage({ userId: this.connectedUser._id, name: this.connectedUser.firstname, userName: this.name, email: this.connectedUser.email, message: this.messageText, date: date, time: time, toUser: "626980f33808d1c41ba27690" });
+
       }
       if (this.connectedUser.role == 'admin') {
         this.clickedUser = sessionStorage.getItem('userId');
         this.chatService.sendMessage({ userId: this.connectedUser._id, name: this.connectedUser.firstname, userName: this.name, email: this.connectedUser.email, message: this.messageText, date: date, time: time, toUser: this.clickedUser });
+
       }
       // add msg to database
       this.addMessage();
+
+
+
+
+
     }
 
-  }
+    
 
+  }
   // ADD NEW MESSAGE
-  addMessage() {
+   addMessage() {
     const date1 = new Date().toDateString();
     const time1 = new Date().toTimeString().split(' ')[0];
 
@@ -121,6 +144,7 @@ export class MessagesComponent implements OnInit {
         time: time1,
         toUser: "626980f33808d1c41ba27690"
       };
+
     }
 
 
@@ -137,18 +161,22 @@ export class MessagesComponent implements OnInit {
         time: time1,
         toUser: this.clickedUser,
       };
+
     }
 
     this.chatService.saveMessage(this.newMsg)
       .subscribe(
-        res => {
+         res => {
+
         },
         err => {
           console.log('this is error', err);
         }
       );
-      // clear the message input field
+
+    // clear the message input field
     this.messageText = "";
+
 
   }
 
@@ -202,6 +230,6 @@ export class MessagesComponent implements OnInit {
     this.cdref.detectChanges();
   }
 
-  
+
 }
 

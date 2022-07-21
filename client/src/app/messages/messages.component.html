@@ -20,13 +20,14 @@
       <div class="col-lg-12">
           <div class="container-fluid name-room" style="position: relative;top: 30px;">
             <div class="row">
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-3 col-xs-12" style="position: relative;top: 30px;">
                   <div class="chat-users">
           
                     <div class="user" style="margin-top: 60px;" *ngIf="connectedUser.role === 'admin'">
                       <div class="avatar">
                       </div>
-                      <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)" [style.background-color]="getStyle(user._id.userId)">{{user._id.userName}}</div>
+                      <!-- <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)" [style.background-color]="getStyle(user._id.userId)">{{user._id.userName}}</div> -->
+                      <div *ngFor="let user of this.chatService.listOfUsers" class="name" (click)="getMessages($event)" [style.background-color]="getStyle(user._id.userId)">{{user._id.userName}}</div>
                     </div>
                   </div>
               </div>
@@ -35,7 +36,7 @@
 
               <!-- DO I CHANGE FROM 9 TO 12 ?------------------------------------------------------------------------------------------------->
 
-              <div class="col-sm-9 col-xs-12 chat" style="overflow: hidden; outline: none; margin-top: 50px;" tabindex="5001">
+              <div class="col-sm-12 col-xs-12 chat" style="overflow: hidden; outline: none; margin-top: 50px;" tabindex="5001">
                 <div class="col-inside-lg decor-default">
                   <div class="chat-body">
 

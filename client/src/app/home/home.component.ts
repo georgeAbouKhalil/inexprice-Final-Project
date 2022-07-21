@@ -193,9 +193,7 @@ export class HomeComponent implements OnInit {
         if (this.allcategorys[item].name == mostViewCategoryName)
           this.categoryID = this.allcategorys[item]._id;
       }
-      console.log(this.categoryID);
       this.recomendProducts = await this.categoriesService.getProductsByCategory(this.categoryID);
-      console.log(this.recomendProducts);
     }
   }
 

@@ -40,8 +40,6 @@ router.get("/by-user/:userId",async (request: Request, response: Response, next:
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const wishList = new WishListModel(request.body);
-        console.log({wishList});
-        
         const addedWishList = await logic.addWishList(wishList);
         response.status(201).json(addedWishList);
     }

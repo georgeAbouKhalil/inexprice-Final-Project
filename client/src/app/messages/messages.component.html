@@ -18,67 +18,40 @@
   <div class="container">
     <div class="row fullscreen align-items-center justify-content-start">
       <div class="col-lg-12">
-        <!-- <div class="active-banner-slider owl-carousel"> -->
-
           <div class="container-fluid name-room" style="position: relative;top: 30px;">
             <div class="row">
               <div class="col-sm-3 col-xs-12">
-                <!-- <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000"> -->
                   <div class="chat-users">
           
                     <div class="user" style="margin-top: 60px;" *ngIf="connectedUser.role === 'admin'">
                       <div class="avatar">
-                        <!-- <div class="status online"></div> -->
                       </div>
-                      <!-- <div class="name" >{{online.user}}</div> -->
-                      <!-- <div class="name" >{{connectedUser.firstName}}</div> -->
-
-
-                      <!-- <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)">{{user._id.userName}}</div> -->
                       <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)" [style.background-color]="getStyle(user._id.userId)">{{user._id.userName}}</div>
-
-
-
-
-
-                      <!--<div class="mood">User mood</div>-->
                     </div>
-          
-          
                   </div>
-                <!-- </div> -->
               </div>
 
 
 
               <!-- DO I CHANGE FROM 9 TO 12 ?------------------------------------------------------------------------------------------------->
 
-
-
               <div class="col-sm-9 col-xs-12 chat" style="overflow: hidden; outline: none; margin-top: 50px;" tabindex="5001">
                 <div class="col-inside-lg decor-default">
                   <div class="chat-body">
-                    <!-- <h6>Mini Chat</h6> -->
-                    <!-- <div #list class="list" [scrollTop]="list.scrollHeight" *ngIf="showMessageForUser"> -->
+
                     <div #list class="list" *ngIf="showMessageForUser">
-          
-                      <!-- <div [ngClass]="(chat.Name === Name)? 'left' : 'right'" class="answer " *ngFor="let chat of historyMessages"> -->
                       <div [ngClass]="(chat.userName === name)? 'left' : 'right'" class="answer "
                         *ngFor="let chat of historyMessages">
-                        <!-- <div *ngIf="chat.userId == '626980f33808d1c41ba27690' && chat.toUser == clickedUser  || chat.userId == '626980f33808d1c41ba27690' && chat.toUser == connectedUser._id || chat.userId == clickedUser && chat.toUser == '626980f33808d1c41ba27690'  || chat.userId == connectedUser._id && chat.toUser == '626980f33808d1c41ba27690' "> -->
                         <div class="avatar">
                           <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
                           <div class="status offline"></div>
                         </div>
-                        <!-- <div class="name">{{chat.Name}}</div> -->
                         <div class="name">{{chat.userName}}</div>
                         <div class="text">
                           {{chat.message}}
                         </div>
                         <div class="time">{{chat.date | date: 'mediumDate'}} {{chat.time}}</div>
-                        <!-- </div> -->
                       </div>
-                      <!-- <div [ngClass]="(item.user === Name)? 'left' : 'right'"  class="answer" *ngFor="let item of messageArray"> -->
                       <div [ngClass]="(item.userName === name)? 'left' : 'right'" class="answer"
                         *ngFor="let item of messageArray">
                         <div class="avatar">
@@ -92,30 +65,20 @@
                         <div class="time">{{item.time}}</div>
                       </div>
                     </div>
-                    <!-- <p *ngIf="showTypingPara"><strong>{{typingShow.userName}}</strong> {{typingShow.message}}</p> -->
                     <div class="answer-add">
-                      <input type="text" class="form-control" [(ngModel)]="messageText" (keyup)="showTyping($event)"
+                      <input type="text" class="form-control" [(ngModel)]="messageText" (keyup)="sendMsg($event)"
                         placeholder="Write a message">
                     </div>
-          
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-
-
-
-
-        <!-- </div> -->
       </div>
     </div>
   </div>
 </section>
 <!-- End banner Area -->
-
-
 
   <app-footer></app-footer>
   	<!-- scroll to the top -->

@@ -53,7 +53,6 @@ export class CategoryComponent implements OnInit {
     this.cart = JSON.parse(localStorage.getItem("cart"));
     this.categories = await this.categoriesService.getAllCategories();
     this.user = this.authService.getUser();
-    console.log(this.user);
     this.ratesUser = JSON.parse(localStorage.getItem("rates"));
     // get products
     this.productsService.getProducts().subscribe(
@@ -127,11 +126,11 @@ export class CategoryComponent implements OnInit {
     if (this.user) {
       for (let item in this.user.favorite) {
         if (this.user.favorite[item].name == this.correctNameCategory) {
-          console.log("item ", this.user.favorite[item].name);
-          console.log("rating ", this.user.favorite[item].rating);
+          // console.log("item ", this.user.favorite[item].name);
+          // console.log("rating ", this.user.favorite[item].rating);
           // this.user.favorite[item].rating = this.user.favorite[item].rating + 1;
           this.user.favorite[item].rating += 1;
-          console.log("after ", this.user.favorite[item].rating);
+          // console.log("after ", this.user.favorite[item].rating);
         }
       }
       await this.authService.updateUser(this.user);
@@ -268,11 +267,6 @@ export class CategoryComponent implements OnInit {
     this.isWish = true;
     await this.wishListService.addToWishList(follow);
     product.follow = true;
-    console.log({ follow });
-    console.log('this.wishListService ', this.wishListService);
-    console.log('this.productsService.products ', this.productsService.products);
-
-
 
   }
 

@@ -35,7 +35,6 @@ export class ProductsService {
   }
 
   public async updateProduct(product: any) {
-    console.log({ product });
     return await this.http.put<ProductModel>(environment.productUrl + product._id, product).toPromise();
   }
 

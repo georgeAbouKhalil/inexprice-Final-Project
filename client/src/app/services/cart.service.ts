@@ -52,8 +52,6 @@ export class CartsService {
   }
 
   public async addToCart(purchasedProduct: ProductModel) {
-    console.log({ purchasedProduct });
-
     return await this.http.post<ProductModel>(
       environment.cartItemUrl,
       purchasedProduct

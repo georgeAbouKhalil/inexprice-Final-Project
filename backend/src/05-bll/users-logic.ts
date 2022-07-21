@@ -54,7 +54,6 @@ async function getAllUsers(): Promise<IUserModel[]> {
 }
 
 async function getOneUser(_id: string): Promise<IUserModel> {
-    console.log("i am here");
     
     // Validate _id:
     if (!mongoose.isValidObjectId(_id)) throw new ClientError(404, `_id ${_id} is invalid`);

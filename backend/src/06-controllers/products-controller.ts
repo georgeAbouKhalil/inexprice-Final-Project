@@ -28,8 +28,6 @@ router.get("/:_id", async (request: Request, response: Response, next: NextFunct
 router.post("/", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const product = new ProductModel(request.body);
-        console.log({product});
-        
         const addedProduct = await logic.addProduct(product);
         response.status(201).json(addedProduct);
     }

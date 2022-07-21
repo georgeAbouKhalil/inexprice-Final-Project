@@ -19,11 +19,13 @@ export class ChatService {
 
     private user = this.authService.getUser();
 
+    // GET USER LIST FOR ADMIN
     async getUsersList() {
         const usersList = await this.http.get<any>(environment.messageUrl + "by-user/").toPromise();
         return usersList;
     }
 
+    // GET LAST MESSAGE THAT SEND 
     async getLastMsg() {
         const lastMsg = await this.http.get<any>(environment.messageUrl + "lastMsg/").toPromise();
         return lastMsg;
@@ -41,6 +43,7 @@ export class ChatService {
         return msg;
     }
 
+    // SEND MSG SOCKET
     sendMessage(data) {
         this.socket.emit('message', data);
     }
@@ -52,16 +55,12 @@ export class ChatService {
             _id: string, userId: string, name?: string, userName: string, email: string, message: string, time: string, toUser: string
         }>(observer => {
             this.socket.on('new message', async (data) => {
-
                 const clickedUser = sessionStorage.getItem('userId');
-
-
 
                 // if (data.userId == '626980f33808d1c41ba27690' && data.toUser == clickedUser) observer.next(data);
                 // if (data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id) observer.next(data);
                 // if ( data.userId == clickedUser && data.toUser == '626980f33808d1c41ba27690') observer.next(data);
                 // if (data.userId == this.user._id && data.toUser == '626980f33808d1c41ba27690') observer.next(data);
-
 
                 if (data.userId == '626980f33808d1c41ba27690' && data.toUser == clickedUser || data.userId == '626980f33808d1c41ba27690' && data.toUser == this.user._id || data.userId == clickedUser && data.toUser == '626980f33808d1c41ba27690' || data.userId == this.user._id && data.toUser == '626980f33808d1c41ba27690') {    
                     observer.next(data);
@@ -78,11 +77,10 @@ export class ChatService {
         return observable;
     }
 
+    // GET ALL MSG 
     allChat() {
         const observable = new Observable<any>(observer => {
             this.socket.on('chat history', (data) => {
-                console.log(this.user);
-                console.log({ data });
                 observer.next(data);
             });
             return () => {

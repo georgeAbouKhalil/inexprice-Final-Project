@@ -41,7 +41,6 @@ router.post("/", async (request: Request, response: Response, next: NextFunction
     try {
         
         request.body.status = "open"; 
-        console.log(request.body);
         const cart = new CartModel(request.body);
         const addedCart= await logic.addCart(cart);
         response.status(201).json(addedCart);

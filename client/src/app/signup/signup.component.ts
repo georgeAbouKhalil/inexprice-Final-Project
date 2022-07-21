@@ -30,10 +30,13 @@ export class SignupComponent implements OnInit {
   fourFormGroup: FormGroup;
 
   completed = false;
+  today: any;
   constructor(private cartsService: CartsService, private notify: NotifyService, private _formBuilder: FormBuilder, private myAuthService: AuthService, private myRouter: Router,) { }
 
   ngOnInit(): void {
     this.createLoginForm();
+    // this.today =new Date().toISOString().split("T")[0];
+    this.today =(new Date(new Date().getTime() - (1825 * 24 * 60 * 60 * 1000))).toISOString().split("T")[0];
   }
 
   createLoginForm() {

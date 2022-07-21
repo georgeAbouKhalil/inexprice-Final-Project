@@ -154,6 +154,10 @@ export class HomeComponent implements OnInit {
 
   async categoryFilter(e: Event) {
 
+    if (!this.user){
+      return;
+    }
+
     // get all categories
     this.categories = await this.categoriesService.getAllCategories();
 
@@ -161,7 +165,7 @@ export class HomeComponent implements OnInit {
     const categoryName = (e.target as any).innerHTML;
 
     // get the category Id and store in sessionStorage
-    this.categoryDetails = this.categories.find((category) => category.name === categoryName);
+    this.categoryDetails = this.categories.find((category) => category.name === categoryName.trim());
 
     sessionStorage.setItem('categoryId', this.categoryDetails._id);
 

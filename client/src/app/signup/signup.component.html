@@ -105,8 +105,8 @@
         <form [formGroup]="thirdFormGroup">
           <div class="title">Date of Birth: </div>
           <div class="field">
-            <div class="label">Date <span style="color: red;">*</span></div>
-            <input formControlName="birthday" type="date">
+            <div class="label">Date <span style="color: red;"><span style="font-size: 12px;"><em>minimum age is 5 years old </em></span>*</span></div>
+            <input formControlName="birthday" type="date" max={{today}}>
             <div
               *ngIf="!thirdFormGroup.controls.birthday!.valid && (thirdFormGroup.controls.birthday!.dirty || thirdFormGroup.controls.birthday?.touched)"
               style="color: red"> Date is required

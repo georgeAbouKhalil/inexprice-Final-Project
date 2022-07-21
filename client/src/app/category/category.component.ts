@@ -115,7 +115,22 @@ export class CategoryComponent implements OnInit {
     this.productsService.productsCategory = categoryId;
     this.productsService.products = await this.categoriesService.getProductsByCategory(categoryId);
 
+    this.productsService.products.forEach(async product => {
+      // get all reviews          
+      this.reviews = await this.reviewsService.getReviews(product._id);
+      this.averageRating = (this.reviews.map(review => (review.rating)).reduce((a, b) => a + b, 0)) / this.reviews.length;
+      product.rating = this.averageRating;
 
+    })
+
+    // for each product in wishlist in all products array = productsService.products
+    this.wishProduct.forEach((follower) => {
+      this.productsService.products.forEach(product => {
+        if (follower.product._id === product._id) {
+          product.follow = true;
+        }
+      })
+    })
 
     for (let item in this.categories) {
       if (this.categories[item]._id === categoryId)

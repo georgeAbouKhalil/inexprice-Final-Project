@@ -115,12 +115,9 @@ export class AccountSettingComponent implements OnInit {
   }
 
   changeCardCvv(updateCvv) {
-    // this.rotato = "thecard";
-    for (let i = 0; i < 1; i++) {
-      this.notify.success("hover the card to see the CVV");
-    }
+
     var cardCVV2 = updateCvv;
-    // var formattedCardCvv = cardCVV2.replace(/[^\d]/g, "");
+
     var formattedCardCvv = cardCVV2.substring(0, 3);
 
     this.cardCVV = formattedCardCvv;
@@ -196,6 +193,7 @@ export class AccountSettingComponent implements OnInit {
           this.Password_valid.reset();
           this.notify.success("password has been changed please login again")
           this.myAuthService.logout();
+          window.location.href = "home";
         }
       } else {
         this.notify.error("wrong password");

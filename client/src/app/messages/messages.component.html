@@ -32,8 +32,15 @@
                       </div>
                       <!-- <div class="name" >{{online.user}}</div> -->
                       <!-- <div class="name" >{{connectedUser.firstName}}</div> -->
-                      <!-- <div *ngFor="let user of usersList" class="name" (click)="getMessages(user.userId)" >{{user.userName}}</div> -->
-                      <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)">{{user._id.userName}}</div>
+
+
+                      <!-- <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)">{{user._id.userName}}</div> -->
+                      <div *ngFor="let user of usersList" class="name" (click)="getMessages($event)" [style.background-color]="getStyle(user._id.userId)">{{user._id.userName}}</div>
+
+
+
+
+
                       <!--<div class="mood">User mood</div>-->
                     </div>
           
@@ -58,7 +65,7 @@
                       <!-- <div [ngClass]="(chat.Name === Name)? 'left' : 'right'" class="answer " *ngFor="let chat of historyMessages"> -->
                       <div [ngClass]="(chat.userName === name)? 'left' : 'right'" class="answer "
                         *ngFor="let chat of historyMessages">
-                        <!-- <div *ngIf="chat.userName ===name && chat.toUser === '626980f33808d1c41ba27690' || chat.userId === '626980f33808d1c41ba27690' && chat.toUser=== connectedUser._id"> -->
+                        <!-- <div *ngIf="chat.userId == '626980f33808d1c41ba27690' && chat.toUser == clickedUser  || chat.userId == '626980f33808d1c41ba27690' && chat.toUser == connectedUser._id || chat.userId == clickedUser && chat.toUser == '626980f33808d1c41ba27690'  || chat.userId == connectedUser._id && chat.toUser == '626980f33808d1c41ba27690' "> -->
                         <div class="avatar">
                           <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
                           <div class="status offline"></div>
@@ -85,7 +92,7 @@
                         <div class="time">{{item.time}}</div>
                       </div>
                     </div>
-                    <p *ngIf="showTypingPara"><strong>{{typingShow.userName}}</strong> {{typingShow.message}}</p>
+                    <!-- <p *ngIf="showTypingPara"><strong>{{typingShow.userName}}</strong> {{typingShow.message}}</p> -->
                     <div class="answer-add">
                       <input type="text" class="form-control" [(ngModel)]="messageText" (keyup)="showTyping($event)"
                         placeholder="Write a message">

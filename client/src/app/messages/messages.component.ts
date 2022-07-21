@@ -4,6 +4,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { Router } from '@angular/router';
 import { ItemModel } from '../models/item.model';
 
+
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
@@ -23,10 +24,7 @@ export class MessagesComponent implements OnInit {
   user = '';
   room: string;
   messageText: string;
-  // messageArray: Array<{userName: string, message: string, time: string}> = [];
-  messageArray: Array<{userId?:string, name?:string, userName?: string,email?:string, message?: string, time?: string, toUser?:string}> = [];
-
-
+  messageArray: Array<{_id?:string ,userId?:string, name?:string, userName?: string,email?:string, message?: string, time?: string, toUser?:string}> = [];
   historyArray: ItemModel[] = [];
   typingShow = {};
   name = '';
@@ -36,26 +34,29 @@ export class MessagesComponent implements OnInit {
   @ViewChild('chatWindow') chatWindow: ElementRef;
   connectedUser : any;
   usersList: any;
-
   showMessageForUser:boolean =false;
   newMsg:any;
   userDetails: any;
+  showMessage: boolean = false;
+  lastInsertedMsg:any;
 
   constructor(private cdref: ChangeDetectorRef ,private chatService: ChatService, private router: Router, public authService: AuthService) {
-
-
-    
   this.chatService.newMessageReceived()
-  .subscribe(data => {
+  .subscribe(async data => {
+    this.clickedUser =  sessionStorage.getItem('userId');
+
+    if (data.userId == '626980f33808d1c41ba27690' && data.toUser == this.clickedUser  || data.userId == '626980f33808d1c41ba27690' && data.toUser == this.connectedUser._id || data.userId == this.clickedUser && data.toUser == '626980f33808d1c41ba27690'  || data.userId == this.connectedUser._id && data.toUser == '626980f33808d1c41ba27690' ) {
     console.log({data});
-    
-    this.messageArray.push(data);
-    this.typingShow = {};
+
+    this.lastInsertedMsg = await this.chatService.getLastMsg();
+      if (this.messageArray.find(p => p._id === this.lastInsertedMsg._id) === undefined) {
+        this.messageArray.push(this.lastInsertedMsg);
+    }
+
+    }
+
     this.messageText = '';
   });
-
-  this.chatService.userTyping()
-  .subscribe(data => this.typingShow = data);
 
   this.chatService.allChat()
   .subscribe( data => this.chatHistory = data);
@@ -63,36 +64,26 @@ export class MessagesComponent implements OnInit {
    }
 
 
- 
-
 
   async ngOnInit() {
+    sessionStorage.clear();
     this.connectedUser = this.authService.getUser();     
     this.username = this.connectedUser.firstName;
     this.name = this.connectedUser.userName;
     if(this.connectedUser.role === 'user'){
     this.getMessagesUser(this.connectedUser._id);
     }
-console.log(this.connectedUser.role);
-
 
     if (this.connectedUser.role === "admin") {
       this.usersList = await this.chatService.getUsersList();
-      console.log(this.usersList);
       
       const indexToDelete = this.usersList.findIndex(t => t._id.userId == "626980f33808d1c41ba27690");
       console.log({indexToDelete});
       if(indexToDelete >=0) {
       this.usersList.splice(indexToDelete, 1);
-console.log(this.usersList);
       }
 
     }
-
-    console.log(this.name);
-    console.log(this.connectedUser.userName);
-    
-console.log((this.name === this.connectedUser.userName));
 
    if (this.name === this.connectedUser.userName) {
     this.showMessageForUser = true;
@@ -103,25 +94,27 @@ console.log((this.name === this.connectedUser.userName));
 
   
    
-  sendMessage(event) {
-    console.log(event)
-    const date = new Date().toDateString();
-    const time = new Date().toTimeString().split(' ')[0];
-    // this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
-    if (this.connectedUser.role == 'user') {
-      console.log(this.connectedUser.role);
+  // sendMessage(event) {
+  //   console.log(event)
+  //   const date = new Date().toDateString();
+  //   const time = new Date().toTimeString().split(' ')[0];
+  //   // this.chatService.sendMessage({userName: this.name, message: this.messageText, date: date, time: time});
+  //   if (this.connectedUser.role == 'user') {
+  //     console.log(this.connectedUser.role);
       
-    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: "626980f33808d1c41ba27690"});
-    }
-    if (this.connectedUser.role == 'admin') {
-      console.log(this.connectedUser.role);
+  //   this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: "626980f33808d1c41ba27690"});
+  //   }
+  //   if (this.connectedUser.role == 'admin') {
+  //     console.log(this.connectedUser.role);
 
-    this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: this.clickedUser});
-    }
+  //   this.chatService.sendMessage({userId :this.connectedUser._id,name: this.connectedUser.firstname,userName: this.name,email: this.connectedUser.email , message: this.messageText, date: date, time: time,toUser: this.clickedUser});
+  //   }
 
       
-    this.addMessage();
-  }
+  //   this.addMessage();
+  // }
+
+
 
   showTyping(event) {   
     this.showTypingPara = true;
@@ -150,18 +143,14 @@ console.log((this.name === this.connectedUser.userName));
 
 
 
-
-
-
-
-
     this.addMessage();
-    this.showTypingPara = false;
+    // this.showTypingPara = false;
     }
-    this.chatService.typing({userName: this.name});
+    // this.chatService.typing({userName: this.name});
    
   }
 
+  // ADD NEW MESSAGE
   addMessage() {
     const date1 = new Date().toDateString();
     const time1 = new Date().toTimeString().split(' ')[0];
@@ -209,8 +198,10 @@ console.log('this.newMsg  ', this.newMsg);
        }
     );
     this.messageText = "";
+    
   }
 
+  // GET MESSAGE FOR USER WHEN HIS ROLE IS USER DIRECTLY WHEN PAGE LOADED
   getMessagesUser(userId) {
     
     this.chatService.allMessages(userId)
@@ -226,57 +217,47 @@ console.log('this.newMsg  ', this.newMsg);
   }
 
 
-  // getMessages(userId) {
-    
-  //   this.chatService.allMessages(userId)
-  //   .subscribe(
-  //     res => { 
-      
-  //       this.historyMessages = res;
-        
-  //            },
-  //     err => { console.log(err); }
-  //   );
-  // }
-
-
-
-
+  // GET MESSAGE OF USER WHEN THE USER IS ADMIN
  async getMessages(e: Event) {
+  sessionStorage.clear();
+  this.messageArray =[];
+  // get the username from html
+    const userName = (e.target as any).innerHTML;
+    //   get the user Id and store in sessionStorage
 
-        // get the category name from html
-        const userName = (e.target as any).innerHTML;
-    //     // get the category Id and store in sessionStorage
-    //     this.userDetails = this.usersList.find((user) => user.name === userName);
-    // console.log(this.userDetails);
     this.userDetails = await this.authService.getUserDetail(userName);
 
     console.log('this.userDetails._id    ', this.userDetails._id);
     
-        sessionStorage.setItem('userId',this.userDetails._id);
-        // localStorage.setItem('userId',this.userDetails._id);
-
+    sessionStorage.setItem('userId',this.userDetails._id);
 
     this.chatService.allMessages(this.userDetails._id)
     .subscribe(
       res => { 
-      
         this.historyMessages = res;
         console.log(this.historyMessages);
-
              },
       err => { console.log(err); }
     );
   }
 
+// background color for selected username 
+  getStyle(userId) {
+   const userFromStorage = sessionStorage.getItem('userId');
 
+    if (userId === userFromStorage) {
+        return "blue";
+    } else {
+        return "";
+    }
+}
 
   // to solver error  NG0100
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }
 
-
+F
 }
 
 

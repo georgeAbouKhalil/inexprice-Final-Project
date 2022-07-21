@@ -32,7 +32,11 @@ function socketIo(httpServer: HttpServer): void {
         socket.on('message', async function(data) {
             console.log({data});
             
-            
+//             const clickedUser =  sessionStorage.getItem('userId');
+//             const  user = this.authService.getUser();
+//             if (data.userId != '626980f33808d1c41ba27690' && data.toUser != clickedUser  || data.userId != '626980f33808d1c41ba27690' && data.toUser != user._id || data.userId != clickedUser && data.toUser != '626980f33808d1c41ba27690'  || data.userId != user._id && data.toUser != '626980f33808d1c41ba27690' )  {
+// return;}
+
             // const user = await usersLogic.getUserIdByUserName(data.userName)
             // console.log({data});
             // console.log({user});
@@ -44,7 +48,7 @@ function socketIo(httpServer: HttpServer): void {
 
             // socketIoServer.emit('new message', {userName: data.userName, message: data.message, date: data.date ,  time: data.Time}); 
             socketIoServer.emit('new message', {userId: data.userId, name:data.name,email: data.email, userName: data.userName, message: data.message, date: data.date ,  time: data.Time , toUser: data.toUser}); 
-           
+            
           });
           
           socket.on('typing', function(data) {      

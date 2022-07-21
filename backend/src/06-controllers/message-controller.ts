@@ -42,6 +42,18 @@ router.get("/by-user/:userId",async (request: Request, response: Response, next:
     }
 });
 
+
+// Route for getting last message :
+router.get("/lastMsg",async (request: Request, response: Response, next: NextFunction) => {
+    try{
+        const lastInsertedMsg = await logic.getLatestMsg();       
+        response.json(lastInsertedMsg);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
+
 // Route for getting one that send msg to database :
 router.get("/by-user",async (request: Request, response: Response, next: NextFunction) => {
     try{

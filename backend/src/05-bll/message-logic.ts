@@ -11,13 +11,21 @@ async function getAllCarts(): Promise<ICartModel[]> {
 }
 
 // Get one:
-async function getOneCart(_id: string): Promise<ICartModel> {
+async function getOneMsg(_id: string): Promise<IMessageModel> {
 
     if (!mongoose.Types.ObjectId.isValid(_id)) throw new ClientError(404, `_id ${_id} not valid`);
-    const cart = await CartModel.findById(_id).exec();
-    if (!cart) throw new ClientError(404, `_id ${_id} not found`);
+    const msg = await MessageModel.findById(_id).exec();
+    if (!msg) throw new ClientError(404, `_id ${_id} not found`);
 
-    return cart;
+    return msg;
+}
+
+// Get latest added message:
+async function getLatestMsg(): Promise<IMessageModel | any> {
+
+    const lastMsg = await MessageModel.find({}).sort({_id:-1}).limit(1);
+    return lastMsg[0];
+
 }
 
 async function getMsgByUserId(userId: string): Promise<IMessageModel | any> {
@@ -174,7 +182,7 @@ async function getProductsUsingRegex(): Promise<ICartModel[]> {
 
 export default {
     getAllCarts,
-    getOneCart,
+    getOneMsg,
     addMessage,
     updateCart,
     deleteCart,
@@ -183,5 +191,6 @@ export default {
     getPagedProducts,
     getProductsUsingRegex,
     getAllMsgUsers,
-    getMsgByUserId
+    getMsgByUserId,
+    getLatestMsg
 };

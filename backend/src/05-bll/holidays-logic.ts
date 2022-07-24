@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 import { IHolidayModel, HolidayModel } from "../03-models/holidays-model";
 
 // Get all:

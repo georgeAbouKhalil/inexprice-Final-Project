@@ -67,6 +67,21 @@ export class ViewMoreComponent implements OnInit {
       }
 
 
+      console.log(this.product);
+
+
+      if (this.user) {
+        // get all wishlist array
+        this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
+
+        const productWish = this.wishProduct.find((product) => product.productId === this.product._id);
+
+        if (productWish) {
+          this.product.follow = true;
+        }
+
+      }
+
     }
     catch (err) {
       this.notify.error(err)
@@ -160,6 +175,7 @@ export class ViewMoreComponent implements OnInit {
       this.clicked = false
     }
     else { this.clicked = true };
+
     this.wishProduct = await this.wishListService.getAllWishListByUserId(this.user._id);
     const follow = new WishListModel();
     follow.productId = product._id;
@@ -167,18 +183,19 @@ export class ViewMoreComponent implements OnInit {
     this.isWishProduct = this.wishProduct.filter((a: any) => {
       return a.productId === product._id;
     });
+
     // if product is already in wishlist
     if (this.isWishProduct.length > 0) {
       await this.wishListService.removeWishList(this.isWishProduct[0]);
-      this.notify.error("product has removed from wishlist");
       this.isWish = false;
+      product.follow = false;
       return;
     }
 
     // if product is NOT in wishlist
     this.isWish = true;
     await this.wishListService.addToWishList(follow);
-    this.notify.success("product has added from wishlist");
+    product.follow = true;
 
   }
 

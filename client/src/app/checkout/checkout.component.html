@@ -54,7 +54,7 @@
                   <img src="https://i.imgur.com/qHX7vY1.webp" class="rounded" width="70" />
                   <div class="d-flex flex-column ms-3">
                     <span class="h5 mb-1">Credit Card</span>
-                    <span class="small text-muted">xxxx xxxx xxxx{{credit.card_number | slice:14:19}}</span>
+                    <span class="small text-muted">xxxx xxxx xxxx {{credit.card_number}}</span>
                   </div>
                 </div>
                 <input type="radio" name="credit_card" [(ngModel)]="myRadio" [value]="credit.card_number" />

@@ -43,6 +43,7 @@
 	</section>
 	<a *ngIf="user?.role === 'admin'" routerLink="Product/new" class="primary-btn"
 		style="position: absolute; top: 430px; right: 50px;font-weight: bold;">Add Product</a>
+
 	<!-- End Banner Area -->
 	<div class="container">
 		<div class="row">
@@ -70,8 +71,14 @@
 				</div>
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
+
+
 						<div class="col-lg-4 col-md-6"
 							*ngFor="let product of productsService.products | paginate: {itemsPerPage:21, currentPage: currentPg}">
+
+
+							<!-- admin edit or delete product -->
+
 							<div class="single-product">
 								<div style="float:right" *ngIf="user?.role === 'admin'">
 									<a routerLink="/category/edit/{{product?._id}}"><i
@@ -168,9 +175,9 @@
 				</section>
 			</div>
 			<!-- pagination -->
-			<div style="position:relative; left:38vh" class="col-xl-9 col-lg-8 col-md-7">
+			<div style="position:relative; left:38vh" class="col-xl-9 col-lg-8 col-md-7 test">
 				<div class="filter-bar d-flex flex-wrap align-items-center">
-					<div class="pagination">
+					<div class="pagination2">
 						<pagination-controls (pageChange)="currentPg = $event"></pagination-controls>
 					</div>
 				</div>

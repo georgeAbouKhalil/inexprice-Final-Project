@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 import { ICartItemModel, CartItemModel } from "../03-models/cartItem-model";
 
 // Get all:s

@@ -76,16 +76,12 @@
 						<p *ngIf="this.product.inStock > 0"></p>
 						<p>{{product.description}}</p>
 
-						<div *ngIf="user" class="card_area d-flex align-items-center" data-bs-toggle="modal"
-							[attr.data-bs-target]="'#product'+product._id">
-							<a *ngIf="product.inStock>0" class="primary-btn" style="color: white;">Add to Cart</a>
-
-						</div>
-						<div *ngIf="user" class="card_area d-flex align-items-center"
-							style="position: relative; left: 26vh; top: -5.2vh; color: white;">
-							<a class="icon_btn" (click)="wish(product)"><i class="lnr lnr lnr-heart"></i></a>
-						</div>
-
+						<div *ngIf="user" class="card_area d-flex align-items-center" >
+							<a data-bs-toggle="modal"
+							[attr.data-bs-target]="'#product'+product._id" *ngIf="product.inStock>0" class="primary-btn" style="color: white;">Add to Cart</a>
+							<a *ngIf="!product.follow" class="icon_btn" (click)="wish(product)"><i class="lnr lnr lnr-heart"></i></a>
+							<a *ngIf="product.follow"  class="icon_btn" (click)="wish(product)"><i style="color: red;" class="fas fa-heart"></i></a>
+						 </div> 
 					</div>
 					<!-- Modal -->
 					<div class="modal fade" id="{{'product'+product._id}}" tabindex="-1"

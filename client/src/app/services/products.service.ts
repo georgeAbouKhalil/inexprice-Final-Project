@@ -38,10 +38,6 @@ export class ProductsService {
     return await this.http.put<ProductModel>(environment.productUrl + product._id, product).toPromise();
   }
 
-  searchProduct(searchInput: string): Observable<ProductModel[]> {
-    return this.http.get<ProductModel[]>(environment.productUrl + '/search/' + searchInput);
-  }
-
   // Delete product: 
   public async deleteProduct(id: number) {
     await this.http.delete(environment.productUrl + id).toPromise();

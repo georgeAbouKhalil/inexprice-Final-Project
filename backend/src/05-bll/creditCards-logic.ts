@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 import { CreditCardModel, ICreditCardModel } from "../03-models/creditCard-model";
 
 // Get all:

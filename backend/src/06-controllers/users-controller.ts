@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { CredentialsModel } from "../03-models/credentials-model";
 import { UserModel } from "../03-models/user-model";
-import logic from "../05-BLL/users-logic"
+import logic from "../05-bll/users-logic"
 
 const router = express.Router();
 

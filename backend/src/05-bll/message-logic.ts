@@ -1,6 +1,6 @@
 import { IMessageModel, MessageModel } from './../03-models/message-model';
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 
 // Get latest added message:
 async function getLatestMsg(): Promise<IMessageModel | any> {

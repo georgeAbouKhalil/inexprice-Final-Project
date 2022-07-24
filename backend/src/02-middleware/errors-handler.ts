@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 
 function errorsHandler(err: any, request: Request, response: Response, next: NextFunction): void {
 

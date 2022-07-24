@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 import { IOrderModel, OrderModel } from "../03-models/order-model";
 
 // Get all:

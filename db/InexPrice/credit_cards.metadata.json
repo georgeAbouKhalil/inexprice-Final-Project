@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"card_number":{"$numberInt":"1"}},"name":"card_number_1","background":true,"unique":true}],"uuid":"891c585134044f00a27646faacf282b0","collectionName":"credit_cards","type":"collection"}

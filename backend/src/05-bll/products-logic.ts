@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ClientError from "../03-Models/client-error";
+import ClientError from "../03-models/client-error";
 import { IProductModel, ProductModel } from "../03-models/product-model";
 
 // Get all:
@@ -71,5 +71,5 @@ export default {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProductsByTypes
+    getProductsByTypes,
 };

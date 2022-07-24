@@ -83,7 +83,13 @@ img{
 .pagination ::ng-deep .ngx-pagination .current{
     background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
 }
+.pagination2 ::ng-deep .ngx-pagination .current{
+    background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
+}
 .pagination ::ng-deep .ngx-pagination a:hover{
+    background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
+}
+.pagination2 ::ng-deep .ngx-pagination a:hover{
     background: -webkit-linear-gradient(90deg, #0250c5, #12428a 100%);
 }
 .pagination ::ng-deep a{
@@ -94,6 +100,17 @@ img{
     padding-left: 9px;
     padding-right: 9px;
     margin:2px;
+}
+
+.pagination2 ::ng-deep a{
+    width: auto;
+    height: auto;
+    position: relative;
+    border-radius: 4px;
+    padding-left: 9px;
+    padding-right: 9px;
+    margin:2px;
+    background: white;
 }
 
 .my_icons{
@@ -114,4 +131,11 @@ img{
 ngb-rating {
     color: yellow;
     font-size: 25px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .test{
+        display: none;
+   }
 }

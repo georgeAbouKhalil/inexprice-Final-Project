@@ -86,7 +86,7 @@ function createReceiptFile(cartItems, orderDetails) {
     
         receipt +=
             `<br>
-            <div style="text-align: left; margin-left: 20%"> 💳credit_card:  ${orderDetails.credit_card.substring(14, 19)} <br>`+
+            <div style="text-align: left; margin-left: 20%"> 💳credit_card:  ${orderDetails.credit_card} <br>`+
             `🚚Shipping destination: ${orderDetails.delivery_city} <br>` +
             `Thanks for buying from us ${orderDetails.firstName}😃</div></div>`;
 

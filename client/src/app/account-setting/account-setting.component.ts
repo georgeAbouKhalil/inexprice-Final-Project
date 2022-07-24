@@ -62,13 +62,13 @@ export class AccountSettingComponent implements OnInit {
   changeCardNumber(updateNumberValue) {
     var cardNumber2 = updateNumberValue;
     // Do not allow users to write invalid characters
-    var formattedCardNumber = cardNumber2.replace(/[^\d]/g, "");
-    formattedCardNumber = formattedCardNumber.substring(0, 16);
+    var formattedCardNumber = cardNumber2?.replace(/[^\d]/g, "");
+    formattedCardNumber = formattedCardNumber?.substring(0, 16);
 
     // Split the card number is groups of 4
-    var cardNumberSections = formattedCardNumber.match(/\d{1,4}/g);
+    var cardNumberSections = formattedCardNumber?.match(/\d{1,4}/g);
     if (cardNumberSections !== null) {
-      formattedCardNumber = cardNumberSections.join(' ');
+      formattedCardNumber = cardNumberSections?.join(' ');
     }
     this.cardNumber = formattedCardNumber;
 
@@ -91,8 +91,8 @@ export class AccountSettingComponent implements OnInit {
   changeCardDateMM(updateDateMM) {
     var cardDateMM2 = updateDateMM;
 
-    var formattedCardDateMM = cardDateMM2.replace(/[^\d]/g, "");
-    formattedCardDateMM = formattedCardDateMM.substring(0, 2);
+    var formattedCardDateMM = cardDateMM2?.replace(/[^\d]/g, "");
+    formattedCardDateMM = formattedCardDateMM?.substring(0, 2);
 
     this.cardDateMM = formattedCardDateMM;
 
@@ -104,8 +104,8 @@ export class AccountSettingComponent implements OnInit {
   changeCardDateYYYY(updateDateYYYY) {
     var cardDateYYYY2 = updateDateYYYY;
 
-    var formattedCardDateYYYY = cardDateYYYY2.replace(/[^\d]/g, "");
-    formattedCardDateYYYY = formattedCardDateYYYY.substring(0, 2);
+    var formattedCardDateYYYY = cardDateYYYY2?.replace(/[^\d]/g, "");
+    formattedCardDateYYYY = formattedCardDateYYYY?.substring(0, 2);
 
     this.cardDateYYYY = formattedCardDateYYYY;
 
@@ -118,7 +118,7 @@ export class AccountSettingComponent implements OnInit {
 
     var cardCVV2 = updateCvv;
 
-    var formattedCardCvv = cardCVV2.substring(0, 3);
+    var formattedCardCvv = cardCVV2?.substring(0, 3);
 
     this.cardCVV = formattedCardCvv;
 
@@ -140,6 +140,7 @@ export class AccountSettingComponent implements OnInit {
   async onSubmit() {
     try {
       if (this.credit_card.valid) {
+        this.credit_card.value.card_number = this.credit_card.value.card_number.slice(14, 19).trim();
         const newCard = await this.creditService.addCreditCard({ ...this.credit_card.value });
         this.notify.success("credit card successfuly added");
         this.creditCards.push(newCard);

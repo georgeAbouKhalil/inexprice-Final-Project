@@ -1,5 +1,5 @@
-import { ProductModel } from './../03-models/product-model';
 import express, { NextFunction, Request, Response } from "express";
+import { ProductModel } from "../03-models/product-model";
 import logic from "../05-bll/products-logic";
 
 const router = express.Router();

@@ -1,4 +1,4 @@
-# InexPrice---Final-Project-College
+# InexPrice-Final-Project-College
 ## InexPrice - is a web e-commerce create by angular nodejs and mongodb
 
 - the source code is private

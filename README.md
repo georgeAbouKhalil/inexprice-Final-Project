@@ -178,36 +178,12 @@ Before running the application, make sure MongoDB is installed and running local
 
 Database files are included inside the `db/InexPrice` folder.
 
-## Screenshots
-
-Add screenshots here to make the project easier to understand.
-
-Example:
-
-```md
-![Home Page](screenshots/home.png)
-![Product Page](screenshots/product.png)
-![Shopping Cart](screenshots/cart.png)
-![Admin Panel](screenshots/admin.png)
-```
-
 ## Important Notes
 
 * This project was created as a college final project.
 * The application contains many e-commerce features and backend modules.
 * Payment functionality should be treated as a project/demo flow unless connected to a real payment provider.
 * Make sure not to expose private credentials in the repository.
-
-## Future Improvements
-
-* Add better validation on forms and API requests
-* Improve UI/UX design
-* Add unit and integration tests
-* Add API documentation with Swagger
-* Add Docker support
-* Add deployment instructions
-* Improve the recommendation algorithm
-* Add better admin dashboard analytics
 
 ## Author
 
